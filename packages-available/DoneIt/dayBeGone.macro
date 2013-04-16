@@ -1,0 +1,4 @@
+# Do this when the working day has finished. --dayBeGone[=quote] ~ doneit
+#onDefine aliasFeature dayBeGone,dbg
+
+doing noOne,notWorking,Not in work.
