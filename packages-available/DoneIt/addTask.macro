@@ -1,0 +1,4 @@
+# Add a task. --addTask=[who],shortDesc,longDesc ~ doneit,task
+
+load loadStoreFromData
+
