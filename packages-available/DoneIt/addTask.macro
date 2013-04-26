@@ -1,4 +1,33 @@
 # Add a task. --addTask=[who],shortDesc,longDesc ~ doneit,task
 
-load loadStoreFromData
+load doneItLoad
 
+# Find out if we have any tasks matching the shortDesc already
+listTasks
+requireItem shortDesc,~!Global,addTask-1!~
+countToVar Tmp,count
+
+if ~!Tmp,count!~,==,0,
+	now DoneIt,lastTask
+	
+	setNested DoneIt,tasks,~!DoneIt,lastTask!~,id,~!DoneIt,lastTask!~
+	setNested DoneIt,tasks,~!DoneIt,lastTask!~,lastWho,~!Global,addTask-0!~
+	setNested DoneIt,tasks,~!DoneIt,lastTask!~,shortDesc,~!Global,addTask-1!~
+	setNested DoneIt,tasks,~!DoneIt,lastTask!~,longDesc,~!Global,addTask-2!~
+else
+	if ~!Global,addTask-3!~,==,update,
+		first
+		loop
+			set DoneIt,lastTask,~!Result,id!~
+			setNested DoneIt,tasks,~!DoneIt,lastTask!~,id,~!DoneIt,lastTask!~
+			setNested DoneIt,tasks,~!DoneIt,lastTask!~,lastWho,~!Global,addTask-0!~
+			setNested DoneIt,tasks,~!DoneIt,lastTask!~,shortDesc,~!Global,addTask-1!~
+			setNested DoneIt,tasks,~!DoneIt,lastTask!~,longDesc,~!Global,addTask-2!~
+		clear
+			
+	elseIf ~!Global,addTask-3!~,==,silent,
+		# Don't complain if we already have it.
+		clear
+		
+	else
+		debug 0,addTask: ~!Global,addTask-1!~ already exists.

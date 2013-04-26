@@ -1,5 +1,6 @@
 # List/search the tasks done today
+#onLoaded setFeatureType today,generateDids
 
-doneItLoadToday
+load doneItLoad
 
 

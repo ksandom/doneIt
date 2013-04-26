@@ -1,0 +1,4 @@
+# Delete a task (think carefully before doing this as it will break anything refering to it). Also be REALLY CAREFUL that your list is what you want. You could wipe your entire list in one go if you're not careful. eg --listTasks=misc --first --deleteTask ~ doneit,task
+
+loop
+	unset DoneIt,tasks,~!Result,id!~
