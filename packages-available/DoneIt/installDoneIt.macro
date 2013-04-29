@@ -1,0 +1,7 @@
+# Install all the defaults ~ install,hidden
+#onDefine registerForEvent Install,general,installDoneIt
+
+debug 1,Installing default tasks for DoneIt
+addTask -,msc,Misce... I can't spell misc,silent
+addTask -,e,E-mail,silent
+addTask -,mtg,Misc Meeting,silent

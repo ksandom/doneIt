@@ -1,3 +1,39 @@
-# What are you doing right now? And for who? --doing=who,whatShort[,whatLong] eg --doing=bob,'fixComp','fixing computer' ~ doneit
+# What are you doing right now? And for who? --doing=name[,who[,description]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit
 
+# Do we match any tasks
+listTasks ~!Global,doing!~
+requireItem shortDesc,^~!Global,addTask-0!~$
+countToVar Tmp,count
 
+if ~!Tmp,count!~,==,0,
+	# We done have a task to do.
+	
+	if ~!Global,addTask-2!~,==,,
+		debug 0,I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
+	else
+		if ~!Global,addTask-1!~,==,,
+			debug 0,I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
+		else
+			addTask ~!Global,addTask-0!~,~!Global,addTask-1!~,~!Global,addTask-2!~
+else
+	# We have a task to do, let's do it.
+	
+	# Get task ID of the task to be done
+	first
+	loop
+		set DoneIt,lastTask,~!Result,id!~
+	
+	# Close off the old task
+	# TODO write this
+	
+	# Save the task
+	now Tmp,lastDid
+	# TODO id->ID
+	setNested DoneIt,dids,~!Tmp,lastDid!~,id,~!Tmp,lastDid!~
+	setNested DoneIt,dids,~!Tmp,lastDid!~,taskID,~!DoneIt,lastTask!~
+	setNested DoneIt,dids,~!Tmp,lastDid!~,start,~!Tmp,lastDid!~
+
+unset Tmp,count
+unset Tmp,lastDid
+clear
+nested
