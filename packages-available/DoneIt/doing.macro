@@ -1,18 +1,17 @@
 # What are you doing right now? And for who? --doing=name[,who[,description]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit
 
 # Do we match any tasks
-listTasks ~!Global,doing!~
-requireItem shortDesc,^~!Global,addTask-0!~$
+listTasks ~!Global,doing-0!~
 countToVar Tmp,count
 
 if ~!Tmp,count!~,==,0,
 	# We done have a task to do.
 	
 	if ~!Global,addTask-2!~,==,,
-		debug 0,I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
+		debug 0,DoneIt: I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
 	else
 		if ~!Global,addTask-1!~,==,,
-			debug 0,I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
+			debug 0,DoneIt: I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
 		else
 			addTask ~!Global,addTask-0!~,~!Global,addTask-1!~,~!Global,addTask-2!~
 else
@@ -22,18 +21,23 @@ else
 	first
 	loop
 		set DoneIt,lastTask,~!Result,id!~
+		set DoneIt,lastWho,~!Result,lastWho!~
 	
 	# Close off the old task
-	# TODO write this
+	if ~!DoneIt,lastDid!~,!=,,
+		debug 0,DoneIt: Closing did ~!DoneIt,tasks,~!DoneIt,dids,~!DoneIt,lastDid!~,taskID!~,name!~
+		setNested DoneIt,dids,~!DoneIt,lastDid!~,stop,~!DoneIt,lastDid!~
+	else
+		debug 0,DoneIt: No previous did to close.
 	
 	# Save the task
-	now Tmp,lastDid
+	now DoneIt,lastDid
 	# TODO id->ID
-	setNested DoneIt,dids,~!Tmp,lastDid!~,id,~!Tmp,lastDid!~
-	setNested DoneIt,dids,~!Tmp,lastDid!~,taskID,~!DoneIt,lastTask!~
-	setNested DoneIt,dids,~!Tmp,lastDid!~,start,~!Tmp,lastDid!~
+	setNested DoneIt,dids,~!DoneIt,lastDid!~,id,~!DoneIt,lastDid!~
+	setNested DoneIt,dids,~!DoneIt,lastDid!~,taskID,~!DoneIt,lastTask!~
+	setNested DoneIt,dids,~!DoneIt,lastDid!~,start,~!DoneIt,lastDid!~
+	setNested DoneIt,dids,~!DoneIt,lastDid!~,who,~!DoneIt,lastWho!~
 
 unset Tmp,count
-unset Tmp,lastDid
 clear
 nested

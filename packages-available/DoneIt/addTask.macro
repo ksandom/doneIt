@@ -1,28 +1,30 @@
-# Add a task. --addTask=shortDesc,[who],longDesc[,update,silent] . IF there is already a task with the same short description, the request will be rejected and an error displayed to debug0. However if update is specified in that sitution, the existing entry will be updated to match the request. Alternatively silent can be specified to make it silently ignore the request. ~ doneit,task
+# Add a task. --addTask=name,[who],description[,update,silent] . IF there is already a task with the same name, the request will be rejected and an error displayed to debug0. However if update is specified in that sitution, the existing entry will be updated to match the request. Alternatively silent can be specified to make it silently ignore the request. ~ doneit,task
 
 load doneItLoad
 
-# Find out if we have any tasks matching the shortDesc already
+# Find out if we have any tasks matching the name already
 listTasks
-requireItem shortDesc,^~!Global,addTask-1!~$
+requireItem name,^~!Global,addTask-0!~$
 countToVar Tmp,count
+
+# TODO the problem is that the timestamp based ID is being iterated too quickly and therefore not unique. Switch the ID to being the name.
 
 if ~!Tmp,count!~,==,0,
 	now Tmp,lastTask
 	
 	setNested DoneIt,tasks,~!Tmp,lastTask!~,id,~!Tmp,lastTask!~
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-0!~
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,shortDesc,~!Global,addTask-1!~
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,longDesc,~!Global,addTask-2!~
+	setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-1!~
+	setNested DoneIt,tasks,~!Tmp,lastTask!~,name,~!Global,addTask-0!~
+	setNested DoneIt,tasks,~!Tmp,lastTask!~,description,~!Global,addTask-2!~
 else
 	if ~!Global,addTask-3!~,==,update,
 		first
 		loop
 			set Tmp,lastTask,~!Result,id!~
 			setNested DoneIt,tasks,~!Tmp,lastTask!~,id,~!Tmp,lastTask!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-0!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,shortDesc,~!Global,addTask-1!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,longDesc,~!Global,addTask-2!~
+			setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-1!~
+			setNested DoneIt,tasks,~!Tmp,lastTask!~,name,~!Global,addTask-0!~
+			setNested DoneIt,tasks,~!Tmp,lastTask!~,description,~!Global,addTask-2!~
 		clear
 			
 	elseIf ~!Global,addTask-3!~,==,silent,
@@ -30,7 +32,7 @@ else
 		clear
 		
 	else
-		debug 0,addTask: ~!Global,addTask-1!~ already exists.
+		debug 0,addTask: ~!Global,addTask-0!~ already exists.
 
 unset Tmp,count
 unset Tmp,lastTask

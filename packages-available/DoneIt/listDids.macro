@@ -1,0 +1,11 @@
+# List everything you've done ~ doneit
+
+doneItLoad
+
+retrieveResults DoneIt,dids
+loop
+	set Result,name,~!DoneIt,tasks,~!Result,taskID!~,name!~
+	set Result,description,~!DoneIt,tasks,~!Result,taskID!~,description!~
+	timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
+	fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+

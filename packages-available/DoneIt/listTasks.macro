@@ -5,4 +5,4 @@ load doneItLoad
 
 retrieveResults DoneIt,tasks
 if ~!Global,listTasks!~,!=,,
-	requireItem shortDesc,^~!Global,listTasks!~$
+	requireItem name,^~!Global,listTasks!~$
