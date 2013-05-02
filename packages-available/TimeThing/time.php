@@ -30,6 +30,7 @@ class TimeThing extends Module
 				$this->core->registerFeature($this, array('timeDiff'), 'timeDiff', 'Put the difference of two times into a store variable. --timeDiff=Category,variableName,inputTime1,inputTime2 . inputTime 1 and 2 are time represented in seconds.', array('help'));
 				$this->core->registerFeature($this, array('fuzzyTime'), 'fuzzyTime', 'Put the fuzzyTime (eg "5 hours") into a store variable. --fuzzyTime=Category,variableName,inputTime . inputTime is time represented in seconds.', array('help'));
 				$this->core->registerFeature($this, array('fullTimeStamp'), 'fullTimeStamp', 'Put a full timestamp (eg "2013-04-17--20:12:10") into a store variable. --fullTimeStamp=Category,variableName,[inputTime][,format] . inputTime is time represented in seconds, and will default to now if omitted. format is defined in http://php.net/manual/en/function.date.php and defaults to ~!Settings,timestampFormat!~.', array('help'));
+				$this->core->registerFeature($this, array('strToTime'), 'strToTime', "Uses PHP's strtotime() function to get a timestamp that is useable by the other functions. --strToTime=Category,variableName,string[,baseTime]. string is something like \"yesterday\" or \"-1 day\".", array('help'));
 				break;
 			case 'followup':
 				break;
@@ -51,6 +52,11 @@ class TimeThing extends Module
 				$parms=$this->core->interpretParms($this->core->get('Global', $event), 4, 2, true);
 				if ($parms[3]) $this->core->set($parms[0], $parms[1], $this->fullTimeStamp($parms[2], $parms[3]));
 				else $this->core->set($parms[0], $parms[1], $this->fullTimeStamp($parms[2]));
+				break;
+			case 'strToTime':
+				$parms=$this->core->interpretParms($this->core->get('Global', $event), 4, 3, true);
+				if ($parms[3]) $this->core->set($parms[0], $parms[1], strToTime($parms[2], $parms[3]));
+				else $this->core->set($parms[0], $parms[1], strToTime($parms[2]));
 				break;
 			default:
 				$this->core->complain($this, 'Unknown event', $event);
