@@ -5,9 +5,14 @@ doneItLoad
 
 retrieveResults DoneIt,dids
 loop
+	set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~
 	set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
 	timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
 	fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+	
+	fullTimeStamp Result,startTimeStamp,~!Result,start!~
+	
+	
 	if ~!Result,duration!~,<,0,
 		set Result,duration,
 		set Result,fuzzyDuration,In progress
