@@ -85,7 +85,7 @@ class TimeThing extends Module
 			if ($inputTime<hours)
 			{
 				$unit='minute';
-				$value=round($inputTime/minutes);
+				$value=round($inputTime/minutes, 1);
 			}
 			else
 			{

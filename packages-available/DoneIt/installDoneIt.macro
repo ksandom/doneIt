@@ -2,8 +2,6 @@
 #onDefine registerForEvent Install,general,installDoneIt
 
 debug 1,Installing default tasks for DoneIt
-addTask msc,-,Misce... I can't spell misc
-debug 1,Installing default tasks for DoneIt
-addTask e,-,E-mail
-debug 1,Installing default tasks for DoneIt
-addTask mtg,-,Misc Meeting
+addTask msc,-,Misce... I can't spell misc,,silent
+addTask e,-,E-mail,,silent
+addTask mtg,-,Misc Meeting,,silent

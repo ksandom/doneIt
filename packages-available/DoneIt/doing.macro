@@ -5,7 +5,7 @@ listTasks ~!Global,doing-0!~
 countToVar Tmp,count
 
 if ~!Tmp,count!~,==,0,
-	# We done have a task to do.
+	# We don't have a task to do.
 	
 	if ~!Global,addTask-2!~,==,,
 		debug 0,DoneIt: I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
@@ -20,13 +20,25 @@ else
 	# Get task ID of the task to be done
 	first
 	loop
-		set DoneIt,lastTask,~!Result,id!~
+		set DoneIt,lastTask,~!Result,name!~
 		set DoneIt,lastWho,~!Result,lastWho!~
 	
 	# Close off the old task
 	if ~!DoneIt,lastDid!~,!=,,
-		debug 0,DoneIt: Closing did ~!DoneIt,tasks,~!DoneIt,dids,~!DoneIt,lastDid!~,taskID!~,name!~
-		setNested DoneIt,dids,~!DoneIt,lastDid!~,stop,~!DoneIt,lastDid!~
+		# TODO fix this
+		now Tmp,stop
+		setNested DoneIt,dids,~!DoneIt,lastDid!~,stop,~!Tmp,stop!~
+		timeDiff Tmp,duration,~!DoneIt,dids,~!DoneIt,lastDid!~,start!~,~!DoneIt,dids,~!DoneIt,lastDid!~,stop!~
+		setNested DoneIt,dids,~!DoneIt,lastDid!~,duration,~!Tmp,duration!~
+		
+		fuzzyTime Tmp,fuzzyDuration,~!DoneIt,dids,~!DoneIt,lastDid!~,duration!~
+		setNested DoneIt,dids,~!DoneIt,lastDid!~,fuzzyDuration,~!Tmp,fuzzyDuration!~
+		
+		debug 0,DoneIt: Closed did ~!DoneIt,lastDid!~ (~!DoneIt,tasks,~!DoneIt,dids,~!DoneIt,lastDid!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
+		
+		unset Tmp,duration
+		unset Tmp,fuzzyDuration
+		unset Tmp,stop
 	else
 		debug 0,DoneIt: No previous did to close.
 	
@@ -34,7 +46,7 @@ else
 	now DoneIt,lastDid
 	# TODO id->ID
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,id,~!DoneIt,lastDid!~
-	setNested DoneIt,dids,~!DoneIt,lastDid!~,taskID,~!DoneIt,lastTask!~
+	setNested DoneIt,dids,~!DoneIt,lastDid!~,taskName,~!DoneIt,lastTask!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,start,~!DoneIt,lastDid!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,who,~!DoneIt,lastWho!~
 
