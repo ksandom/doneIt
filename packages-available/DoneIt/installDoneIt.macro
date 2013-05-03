@@ -2,6 +2,32 @@
 #onDefine registerForEvent Install,general,installDoneIt
 
 debug 1,Installing default tasks for DoneIt
-addTask msc,-,Misce... I can't spell misc,,silent
-addTask e,-,E-mail,,silent
-addTask mtg,-,Misc Meeting,,silent
+addTask misc,-,Misce... I can't spell misc,work,silent
+addTask e,-,E-mail,work,silent
+addTask mtg,-,Misc Meeting,work,silent
+addTask int,-,Interviewing someone,work,silent
+addTask intp,-,Interview preparation,work,silent
+addTask b,-,Break (on the clock),work,silent
+
+
+# User admin
+addTask ns,-,New starters,work,silent
+addTask le,-,Leavers,work,silent
+addTask ua,-,User access,work,silent
+
+# Sysadmin
+addTask a,-,Alert,work,silent
+addTask o,-,Outage,work,silent
+addTask li,-,Live issue,work,silent
+
+# Personal
+addTask ep,-,E-mail,personal,silent
+addTask p,-,General personal time,personal,silent
+addTask l,-,Lunch,personal,silent
+addTask bp,-,Break (off the clock),personal,silent
+
+retrieveResults DoneIt,dids
+loop
+	if ~!Result,taskName!~,==,msc,
+	set Result,taskName,misc
+nested

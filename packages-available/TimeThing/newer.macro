@@ -1,0 +1,5 @@
+# Filter records newer than the timestamp specified. --newer=resultVariableNameToTest,timestamp ~ filter,time
+
+loop
+	if ~!Result,~!Global,newer-0!~!~,<,~!Global,newer-1!~,
+		unsetCategory Result

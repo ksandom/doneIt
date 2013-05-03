@@ -21,7 +21,7 @@ if ~!Tmp,count!~,==,0,
 	setNested DoneIt,tasks,~!Tmp,lastTask!~,context,~!Tmp,context!~
 	setNested DoneIt,tasks,~!Tmp,lastTask!~,description,~!Global,addTask-2!~
 else
-	if ~!Global,addTask-3!~,==,update,
+	if ~!Global,addTask-4!~,==,update,
 		first
 		loop
 			set Tmp,lastTask,~!Result,id!~
@@ -31,7 +31,7 @@ else
 			setNested DoneIt,tasks,~!Tmp,lastTask!~,description,~!Global,addTask-2!~
 		clear
 			
-	elseIf ~!Global,addTask-3!~,==,silent,
+	elseIf ~!Global,addTask-4!~,==,silent,
 		# Don't complain if we already have it.
 		clear
 		

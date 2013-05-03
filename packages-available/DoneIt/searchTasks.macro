@@ -4,4 +4,4 @@
 load doneItLoad
 
 retrieveResults DoneIt,tasks
-refine ~!Global,listTasks!~
+refine ~!Global,searchTasks!~
