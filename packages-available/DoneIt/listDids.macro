@@ -1,6 +1,8 @@
 # List everything you've done ~ doneit
 #onLoaded setFeatureType listDids,generateDids
 
+registerForEvent Mass,finishGeneral,howLong
+
 doneItLoad
 
 retrieveResults DoneIt,dids
