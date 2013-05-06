@@ -6,6 +6,10 @@ registerForEvent Mass,finishGeneral,howLong
 doneItLoad
 
 retrieveResults DoneIt,dids
+
+if ~!Global,listDids!~,!=,,
+	requireItem taskName,~!Global,listDids!~
+
 loop
 	set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~
 	set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
