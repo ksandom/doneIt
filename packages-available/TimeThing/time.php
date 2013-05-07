@@ -76,6 +76,8 @@ class TimeThing extends Module
 	
 	function fuzzyTime($inputTime)
 	{
+		$accuracy=1;
+		
 		if ($inputTime>fuzzyTimeThreshold)
 		{
 			return $this->fullTimeStamp($inputTime);
@@ -91,40 +93,40 @@ class TimeThing extends Module
 			if ($inputTime<hours)
 			{
 				$unit='minute';
-				$value=round($inputTime/minutes, 1);
+				$value=round($inputTime/minutes, $accuracy);
 			}
 			else
 			{
 				if ($inputTime<days)
 				{
 					$unit='hour';
-					$value=round($inputTime/hours);
+					$value=round($inputTime/hours, $accuracy);
 				}
 				else
 				{
 					if ($inputTime<weeks)
 					{
 						$unit='day';
-						$value=round($inputTime/days);
+						$value=round($inputTime/days, $accuracy);
 					}
 					else
 					{
 						if ($inputTime<months)
 						{
 							$unit='week';
-							$value=round($inputTime/weeks);
+							$value=round($inputTime/weeks, $accuracy);
 						}
 						else
 						{
 							if ($inputTime<years)
 							{
 								$unit='month';
-								$value=round($inputTime/months);
+								$value=round($inputTime/months, $accuracy);
 							}
 							else
 							{
 								$unit='year';
-								$value=round($inputTime/years);
+								$value=round($inputTime/years, $accuracy);
 							}
 						}
 					}

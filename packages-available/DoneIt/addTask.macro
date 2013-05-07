@@ -24,6 +24,7 @@ else
 	if ~!Global,addTask-4!~,==,update,
 		first
 		loop
+			debug 2,addTask: Updating ~!Global,addTask-0!~ context=~!Tmp,context!~
 			set Tmp,lastTask,~!Result,id!~
 			setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-1!~
 			setNested DoneIt,tasks,~!Tmp,lastTask!~,name,~!Global,addTask-0!~

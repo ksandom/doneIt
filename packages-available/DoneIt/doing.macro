@@ -45,6 +45,7 @@ else
 	# Save the task
 	now DoneIt,lastDid
 	# TODO id->ID
+	debug 0,DoneIt: Starting ~!DoneIt,tasks,~!DoneIt,lastTask!~,description!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,id,~!DoneIt,lastDid!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,taskName,~!DoneIt,lastTask!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,start,~!DoneIt,lastDid!~
