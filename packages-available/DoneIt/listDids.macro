@@ -3,6 +3,7 @@
 #onDefine aliasFeature listDids,done
 
 registerForEvent Mass,finishGeneral,howLong
+registerForEvent Template,before,cleanUnresolvedResultVars
 
 doneItLoad
 

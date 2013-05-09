@@ -1,4 +1,5 @@
 # Load all tasks ~ doneit,load,hidden
-#onDefine registerForEvent Mass,finishGeneral,doneItSave
+
+registerForEvent Mass,finishGeneral,doneItSave
 
 loadStoreFromData DoneIt

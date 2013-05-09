@@ -1,3 +1,4 @@
 # Save tasks ~ doneit,save,tasks,hidden
 
+debug 2,doneitSave: Saving DoneIt.
 saveStoreToData DoneIt

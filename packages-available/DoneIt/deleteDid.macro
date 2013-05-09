@@ -1,0 +1,6 @@
+# Delete something you did (in DoneIt) . eg --listDids --first --deleteDid ~ doneit,did
+
+# TODO the problem appears to be key preservation in --refine... Or possibly one of the other commands in mass --listDids --refine=b --last -vvv --deleteDid
+loop
+	debug 0,deleteDid: Trying to delete ~!Result,key!~
+	unset DoneIt,dids,~!Result,key!~

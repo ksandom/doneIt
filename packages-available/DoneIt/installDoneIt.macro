@@ -7,7 +7,7 @@ addTask e,-,E-mail,work,silent
 addTask mtg,-,Misc Meeting,work,silent
 addTask int,-,Interviewing someone,work,silent
 addTask intp,-,Interview preparation,work,silent
-addTask b,-,Break (on the clock),work,update
+addTask b,-,Break (on the clock),work,silent
 
 
 # User admin
