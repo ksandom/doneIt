@@ -1,0 +1,28 @@
+# Choose a subset of results based on a timestamp. --tsDay=startNumberOfDaysAgo,[howManyDaysToTake][,fieldToDecideOn] ~ time
+
+# Set the default field
+if ~!Global,tsDay-2!~,!=,,
+	set Tmp,timeField,~!Global,tsDay-2!~
+else
+	set Tmp,timeField,start
+
+# Get a starting point
+now Tmp,now
+strToTime Tmp,base,0:00:00,~!Tmp,now!~
+
+# Refine the results
+strToTime Tmp,start,-~!Global,tsDay-0!~ day,~!Tmp,now!~
+newer ~!Tmp,timeField!~,~!Tmp,start!~
+
+if ~!Global,tsDay-1!~,!=,,
+	strToTime Tmp,stop,+~!Global,tsDay-1!~ day,~!Tmp,start!~
+else
+	strToTime Tmp,stop,+1 day,~!Tmp,start!~
+older ~!Tmp,timeField!~,~!Tmp,stop!~
+
+# Clean up
+unset Tmp,now
+unset Tmp,base
+unset Tmp,start
+unset Tmp,stop
+unset Tmp,timeField
