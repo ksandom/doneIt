@@ -1,0 +1,5 @@
+# List/search the tasks done last week
+#onLoaded setFeatureType lastWeek,generateDids
+
+listDids
+tsWeek 1

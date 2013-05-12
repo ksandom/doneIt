@@ -1,4 +1,4 @@
-# What are you doing right now? And for who? --doing=name[,who[,description]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit
+# What are you doing right now? And for who? --doing=name[,who[,description[,overrideTimestamp]]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit
 
 # Do we match any tasks
 listTasks ~!Global,doing-0!~
@@ -7,14 +7,18 @@ countToVar Tmp,count
 if ~!Tmp,count!~,==,0,
 	# We don't have a task to do.
 	
-	if ~!Global,addTask-2!~,==,,
-		debug 0,DoneIt: I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
+	if ~!Global,doing-2!~,==,,
+		debug 0,doing: I can't find a task matching "^~!Global,doing-0!~$". If you'd like to add it please include who and a description.
 	else
-		if ~!Global,addTask-1!~,==,,
-			debug 0,DoneIt: I can't find a task matching "^~!Global,addTask-0!~$". If you'd like to add it please include who and a description.
+		if ~!Global,doing-1!~,==,,
+			debug 0,doing: I can't find a task matching "^~!Global,doing-0!~$". If you'd like to add it please include who and a description.
 		else
-			addTask ~!Global,addTask-0!~,~!Global,addTask-1!~,~!Global,addTask-2!~
-else
+			debug 0,doing: Adding task ~!Global,doing-2!~
+			addTask ~!Global,doing-0!~,~!Global,doing-1!~,~!Global,doing-2!~
+			listTasks ~!Global,doing-0!~
+			countToVar Tmp,count
+
+if ~!Tmp,count!~,!=,0,
 	# We have a task to do, let's do it.
 	
 	# Get task ID of the task to be done
@@ -26,7 +30,13 @@ else
 	# Close off the old task
 	if ~!DoneIt,lastDid!~,!=,,
 		# TODO fix this
-		now Tmp,stop
+		
+		if ~!Global,doing-3!~,==,,
+			now Tmp,stop
+		else
+			debug 0,doing: Will close off the old task at ~!Global,doing-3!~
+			set Tmp,stop,~!Global,doing-3!~
+		
 		setNested DoneIt,dids,~!DoneIt,lastDid!~,stop,~!Tmp,stop!~
 		timeDiff Tmp,duration,~!DoneIt,dids,~!DoneIt,lastDid!~,start!~,~!DoneIt,dids,~!DoneIt,lastDid!~,stop!~
 		setNested DoneIt,dids,~!DoneIt,lastDid!~,duration,~!Tmp,duration!~
@@ -34,18 +44,23 @@ else
 		fuzzyTime Tmp,fuzzyDuration,~!DoneIt,dids,~!DoneIt,lastDid!~,duration!~
 		setNested DoneIt,dids,~!DoneIt,lastDid!~,fuzzyDuration,~!Tmp,fuzzyDuration!~
 		
-		debug 0,DoneIt: Closed did ~!DoneIt,lastDid!~ (~!DoneIt,tasks,~!DoneIt,dids,~!DoneIt,lastDid!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
+		debug 0,doing: Closed did ~!DoneIt,lastDid!~ (~!DoneIt,tasks,~!DoneIt,dids,~!DoneIt,lastDid!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
 		
 		unset Tmp,duration
 		unset Tmp,fuzzyDuration
 		unset Tmp,stop
 	else
-		debug 0,DoneIt: No previous did to close.
+		debug 0,doing: No previous did to close.
 	
 	# Save the task
-	now DoneIt,lastDid
+	if ~!Global,doing-3!~,==,,
+		now DoneIt,lastDid
+	else
+		debug 0,doing: Setting new task to start from ~!Global,doing-3!~
+		set DoneIt,lastDid,~!Global,doing-3!~
+	
 	# TODO id->ID
-	debug 0,DoneIt: Starting ~!DoneIt,tasks,~!DoneIt,lastTask!~,description!~
+	debug 0,doing: Starting ~!DoneIt,tasks,~!DoneIt,lastTask!~,description!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,id,~!DoneIt,lastDid!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,taskName,~!DoneIt,lastTask!~
 	setNested DoneIt,dids,~!DoneIt,lastDid!~,start,~!DoneIt,lastDid!~

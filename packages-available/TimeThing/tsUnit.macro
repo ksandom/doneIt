@@ -34,7 +34,7 @@ else
 fullTimeStamp Tmp,tsStop,~!Tmp,stop!~
 older ~!Tmp,timeField!~,~!Tmp,stop!~
 
-debug 2,Range ~!Tmp,tsStart!~  -  ~!Tmp,tsStop!~
+debug 2,tsUnit: Range ~!Tmp,tsStart!~  -  ~!Tmp,tsStop!~
 
 
 

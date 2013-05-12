@@ -1,6 +1,5 @@
 # List/search the tasks done today
 #onLoaded setFeatureType today,generateDids
 
-listDids
-tsToday Tmp,today
-newer start,~!Tmp,today!~
+done
+tsDay 0
