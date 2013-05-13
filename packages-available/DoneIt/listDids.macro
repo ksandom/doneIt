@@ -28,5 +28,9 @@ loop
 	
 	fullTimeStamp Result,startTimeStamp,~!Result,start!~
 	
-	
+	set Result,summary,~!Result,taskName!~--~!Result,comment!~
+
+positiveCRC summary,pseudoID
+chooseBasedOn pseudoID,color,Color
+
 

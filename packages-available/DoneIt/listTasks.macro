@@ -1,5 +1,6 @@
 # List tasks ~ doneit
 #onLoaded setFeatureType listTasks,generateTasks
+#onLoaded aliasFeature listTasks,tasks
 
 load doneItLoad
 
