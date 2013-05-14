@@ -1,3 +1,3 @@
-<~~ ~%startTimeStamp%~~!Color,brightBlack!~: ~!Color,~%color%~!~-=#=-~!Color,default!~ ~!Color,yellow!~~%who%~~!Color,brightBlack!~, ~!Color,green!~~%description%~ ~!Color,blue!~(~%context%~) ~!Color,brightBlack!~- ~!Color,yellow!~~%fuzzyDuration%~~!Color,default!~ ~%comment%~~!Color,default!~
+<~~ ~%startTimeStamp%~~!Color,brightBlack!~: ~!Color,~%summaryColor%~!~==~!Color,~%whoColor%~!~==~!Color,~%taskNameColor%~!~==~!Color,green!~ ~%taskName%~~!Color,default!~~!Color,brightBlack!~, ~!Color,default!~~%who%~~!Color,brightBlack!~, ~!Color,green!~~%description%~ ~!Color,blue!~(~%context%~) ~!Color,brightBlack!~- ~!Color,yellow!~~%fuzzyDuration%~~!Color,default!~ ~%comment%~~!Color,default!~
 
 ~>  ~!DoneIt,totalFuzzyTime!~ ~!Color,brightBlack!~(~!DoneIt,totalTime!~ seconds)~!Color,default!~

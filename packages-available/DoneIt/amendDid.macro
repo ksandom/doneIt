@@ -3,6 +3,11 @@
 
 load doneItLoad
 
+countToVar Tmp,count
+if ~!Tmp,count!~,<,1,
+	today
+	last
+
 loop
 	# taskName
 	if ~!Global,amendDid-0!~,!=,,
@@ -19,3 +24,5 @@ loop
 	if ~!Global,amendDid-2!~,!=,,
 		debug 2,amendDid: Setting comment ~!Global,amendDid-2!~
 		setNested DoneIt,dids,~!Result,id!~,comment,~!Global,amendDid-2!~
+
+unset Tmp,count

@@ -31,6 +31,11 @@ loop
 	set Result,summary,~!Result,taskName!~--~!Result,comment!~
 
 positiveCRC summary,pseudoID
-chooseBasedOn pseudoID,color,Color
+chooseBasedOn pseudoID,summaryColor,Color
 
+positiveCRC who,whoPseudoID
+chooseBasedOn whoPseudoID,whoColor,Color
+
+positiveCRC taskName,taskNamePseudoID
+chooseBasedOn taskNamePseudoID,taskNameColor,Color
 

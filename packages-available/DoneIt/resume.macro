@@ -1,0 +1,17 @@
+# Resume a task ~ doneit
+
+countToVar Tmp,count
+if ~!Tmp,count!~,<,1,
+	today
+	
+	if ~!Global,resume!~,==,,
+		last 2
+	else
+		last ~!Global,resume!~
+	
+	first
+
+
+first
+loop
+	doing ~!Result,taskName!~,~!Result,who!~,~!Result,comment!~
