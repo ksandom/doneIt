@@ -1,4 +1,4 @@
 # How long was spent on this list of dids ~ donit
 
 sum DoneIt,totalTime,duration
-fuzzyTime DoneIt,totalFuzzyTime,~!DoneIt,totalTime!~
+fuzzyTime DoneIt,totalFuzzyTime,~!DoneIt,totalTime!~,hours

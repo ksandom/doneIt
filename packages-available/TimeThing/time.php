@@ -28,7 +28,7 @@ class TimeThing extends Module
 			case 'init':
 				$this->core->registerFeature($this, array('now'), 'now', 'Put the current time in seconds into a store variable. --now=Category,variableName', array('time'));
 				$this->core->registerFeature($this, array('timeDiff'), 'timeDiff', 'Put the difference of two times into a store variable. --timeDiff=Category,variableName,inputTime1,inputTime2 . inputTime 1 and 2 are time represented in seconds.', array('help'));
-				$this->core->registerFeature($this, array('fuzzyTime'), 'fuzzyTime', 'Put the fuzzyTime (eg "5 hours") into a store variable. --fuzzyTime=Category,variableName,inputTime . inputTime is time represented in seconds.', array('help'));
+				$this->core->registerFeature($this, array('fuzzyTime'), 'fuzzyTime', 'Put the fuzzyTime (eg "5 hours") into a store variable. --fuzzyTime=Category,variableName,inputTime[,maxUnit] . inputTime is time represented in seconds. maxUnit', array('help'));
 				$this->core->registerFeature($this, array('fullTimeStamp'), 'fullTimeStamp', 'Put a full timestamp (eg "2013-04-17--20:12:10") into a store variable. --fullTimeStamp=Category,variableName,[inputTime][,format] . inputTime is time represented in seconds, and will default to now if omitted. format is defined in http://php.net/manual/en/function.date.php and defaults to ~!Settings,timestampFormat!~.', array('help'));
 				$this->core->registerFeature($this, array('strToTime'), 'strToTime', "Uses PHP's strtotime() function to get a timestamp that is useable by the other functions. --strToTime=Category,variableName,string[,baseTime]. string is something like \"yesterday\" or \"-1 day\".", array('help'));
 				break;
@@ -45,8 +45,8 @@ class TimeThing extends Module
 				$this->core->set($parms[0], $parms[1], $this->timeDiff($parms[2], $parms[3]));
 				break;
 			case 'fuzzyTime':
-				$parms=$this->core->interpretParms($this->core->get('Global', $event), 3, 3, true);
-				$this->core->set($parms[0], $parms[1], $this->fuzzyTime($parms[2]));
+				$parms=$this->core->interpretParms($this->core->get('Global', $event), 4, 3, true);
+				$this->core->set($parms[0], $parms[1], $this->fuzzyTime($parms[2], $parms[3]));
 				break;
 			case 'fullTimeStamp':
 				$parms=$this->core->interpretParms($this->core->get('Global', $event), 4, 2, true);
@@ -74,7 +74,7 @@ class TimeThing extends Module
 		return $inputTime2-$inputTime1;
 	}
 	
-	function fuzzyTime($inputTime)
+	function fuzzyTime($inputTime, $maxUnit='')
 	{
 		$accuracy=1;
 		
@@ -83,42 +83,42 @@ class TimeThing extends Module
 			return $this->fullTimeStamp($inputTime);
 		}
 		
-		if ($inputTime<minutes)
+		if ($inputTime<minutes or $maxUnit=='seconds')
 		{
 			$unit='second';
 			$value=$inputTime;
 		}
 		else
 		{
-			if ($inputTime<hours)
+			if ($inputTime<hours or $maxUnit=='minutes')
 			{
 				$unit='minute';
 				$value=round($inputTime/minutes, $accuracy);
 			}
 			else
 			{
-				if ($inputTime<days)
+				if ($inputTime<days or $maxUnit=='hours')
 				{
 					$unit='hour';
 					$value=round($inputTime/hours, $accuracy);
 				}
 				else
 				{
-					if ($inputTime<weeks)
+					if ($inputTime<weeks or $maxUnit=='days')
 					{
 						$unit='day';
 						$value=round($inputTime/days, $accuracy);
 					}
 					else
 					{
-						if ($inputTime<months)
+						if ($inputTime<months or $maxUnit=='weeks')
 						{
 							$unit='week';
 							$value=round($inputTime/weeks, $accuracy);
 						}
 						else
 						{
-							if ($inputTime<years)
+							if ($inputTime<years or $maxUnit=='months')
 							{
 								$unit='month';
 								$value=round($inputTime/months, $accuracy);

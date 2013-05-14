@@ -1,0 +1,29 @@
+# Do all the post processig on the dids. ~ doneit,hidden
+
+loop
+	set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~
+	set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
+	
+	if ~!Result,stop!~,!=,,
+		timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
+		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+	else
+		now Tmp,a
+		timeDiff Result,duration,~!Result,start!~,~!Tmp,a!~
+		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+		set Result,duration,~!Result,duration!~ (In progress)
+		unset Tmp,a
+	
+	fullTimeStamp Result,startTimeStamp,~!Result,start!~
+	
+	set Result,summary,~!Result,taskName!~--~!Result,comment!~
+
+positiveCRC summary,pseudoID
+chooseBasedOn pseudoID,summaryColor,Color
+
+positiveCRC who,whoPseudoID
+chooseBasedOn whoPseudoID,whoColor,Color
+
+positiveCRC taskName,taskNamePseudoID
+chooseBasedOn taskNamePseudoID,taskNameColor,Color
+
