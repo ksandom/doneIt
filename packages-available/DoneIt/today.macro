@@ -1,5 +1,5 @@
 # List/search the tasks done today
 #onLoaded setFeatureType today,generateDids
 
-done
+ifNoResult done
 tsDay 0

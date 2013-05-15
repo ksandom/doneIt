@@ -1,4 +1,4 @@
-# Do all the post processig on the dids. ~ doneit,hidden
+# Do all the post processig on the dids. This is called automatically when you do a --listDids (--help=--listDids). In rare situations you may want to call this early so that you can do processig based on the results of this feature. ~ doneit
 
 loop
 	set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~

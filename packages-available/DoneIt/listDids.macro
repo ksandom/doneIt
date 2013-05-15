@@ -12,6 +12,3 @@ retrieveResults DoneIt,dids
 
 if ~!Global,listDids!~,!=,,
 	requireItem taskName,~!Global,listDids!~
-
-# processDids
-
