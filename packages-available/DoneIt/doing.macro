@@ -32,26 +32,7 @@ if ~!Tmp,count!~,!=,0,
 	
 	# Close off the old task
 	if ~!DoneIt,lastDid!~,!=,,
-		# TODO fix this
-		
-		if ~!Global,doing-3!~,==,,
-			now Tmp,stop
-		else
-			debug 0,doing: Will close off the old task at ~!Global,doing-3!~
-			set Tmp,stop,~!Global,doing-3!~
-		
-		setNested DoneIt,dids,~!DoneIt,lastDid!~,stop,~!Tmp,stop!~
-		timeDiff Tmp,duration,~!DoneIt,dids,~!DoneIt,lastDid!~,start!~,~!DoneIt,dids,~!DoneIt,lastDid!~,stop!~
-		setNested DoneIt,dids,~!DoneIt,lastDid!~,duration,~!Tmp,duration!~
-		
-		fuzzyTime Tmp,fuzzyDuration,~!DoneIt,dids,~!DoneIt,lastDid!~,duration!~
-		setNested DoneIt,dids,~!DoneIt,lastDid!~,fuzzyDuration,~!Tmp,fuzzyDuration!~
-		
-		debug 0,doing: Closed did ~!DoneIt,lastDid!~ (~!DoneIt,tasks,~!DoneIt,dids,~!DoneIt,lastDid!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
-		
-		unset Tmp,duration
-		unset Tmp,fuzzyDuration
-		unset Tmp,stop
+		closeDid ~!DoneIt,lastDid!~,~!Global,doing-3!~
 	else
 		debug 0,doing: No previous did to close.
 	
@@ -67,14 +48,13 @@ if ~!Tmp,count!~,!=,0,
 		set DoneIt,lastWho,~!Global,doing-1!~
 	
 	# TODO id->ID
-	debug 0,doing: Starting ~!DoneIt,tasks,~!DoneIt,lastTask!~,description!~
-	setNested DoneIt,dids,~!DoneIt,lastDid!~,id,~!DoneIt,lastDid!~
-	setNested DoneIt,dids,~!DoneIt,lastDid!~,taskName,~!DoneIt,lastTask!~
-	setNested DoneIt,dids,~!DoneIt,lastDid!~,start,~!DoneIt,lastDid!~
-	setNested DoneIt,dids,~!DoneIt,lastDid!~,who,~!DoneIt,lastWho!~
 	
+	# TODO finish this
 	if ~!Tmp,createNew!~,==,false,
-		setNested DoneIt,dids,~!DoneIt,lastDid!~,comment,~!Global,doing-2!~
+		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,~!Global,doing-2!~,~!DoneIt,lastDid!~
+	else
+		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,,~!DoneIt,lastDid!~
+
 
 unset Tmp,count
 unset Tmp,createNew
