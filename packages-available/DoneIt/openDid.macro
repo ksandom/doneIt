@@ -1,0 +1,11 @@
+# Open a did. --openDid=name,who,description,startTimestamp ~ doneit,hidden
+
+debug 0,openDid: Starting ~!DoneIt,tasks,~!Global,openDid-0!~,description!~
+debug 1,openDid: Recieved ~!Global,openDid-0!~,~!Global,openDid-1!~,~!Global,openDid-2!~,~!Global,openDid-3!~
+setNested DoneIt,dids,~!Global,openDid-3!~,id,~!Global,openDid-3!~
+setNested DoneIt,dids,~!Global,openDid-3!~,taskName,~!Global,openDid-0!~
+setNested DoneIt,dids,~!Global,openDid-3!~,start,~!Global,openDid-3!~
+setNested DoneIt,dids,~!Global,openDid-3!~,who,~!Global,openDid-1!~
+
+if ~!Global,openDid-2!~,!=,,
+	setNested DoneIt,dids,~!Global,openDid-3!~,comment,~!Global,openDid-2!~

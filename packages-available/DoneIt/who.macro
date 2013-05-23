@@ -1,0 +1,3 @@
+# Amend who on all DoneIt dids in the result set. ~ doneit
+
+amend ,~!Global,who!~
