@@ -2,61 +2,62 @@
 #onDefine aliasFeature splitDid,split
 
 # TODO Currently this feature does some funky things when working with more than one record. Once this is fixed, first can be removed.
-first
+# first
 
-loop
-	# Check that we have sane values
-	set Tmp,passed,true
-	
-	if ~!Global,splitDid-0!~,<,0,
-		set Tmp,passed,false
-		debug 0,splitDid: secondsAfterStartToSplit (~!Global,splitDid-0!~) is too small
-	
-	basicMaths Tmp,splitTime,~!Result,start!~,+,~!Global,splitDid-0!~
-	
-	if ~!Result,stop!~,!=,,
-		if ~!Tmp,splitTime!~,>,~!Result,stop!~,
+thereCanBeOnly 1,splitDid,
+	loop
+		# Check that we have sane values
+		set Tmp,passed,true
+		
+		if ~!Global,splitDid-0!~,<,0,
 			set Tmp,passed,false
-			debug 0,splitDid: secondsAfterStartToSplit is greater than the duration of the did.
-	
-	if ~!Tmp,passed!~,==,true,
-		debug 0,closeDid ~!Result,start!~,~!Tmp,splitTime!~
-		closeDid ~!Result,start!~,~!Tmp,splitTime!~
+			debug 0,splitDid: secondsAfterStartToSplit (~!Global,splitDid-0!~) is too small
 		
-		# TODO write code to take optional information
-		if ~!Global,splitDid-1!~,!=,,
-			set Tmp,taskName,~!Global,splitDid-1!~
-		else
-			set Tmp,taskName,~!Result,taskName!~
-		
-		if ~!Global,splitDid-2!~,!=,,
-			set Tmp,who,~!Global,splitDid-2!~
-		else
-			set Tmp,who,~!Result,who!~
-		
-		if ~!Global,splitDid-3!~,!=,,
-			set Tmp,comment,~!Global,splitDid-3!~
-		else
-			set Tmp,comment,~!Result,comment!~
-		
-		debug 0,openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
-		openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
+		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Global,splitDid-0!~
 		
 		if ~!Result,stop!~,!=,,
-			# We have a stop position
-			debug 0,closeDid ~!Tmp,splitTime!~,~!Result,stop!~
-			closeDid ~!Tmp,splitTime!~,~!Result,stop!~
-	
-	unset Tmp,passed
-	unset Tmp,splitTime
-	unset Tmp,taskName
-	unset Tmp,who
-	unset Tmp,comment
+			if ~!Tmp,splitTime!~,>,~!Result,stop!~,
+				set Tmp,passed,false
+				debug 0,splitDid: secondsAfterStartToSplit is greater than the duration of the did.
+		
+		if ~!Tmp,passed!~,==,true,
+			debug 0,closeDid ~!Result,start!~,~!Tmp,splitTime!~
+			closeDid ~!Result,start!~,~!Tmp,splitTime!~
+			
+			# TODO write code to take optional information
+			if ~!Global,splitDid-1!~,!=,,
+				set Tmp,taskName,~!Global,splitDid-1!~
+			else
+				set Tmp,taskName,~!Result,taskName!~
+			
+			if ~!Global,splitDid-2!~,!=,,
+				set Tmp,who,~!Global,splitDid-2!~
+			else
+				set Tmp,who,~!Result,who!~
+			
+			if ~!Global,splitDid-3!~,!=,,
+				set Tmp,comment,~!Global,splitDid-3!~
+			else
+				set Tmp,comment,~!Result,comment!~
+			
+			debug 0,openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
+			openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
+			
+			if ~!Result,stop!~,!=,,
+				# We have a stop position
+				debug 0,closeDid ~!Tmp,splitTime!~,~!Result,stop!~
+				closeDid ~!Tmp,splitTime!~,~!Result,stop!~
+		
+		unset Tmp,passed
+		unset Tmp,splitTime
+		unset Tmp,taskName
+		unset Tmp,who
+		unset Tmp,comment
 
-stashResults Tmp,dids
-retrieveResults DoneIt,dids
-sortOnKey
-stashResults DoneIt,dids
-retrieveResults Tmp,dids
+	stashResults Tmp,dids
+	retrieveResults DoneIt,dids
+	sortOnKey
+	stashResults DoneIt,dids
+	retrieveResults Tmp,dids
 
-unset Tmp,dids
+	unset Tmp,dids
