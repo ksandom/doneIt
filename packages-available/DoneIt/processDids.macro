@@ -23,7 +23,3 @@ chooseBasedOn pseudoID,summaryColor,Color
 
 positiveCRC who,whoPseudoID
 chooseBasedOn whoPseudoID,whoColor,Color
-
-positiveCRC taskName,taskNamePseudoID
-chooseBasedOn taskNamePseudoID,taskNameColor,Color
-
