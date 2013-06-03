@@ -5,13 +5,15 @@ loop
 	set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
 	
 	if ~!Result,stop!~,!=,,
+		debug 1,processDids: Got stop, therefore duration can be calculated.
 		timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
 		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
 	else
+		debug 1,processDids: No stop, therefore duration can not be calculated.
 		now Tmp,a
 		timeDiff Result,duration,~!Result,start!~,~!Tmp,a!~
 		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
-		set Result,duration,~!Result,duration!~ (In progress)
+		set Result,humaDuration,~!Result,duration!~ (In progress)
 		unset Tmp,a
 	
 	fullTimeStamp Result,startTimeStamp,~!Result,start!~
