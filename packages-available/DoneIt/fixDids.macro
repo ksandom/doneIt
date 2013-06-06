@@ -12,12 +12,31 @@ loop
 		debug 1,fixDids: Fixed did ~!Tmp,lastProcessedDid!~
 		setNested DoneIt,dids,~!Tmp,lastProcessedDid!~,stop,~!Result,start!~
 	
-	if ~!Result,stop!~,==,,
-		debug 1,fixDids: Going to fix did ~!Result,start!~
-		set Tmp,lastProcessedDid,~!Result,start!~
+	if ~!Result,start!~,==,,
+		getCategory Result
+		nested
+		outNow
+		
+		if ~!Result,key!~,!=,,
+			debug 1,fixDids: Found a did with no start, but has key ~!Result,key!~. Removing it.
+			unset DoneIt,dids,~!Result,key!~
+		else
+			debug 1,fixDids: Found a did with no key. TODO Check if this will work. It probably won't! mass --doneItLoad --unset=DoneIt,dids,
+	elseIf ~!Result,stop!~,==,,
+		debug 2,fixDids: Going to fix did "~!Result,key!~" "~!Result,key!~"
+		set Tmp,lastProcessedDid,~!Result,key!~
+	elseIf ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
+		if ~!Tmp,lastDidID!~,!=,,
+			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Tmp,lastDidID!~. Effectively ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
+			setNested DoneIt,dids,~!Tmp,lastDidID!~,stop,~!Result,start!~
 	else
 		debug 2,fixDids: ~!Result,start!~ healthy
 		unset Tmp,lastProcessedDid
+	
+	set Tmp,lastDidID,~!Result,key!~
+	set Tmp,lastDidStop,~!Result,stop!~
 
 unset Tmp,lastProcessedDid
+unset Tmp,lastDidID
+unset Tmp,lastDidStop
 null
