@@ -24,6 +24,25 @@ if ~!Tmp,count!~,==,0,
 if ~!Tmp,count!~,!=,0,
 	# We have a task to do, let's do it.
 	
+	
+	# figure out when the change happens
+	if ~!Global,doing-3!~,==,,
+		debug 1,doing: No time specified, set it to now
+		now Tmp,changeOver
+	elseIf ~!Global,doing-3!~,>,~!Time,fuzzyTimeThreshold!~,
+		debug 1,doing: It's either a really big offset, or it's an absolute time. Assume it's an absolute time.
+		set Tmp,changeOver,~!Global,doing-3!~
+	else
+		if ~!Global,doing-3!~,<,0,
+			debug 1,doing: It's a negative offset, go from now+(-offset)
+			now Tmp,now
+			basicMaths Tmp,changeOver,~!Tmp,now!~,+,~!Global,doing-3!~
+			unset Tmp,now
+		else
+			debug 1,doing: It's a positive offset, go from the end of the previous task + offset
+			basicMaths Tmp,changeOver,~!DoneIt,dids,~!DoneIt,lastDid!~,start!~,+,~!Global,doing-3!~
+	
+	
 	# Get task ID of the task to be done
 	first
 	loop
@@ -32,16 +51,13 @@ if ~!Tmp,count!~,!=,0,
 	
 	# Close off the old task
 	if ~!DoneIt,lastDid!~,!=,,
-		closeDid ~!DoneIt,lastDid!~,~!Global,doing-3!~
+		closeDid ~!DoneIt,lastDid!~,~!Tmp,changeOver!~
 	else
 		debug 0,doing: No previous did to close.
 	
 	# Save the task
-	if ~!Global,doing-3!~,==,,
-		now DoneIt,lastDid
-	else
-		debug 0,doing: Setting new task to start from ~!Global,doing-3!~
-		set DoneIt,lastDid,~!Global,doing-3!~
+	debug 1,doing: Setting new task to start from ~!Tmp,changeOver!~
+	set DoneIt,lastDid,~!Tmp,changeOver!~
 	
 	if ~!Global,doing-1!~,!=,,
 		debug 2,doing: Setting who to ~!Global,doing-1!~
@@ -58,5 +74,6 @@ if ~!Tmp,count!~,!=,0,
 
 unset Tmp,count
 unset Tmp,createNew
+unset Tmp,changeOver
 clear
 nested

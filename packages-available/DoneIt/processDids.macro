@@ -13,7 +13,7 @@ loop
 		now Tmp,a
 		timeDiff Result,duration,~!Result,start!~,~!Tmp,a!~
 		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
-		set Result,humaDuration,~!Result,duration!~ (In progress)
+		set Result,fuzzyDuration,~!Result,fuzzyDuration!~ (In progress)
 		unset Tmp,a
 	
 	fullTimeStamp Result,startTimeStamp,~!Result,start!~

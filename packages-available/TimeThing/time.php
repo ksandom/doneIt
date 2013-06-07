@@ -31,6 +31,9 @@ class TimeThing extends Module
 				$this->core->registerFeature($this, array('fuzzyTime'), 'fuzzyTime', 'Put the fuzzyTime (eg "5 hours") into a store variable. --fuzzyTime=Category,variableName,inputTime[,maxUnit] . inputTime is time represented in seconds. maxUnit', array('help'));
 				$this->core->registerFeature($this, array('fullTimeStamp'), 'fullTimeStamp', 'Put a full timestamp (eg "2013-04-17--20:12:10") into a store variable. --fullTimeStamp=Category,variableName,[inputTime][,format] . inputTime is time represented in seconds, and will default to now if omitted. format is defined in http://php.net/manual/en/function.date.php and defaults to ~!Settings,timestampFormat!~.', array('help'));
 				$this->core->registerFeature($this, array('strToTime'), 'strToTime', "Uses PHP's strtotime() function to get a timestamp that is useable by the other functions. --strToTime=Category,variableName,string[,baseTime]. string is something like \"yesterday\" or \"-1 day\".", array('help'));
+				
+				# TODO This is probably better in config. Then we could do some funky things with configuring fuzzy timestamps.
+				$this->core->set('Time', 'fuzzyTimeThreshold', fuzzyTimeThreshold);
 				break;
 			case 'followup':
 				break;
