@@ -2,4 +2,4 @@
 
 registerForEvent Mass,finishGeneral,doneItSave
 
-loadStoreFromData DoneIt
+load loadStoreFromData DoneIt
