@@ -9,3 +9,5 @@ setNested DoneIt,dids,~!Global,openDid-3!~,who,~!Global,openDid-1!~
 
 if ~!Global,openDid-2!~,!=,,
 	setNested DoneIt,dids,~!Global,openDid-3!~,comment,~!Global,openDid-2!~
+
+addDebuggingToDid ~!Global,openDid-3!~,openDid: Opened did.

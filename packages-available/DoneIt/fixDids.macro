@@ -1,5 +1,6 @@
 # Fix any known problems with dids ~ doneit,dids,fix
 
+verbose
 doneItLoad
 
 retrieveResults DoneIt,dids
@@ -10,6 +11,7 @@ unset Tmp,lastProcessedDid
 loop
 	if ~!Tmp,lastProcessedDid!~,!=,,
 		debug 1,fixDids: Fixed did ~!Tmp,lastProcessedDid!~
+		addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Stop is missing. Setting to ~!Result,start!~.
 		setNested DoneIt,dids,~!Tmp,lastProcessedDid!~,stop,~!Result,start!~
 	
 	if ~!Result,start!~,==,,
@@ -28,6 +30,7 @@ loop
 	elseIf ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
 		if ~!Tmp,lastDidID!~,!=,,
 			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Tmp,lastDidID!~. Effectively ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
+			addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Amended stop from ~!DoneIt,dids,~!Tmp,lastDidID!~,stop!~ to ~!Result,start!~
 			setNested DoneIt,dids,~!Tmp,lastDidID!~,stop,~!Result,start!~
 	else
 		debug 2,fixDids: ~!Result,start!~ healthy

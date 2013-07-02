@@ -10,6 +10,10 @@ if ~!Tmp,count!~,<,1,
 		last ~!Global,resume!~
 	
 	first
+else
+	if ~!Global,resume!~,!=,,
+		last ~!Global,resume!~
+		first
 
 
 last

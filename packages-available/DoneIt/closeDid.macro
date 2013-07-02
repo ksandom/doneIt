@@ -4,9 +4,11 @@ debug 1,closeDid: Recieved ~!Global,closeDid-0!~,~!Global,closeDid-1!~
 
 if ~!Global,closeDid-1!~,==,,
 	now Tmp,stop
+	addDebuggingToDid ~!Global,closeDid-0!~,closeDid: Closing did at now (~!Tmp,stop!~).
 else
 	debug 0,closeDid: Will close off the old task at ~!Global,closeDid-1!~
 	set Tmp,stop,~!Global,closeDid-1!~
+	addDebuggingToDid ~!Global,closeDid-0!~,closeDid: Closing did at the manually specified time of ~!Tmp,stop!~.
 
 setNested DoneIt,dids,~!Global,closeDid-0!~,stop,~!Tmp,stop!~
 timeDiff Tmp,duration,~!DoneIt,dids,~!Global,closeDid-0!~,start!~,~!DoneIt,dids,~!Global,closeDid-0!~,stop!~
@@ -20,5 +22,3 @@ debug 0,closeDid: Closed did ~!Global,closeDid-0!~ (~!DoneIt,tasks,~!DoneIt,dids
 unset Tmp,duration
 unset Tmp,fuzzyDuration
 unset Tmp,stop
-
-

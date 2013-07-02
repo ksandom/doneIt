@@ -15,12 +15,15 @@ thereCanBeOnly 1,splitDid,
 		
 		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Global,splitDid-0!~
 		
+		
 		if ~!Result,stop!~,!=,,
 			if ~!Tmp,splitTime!~,>,~!Result,stop!~,
 				set Tmp,passed,false
 				debug 0,splitDid: secondsAfterStartToSplit is greater than the duration of the did.
 		
 		if ~!Tmp,passed!~,==,true,
+			addDebuggingToDid ~!Result,start!~,splitDid: Creating new did ~!Tmp,splitTime!~
+			
 			debug 0,closeDid ~!Result,start!~,~!Tmp,splitTime!~
 			closeDid ~!Result,start!~,~!Tmp,splitTime!~
 			
@@ -40,6 +43,7 @@ thereCanBeOnly 1,splitDid,
 			else
 				set Tmp,comment,~!Result,comment!~
 			
+			addDebuggingToDid ~!Tmp,splitTime!~,splitDid: Created from ~!Result,start!~
 			debug 0,openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
 			openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
 			
@@ -47,6 +51,7 @@ thereCanBeOnly 1,splitDid,
 				# We have a stop position
 				debug 0,closeDid ~!Tmp,splitTime!~,~!Result,stop!~
 				closeDid ~!Tmp,splitTime!~,~!Result,stop!~
+		
 		
 		unset Tmp,passed
 		unset Tmp,splitTime

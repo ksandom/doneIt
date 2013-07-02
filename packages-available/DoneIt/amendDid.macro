@@ -14,15 +14,18 @@ loop
 		debug 2,amendDid: Setting taskName ~!Global,amendDid-0!~ for key ~!Result,id!~
 		debug 2,setNested DoneIt,dids,~!Result,id!~,taskName,~!Global,amendDid-0!~
 		setNested DoneIt,dids,~!Result,id!~,taskName,~!Global,amendDid-0!~
+		addDebuggingToDid ~!Result,id!~,amendDid: Changed taskName to "~!Global,amendDid-0!~"
 	
 	# who
 	if ~!Global,amendDid-1!~,!=,,
 		debug 2,amendDid: Setting who ~!Global,amendDid-1!~
 		setNested DoneIt,dids,~!Result,id!~,who,~!Global,amendDid-1!~
+		addDebuggingToDid ~!Result,id!~,amendDid: Changed who to "~!Global,amendDid-1!~"
 	
 	# comment
 	if ~!Global,amendDid-2!~,!=,,
 		debug 2,amendDid: Setting comment ~!Global,amendDid-2!~
 		setNested DoneIt,dids,~!Result,id!~,comment,~!Global,amendDid-2!~
+		addDebuggingToDid ~!Result,id!~,amendDid: Changed comment to "~!Global,amendDid-2!~"
 
 unset Tmp,count
