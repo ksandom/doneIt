@@ -1,7 +1,7 @@
 # Install all the defaults ~ install,hidden
 #onDefine registerForEvent Install,general,installDoneIt
 
-debug 1,Installing default tasks for DoneIt
+debug 1,DoneIt: Installing default tasks
 addTask misc,-,Misce... I can't spell misc,work,silent
 addTask e,-,E-mail,work,silent
 addTask mtg,-,Misc Meeting,work,silent
@@ -26,10 +26,3 @@ addTask p,-,General personal time,personal,silent
 addTask l,-,Lunch,personal,silent
 addTask bp,-,Break (off the clock),personal,silent
 
-retrieveResults DoneIt,dids
-loop
-	if ~!Result,taskName!~,==,msc,
-	set Result,taskName,misc
-nested
-
-clear
