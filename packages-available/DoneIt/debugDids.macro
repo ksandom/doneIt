@@ -1,0 +1,9 @@
+# Show debugging for dids
+
+
+processDids
+
+loop
+	fullTimeStamp Result,stopTimeStamp,~!Result,stop!~
+
+templateOut debugDid

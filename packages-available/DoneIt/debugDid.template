@@ -1,0 +1,3 @@
+<~~ ~%startTimeStamp%~ (~%start%~) ~!Color,brightBlack!~to ~!Color,default!~~%stopTimeStamp%~ (~%stop%~) = ~%duration%~ => ~!Color,yellow!~~%fuzzyDuration%~~!Color,default!~~!Color,brightBlack!~: ~!Color,green!~ ~%taskName%~~!Color,default!~~!Color,brightBlack!~, ~!Color,default!~~%who%~~!Color,brightBlack!~, ~!Color,green!~~%description%~ ~!Color,blue!~(~%context%~) ~!Color,brightBlack!~- ~%comment%~~!Color,default!~
+
+~>  ~!DoneIt,totalFuzzyTime!~ ~!Color,brightBlack!~(~!DoneIt,totalTime!~ seconds)~!Color,default!~
