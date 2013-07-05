@@ -1,0 +1,7 @@
+# Show only work dids ~ doneit
+
+# TODO debug why ifNoResult is not returning results
+ifNoResult today
+
+processDids
+refine personal
