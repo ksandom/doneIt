@@ -9,6 +9,30 @@ sortOnKey
 unset Tmp,lastProcessedDid
 
 loop
+	getType Tmp,stopType,~!Result,stop!~
+	getType Tmp,keyType,~!Result,key!~
+	
+	# Fix occurances of strings where they shouldn't be
+	if ~!Tmp,stopType!~,==,string,
+		if ~!Tmp,stop!~,!=,,
+			debug 1,fixDids: Found a stop of type string: "~!Result,stop!~". Merging in the details of the next did before deleting the next did.
+			addDebuggingToDid ~!Result,key!~,fixDid: Stop="~!Result,stop!~".
+			# TODO the problem looks like it stems from the behavior of nested code on the Result category.
+			set Result,stop,~!DoneIt,dids,~!Result,stop!~,stop!~
+			
+			# Merge details
+			set Result,comment,MERGED(~!Result,taskName!~:~!Result,comment!~ WITH ~!DoneIt,dids,~!Result,stop!~,taskName!~:~!DoneIt,dids,~!Result,stop!~,comment!~)
+	
+	if ~!Tmp,keyType!~,==,string,
+		if ~!Tmp,stopType!~,==,string,
+			# NOTE This will work because the stopType will be set to the next one, so the next run will simply pick up the next linked did. Potentially a simple while loop would be sufficient to do this. Or simply not progress the lastDidID at the end of the iteration.
+			debug 0,fixDids: Found a did that has both a key(~!Result,key!~) and stop(~!Result,stop!~) of type string. Currently this can't be fixed in a single pass, so --fixDids will need to be run again.
+		
+		debug 1,fixDids: Found a key of type string: "~!Result,key!~". Marking to delete.
+		setNested Tmp,didsToDelete,~!Result,key!~,true
+	
+	
+	# Fix mismatching dids
 	if ~!Tmp,lastProcessedDid!~,!=,,
 		debug 1,fixDids: Fixed did ~!Tmp,lastProcessedDid!~
 		addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Stop is missing. Setting to ~!Result,start!~.
@@ -39,7 +63,13 @@ loop
 	set Tmp,lastDidID,~!Result,key!~
 	set Tmp,lastDidStop,~!Result,stop!~
 
+clear
+retrieveResults Tmp,didsToDelete
+loop
+	debug 1,fixDids: Deleting ~!Result,key!~
+	unset DoneIt,dids,~!Result,key!~
+
 unset Tmp,lastProcessedDid
 unset Tmp,lastDidID
 unset Tmp,lastDidStop
-null
+clear
