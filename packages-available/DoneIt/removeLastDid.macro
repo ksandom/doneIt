@@ -1,0 +1,18 @@
+# Remove the last recorded did. You do not need to search to use this feature. Use with caution. ~ doneit
+
+done
+last
+loop
+	set Tmp,didToDelete,~!Result,key!~
+
+done
+last 2
+first
+loop
+	set Tmp,didToKeep,~!Result,key!~
+
+set DoneIt,lastDid,~!Tmp,didToKeep!~
+unset DoneIt,dids,~!Tmp,didToDelete!~
+
+unset Tmp,didToDelete
+unset Tmp,didToKeep

@@ -1,0 +1,45 @@
+# Remove a single did entry. ~ doneit
+
+# get the details of the did to delete
+thereCanBeOnly 1,There were too many results. Please refine your results with something like --refine or --last.,
+	loop
+		set Tmp,didToDeleteID,~!Result,key!~
+		if ~!Result,stop!~,!=,,
+			set Tmp,didToDeleteStop,~!Result,stop!~
+		else
+			unset Tmp,didToDeleteStop
+	
+	# get the next did details
+	if ~!Tmp,didToDeleteStop!~,!=,,
+		set Tmp,nextDidID,~!Tmp,didToDeleteStop!~
+		set Tmp,nextDidStop,~!DoneIt,dids,~!Tmp,didToDeleteStop!~,stop!~
+	
+	# get the previous did details
+	done
+	requireItem stop,~!Tmp,didToDeleteID!~
+	first
+	loop
+		set Tmp,previousDidID,~!Result,key!~
+		set Tmp,previousDidStop,~!Result,stop!~
+	
+	
+	# modify the previous did. set stop time
+	setNested DoneIt,dids,~!Tmp,nextDidID!~,stop,~!Tmp,didToDeleteStop!~
+	
+	# delete the old did
+	unset DoneIt,dids,~!Tmp,didToDeleteID!~
+	
+	# recalculate time on the previous did
+	done
+	requireItem id,~!Tmp,previousDidID!~
+	
+	# todo cleanup
+	unset Tmp,didToDeleteID
+	unset Tmp,didToDeleteStop
+	unset Tmp,nextDidID
+	unset Tmp,nextDidStop
+	unset Tmp,previousDidID
+	unset Tmp,previousDidStop
+
+# getCategory Tmp
+# nested
