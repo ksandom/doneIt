@@ -24,7 +24,7 @@ thereCanBeOnly 1,There were too many results. Please refine your results with so
 	
 	
 	# modify the previous did. set stop time
-	setNested DoneIt,dids,~!Tmp,nextDidID!~,stop,~!Tmp,didToDeleteStop!~
+	setNested DoneIt,dids,~!Tmp,previousDidID!~,stop,~!Tmp,didToDeleteStop!~
 	
 	# delete the old did
 	unset DoneIt,dids,~!Tmp,didToDeleteID!~
@@ -33,6 +33,10 @@ thereCanBeOnly 1,There were too many results. Please refine your results with so
 	done
 	requireItem id,~!Tmp,previousDidID!~
 	
+	if ~!Verbosity,level!~,>,0,
+		getCategory Tmp
+		nested
+		
 	# todo cleanup
 	unset Tmp,didToDeleteID
 	unset Tmp,didToDeleteStop
@@ -41,5 +45,4 @@ thereCanBeOnly 1,There were too many results. Please refine your results with so
 	unset Tmp,previousDidID
 	unset Tmp,previousDidStop
 
-# getCategory Tmp
-# nested
+
