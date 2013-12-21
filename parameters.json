@@ -1,0 +1,1 @@
+{"name":"doneIt","doneIt":{"name":"doneIt","description":"A tool for tracking time based on a notation I've been using on paper for the last few years.","execName":"doneit","packages":{"SELF":{"sourceRepo":"doneIt","packageRegex":".*"},"BASE":{"sourceRepo":"achel","packageRegex":".*"}}}}
