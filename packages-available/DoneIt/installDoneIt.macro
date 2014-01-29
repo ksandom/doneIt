@@ -14,9 +14,11 @@ addTask e,-,E-mail,work,silent
 addTask dis,-,Recovery time after distraction,work,silent
 addTask mtg,-,Meeting,work,silent
 addTask mtgp,-,Meeting prep,work,silent
+addTask mtgzzz,-,Meeting with no percieved value,work,silent
 addTask lm,-,Working lunch meeting,work,silent
 
 # work - Self improvement
+addTask guts,-,Getting up to speed - http://bit.ly/LaLEJo,work,silent
 addTask trn,-,Training,work,silent
 addTask std,-,Study,work,silent
 
@@ -28,10 +30,12 @@ addTask tc,-,Ticket cleanup,work,silent
 addTask int,-,Interviewing someone,work,silent
 addTask intp,-,Interview preparation,work,silent
 
-# work -User admin
+# work - User admin
 addTask ns,-,New starters,work,silent
 addTask le,-,Leavers,work,silent
 addTask ua,-,User access,work,silent
+addTask hd,-,Help desk misc,work,silent
+addTask dh,-,De-haunting computer - http://xkcd.org/1316/,work,silent
 
 # work - Sysadmin
 addTask a,-,Alert,work,silent
@@ -43,4 +47,5 @@ addTask ep,-,E-mail,personal,silent
 addTask p,-,General personal time,personal,silent
 addTask l,-,Lunch,personal,silent
 addTask bp,-,Break (off the clock),personal,silent
+addTask ada,-,Awesomely dangerous activities - http://funnyhacks.com/tarp,personal,silent
 addTask zzz,-,Sleep,personal,silent
