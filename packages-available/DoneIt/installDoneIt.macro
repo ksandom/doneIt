@@ -8,6 +8,8 @@ addTask b,-,Break (on the clock),work,silent
 addTask misc,-,Miscellaneous,work,silent
 addTask lw,-,Working lunch,work,silent
 addTask doc,-,Documentation,work,silent
+addTask pln,-,Planning,work,silent
+addTask des,-,Design,work,silent
 
 # work - Interaction
 addTask talk,-,General discussion,work,silent
@@ -42,6 +44,11 @@ addTask dh,-,De-haunting computer - http://xkcd.org/1316/,work,silent
 addTask a,-,Alert,work,silent
 addTask o,-,Outage/Incident,work,silent
 addTask li,-,Live issue,work,silent
+addTask dpa,-,Deploying - inhouse app,work,silent
+addTask dps,-,Deploying - system,work,silent
+
+# work - Dev
+addTask rf,-,Refactoring - bit.ly/1k94wVZ,work,silent
 
 # personal - General
 addTask ep,-,E-mail,personal,silent
