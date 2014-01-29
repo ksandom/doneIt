@@ -24,7 +24,7 @@ thereCanBeOnly 1,splitDid,
 		if ~!Tmp,passed!~,==,true,
 			addDebuggingToDid ~!Result,start!~,splitDid: Creating new did ~!Tmp,splitTime!~
 			
-			debug 0,closeDid ~!Result,start!~,~!Tmp,splitTime!~
+			debug 1,closeDid ~!Result,start!~,~!Tmp,splitTime!~
 			closeDid ~!Result,start!~,~!Tmp,splitTime!~
 			
 			# TODO write code to take optional information
@@ -44,12 +44,12 @@ thereCanBeOnly 1,splitDid,
 				set Tmp,comment,~!Result,comment!~
 			
 			addDebuggingToDid ~!Tmp,splitTime!~,splitDid: Created from ~!Result,start!~
-			debug 0,openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
+			debug 1,openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
 			openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
 			
 			if ~!Result,stop!~,!=,,
 				# We have a stop position
-				debug 0,closeDid ~!Tmp,splitTime!~,~!Result,stop!~
+				debug 1,closeDid ~!Tmp,splitTime!~,~!Result,stop!~
 				closeDid ~!Tmp,splitTime!~,~!Result,stop!~
 		
 		

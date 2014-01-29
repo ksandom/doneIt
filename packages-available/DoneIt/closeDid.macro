@@ -6,7 +6,7 @@ if ~!Global,closeDid-1!~,==,,
 	now Tmp,stop
 	addDebuggingToDid ~!Global,closeDid-0!~,closeDid: Closing did at now (~!Tmp,stop!~).
 else
-	debug 0,closeDid: Will close off the old task at ~!Global,closeDid-1!~
+	debug 1,closeDid: Will close off the old task at ~!Global,closeDid-1!~
 	set Tmp,stop,~!Global,closeDid-1!~
 	addDebuggingToDid ~!Global,closeDid-0!~,closeDid: Closing did at the manually specified time of ~!Tmp,stop!~.
 
@@ -17,7 +17,7 @@ setNested DoneIt,dids,~!Global,closeDid-0!~,duration,~!Tmp,duration!~
 fuzzyTime Tmp,fuzzyDuration,~!DoneIt,dids,~!Global,closeDid-0!~,duration!~
 setNested DoneIt,dids,~!Global,closeDid-0!~,fuzzyDuration,~!Tmp,fuzzyDuration!~
 
-debug 0,closeDid: Closed did ~!Global,closeDid-0!~ (~!DoneIt,tasks,~!DoneIt,dids,~!Global,closeDid-0!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
+debug 1,closeDid: Closed did ~!Global,closeDid-0!~ (~!DoneIt,tasks,~!DoneIt,dids,~!Global,closeDid-0!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
 
 unset Tmp,duration
 unset Tmp,fuzzyDuration
