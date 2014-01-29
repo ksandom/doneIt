@@ -4,7 +4,7 @@ A commandline tool for tracking time based on a notation I've been using on pape
 
 ## Installing it
 
-    export extraSrc="git@github.com:ksandom/doneIt.git"; curl https://raw.github.com/ksandom/achel/master/supplimentary/misc/webInstall | bash
+    export extraSrc="https://github.com/ksandom/doneIt.git"; curl https://raw.github.com/ksandom/achel/master/supplimentary/misc/webInstall | bash
 
 ## Using it
 
