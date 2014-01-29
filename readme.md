@@ -30,4 +30,4 @@ A commandline tool for tracking time based on a notation I've been using on pape
     2014-01-29--12:37:28: ==== bp, -, Break (off the clock) (personal) - 3 seconds (In progress) 
       2.8 minutes (170 seconds)
 
-
+[More info](https://github.com/ksandom/doneIt/tree/master/packages-available/DoneIt/docs).
