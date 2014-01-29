@@ -7,6 +7,7 @@ debug 1,DoneIt: Installing default tasks
 addTask b,-,Break (on the clock),work,silent
 addTask misc,-,Miscellaneous,work,silent
 addTask lw,-,Working lunch,work,silent
+addTask doc,-,Documentation,work,silent
 
 # work - Interaction
 addTask talk,-,General discussion,work,silent
