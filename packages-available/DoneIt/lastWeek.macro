@@ -1,4 +1,4 @@
-# List/search the tasks done last week
+# List/search the tasks done last week ~ doneit,user
 #onLoaded setFeatureType lastWeek,generateDids
 
 listDids

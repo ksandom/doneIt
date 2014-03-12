@@ -1,4 +1,4 @@
-# Show only work dids ~ doneit
+# Show only work dids ~ doneit,user
 
 # TODO debug why ifNoResult is not returning results
 ifNoResult today

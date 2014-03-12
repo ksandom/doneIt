@@ -1,4 +1,4 @@
-# List/search the tasks done today
+# List/search the tasks done today ~ donit,user
 #onLoaded setFeatureType today,generateDids
 
 ifNoResult done

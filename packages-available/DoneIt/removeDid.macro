@@ -1,4 +1,4 @@
-# Remove a single did entry. ~ doneit
+# Remove a single did entry. ~ doneit,user,advanced
 
 # get the details of the did to delete
 thereCanBeOnly 1,There were too many results. Please refine your results with something like --refine or --last.,

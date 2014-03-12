@@ -1,4 +1,4 @@
-# Add a task. --addTask=name,[who],description,[context][,update,silent] . IF there is already a task with the same name, the request will be rejected and an error displayed to debug0. However if update is specified in that sitution, the existing entry will be updated to match the request. Alternatively silent can be specified to make it silently ignore the request. If context is not set it will default to "work". ~ doneit,task
+# Add a task. --addTask=name,[who],description,[context][,update,silent] . IF there is already a task with the same name, the request will be rejected and an error displayed to debug0. However if update is specified in that sitution, the existing entry will be updated to match the request. Alternatively silent can be specified to make it silently ignore the request. If context is not set it will default to "work". ~ doneit,task,user
 
 load doneItLoad
 

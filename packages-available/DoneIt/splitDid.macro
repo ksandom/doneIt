@@ -1,4 +1,4 @@
-# Split something you've done into two parts. This is useful if you've forgotten to stop a did at some point. To use it you simply need to find the specific did and then call splitDid like this --splitDid=secondsAfterStartToSplit[,taskName[,who[,comment]]] ~ doneit
+# Split something you've done into two parts. This is useful if you've forgotten to stop a did at some point. To use it you simply need to find the specific did and then call splitDid like this --splitDid=secondsAfterStartToSplit[,taskName[,who[,comment]]] ~ doneit,user
 #onDefine aliasFeature splitDid,split
 
 # TODO Currently this feature does some funky things when working with more than one record. Once this is fixed, first can be removed.

@@ -1,4 +1,4 @@
-# What are you doing right now? And for who? --doing=name[,who[,description[,overrideTimestamp]]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit
+# What are you doing right now? And for who? --doing=name[,who[,description[,overrideTimestamp]]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit,user
 
 # Do we match any tasks
 listTasks ~!Global,doing-0!~
