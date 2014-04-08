@@ -35,6 +35,6 @@ A commandline tool for tracking time based on a notation I've been using on pape
     2014-01-29--12:37:28: ==== bp, -, Break (off the clock) (personal) - 3 seconds (In progress) 
       2.8 minutes (170 seconds)
 
-* `--dbg` is an alias for `--dayBeGone` which is a reference to the movie "The emporer's new groove." It simply puts us into "Break (off the clock)".
+* `--dbg` is an alias for `--dayBeGone` which is a reference to the movie "[The emporer's new groove](https://www.youtube.com/watch?v=Fv-sKP17xTw&feature=youtu.be&t=1m22s)." It simply puts us into "Break (off the clock)".
 
 There's a really good worked example [here](https://github.com/ksandom/doneIt/tree/master/packages-available/DoneIt/docs), which quickly shows you have to do some every day things and how to find out more.
