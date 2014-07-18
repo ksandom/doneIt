@@ -4,7 +4,11 @@
 
 registerForEvent Mass,finishGeneral,howLong
 registerForEvent Template,beforeProcessing-did,processDids
+registerForEvent Template,beforeProcessing-didMore,processDids
+registerForEvent Template,beforeProcessing-didLess,processDids
 registerForEvent Template,beforeOutput-did,cleanUnresolvedResultVars
+registerForEvent Template,beforeOutput-didMore,cleanUnresolvedResultVars
+registerForEvent Template,beforeOutput-didLess,cleanUnresolvedResultVars
 
 doneItLoad
 

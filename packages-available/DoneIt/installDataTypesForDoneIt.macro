@@ -2,4 +2,4 @@
 #onDefine registerForEvent Install,dataTypes,installDataTypesForDoneIt
 
 createDataType task,task,,,,Something you can do.
-createDataType did,did,,,,A task you have done or worked towards.
+createDataType did,did,didMore,didLess,,A task you have done or worked towards.

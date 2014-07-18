@@ -1,0 +1,33 @@
+# Summarise the list of dids into a list that is easier to read in a standup meeting. ~ doneit,summary,standup
+#onDefine aliasFeature whatDidIDo,wudido
+
+unsetCategory WhatDidIDo
+
+positiveCRC taskName,taskNameHash
+positiveCRC comment,commentHash
+positiveCRC who,whoHash
+
+loop
+	set Tmp,didKey,~!Result,taskNameHash!~~!Result,commentHash!~~!Result,whoHash!~
+	
+	if ~!WhatDidIDo,~!Tmp,didKey!~,taskName!~,==,,
+		# We don't have the did yet. Let's put it there.
+		setNested WhatDidIDo,~!Tmp,didKey!~,taskName,~!Result,taskName!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,comment,~!Result,comment!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,who,~!Result,who!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,duration,~!Result,duration!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,start,~!Result,start!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,stop,~!Result,stop!~
+	else
+		# We have the did already. Let's add to it.
+		basicMaths Tmp,duration,~!WhatDidIDo,~!Tmp,didKey!~,duration!~,+,~!Result,duration!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,duration,~!Tmp,duration!~
+		unset Tmp,duration
+		
+		basicMaths Tmp,stop,~!WhatDidIDo,~!Tmp,didKey!~,start!~,+,~!WhatDidIDo,~!Tmp,didKey!~,duration!~
+		setNested WhatDidIDo,~!Tmp,didKey!~,stop,~!Tmp,stop!~
+		unset Tmp,stop
+
+#retrieveResults WhatDidIDo
+getCategory WhatDidIDo
+unsetCategory WhatDidIDo
