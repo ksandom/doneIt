@@ -31,3 +31,10 @@ loop
 #retrieveResults WhatDidIDo
 getCategory WhatDidIDo
 unsetCategory WhatDidIDo
+
+
+templateOut whatDidIDo
+registerForEvent Template,beforeProcessing-whatDidIDo,processDids
+registerForEvent Template,beforeOutput-whatDidIDo,cleanUnresolvedResultVars
+
+sortOnItemKey who,taskName,comment
