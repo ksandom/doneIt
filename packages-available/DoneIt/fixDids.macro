@@ -4,7 +4,7 @@ verbose
 doneItLoad
 
 retrieveResults DoneIt,dids
-sortOnKey
+sortDids
 
 unset Tmp,lastProcessedDid
 

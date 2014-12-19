@@ -1,0 +1,6 @@
+# Sort the dids. --sortDids ~ doneIt,sort
+
+doneItLoad
+retrieveResults DoneIt,dids
+sortOnItemKey start
+stashResults DoneIt,dids

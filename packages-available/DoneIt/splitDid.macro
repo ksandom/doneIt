@@ -60,9 +60,7 @@ thereCanBeOnly 1,splitDid,
 		unset Tmp,comment
 
 	stashResults Tmp,dids
-	retrieveResults DoneIt,dids
-	sortOnKey
-	stashResults DoneIt,dids
+	sortDids
 	retrieveResults Tmp,dids
 
 	unset Tmp,dids
