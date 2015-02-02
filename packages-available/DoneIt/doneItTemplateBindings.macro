@@ -1,0 +1,14 @@
+# Bindings for doneIt templates. ~ bindings,hidden
+
+#onDefine registerForEvent Mass,finishGeneral,howLong
+#onDefine registerForEvent Template,beforeProcessing-did,processDids
+#onDefine registerForEvent Template,beforeProcessing-didMore,processDids
+#onDefine registerForEvent Template,beforeProcessing-didLess,processDids
+#onDefine registerForEvent Template,beforeProcessing-didSimple,processDids
+
+#onDefine registerForEvent Template,beforeOutput-did,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-didMore,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-didLess,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-didSimple,cleanUnresolvedResultVars
+
+pass

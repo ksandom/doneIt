@@ -1,0 +1,4 @@
+<~~ ~%startTimeStamp%~ ~!Color,~%whoColor%~!~==~!Color,~%summaryColor%~!~==~!Color,default!~ ~!Color,blue!~(~%context%~) ~!Color,default!~ ~!Color,default!~~%who%~  ~!Color,green!~~%taskName%~ (~%description%~)  ~!Color,default!~ ~%comment%~  ~!Color,yellow!~~%fuzzyDuration%~~!Color,default!~
+
+
+~>

@@ -5,10 +5,25 @@ doneItLoad
 
 retrieveResults DoneIt,dids
 sortDids
+keyOnPreserve id
 
 unset Tmp,lastProcessedDid
 
+
+set Local,showDid,
+	isolate
+		# TODO test this.
+		getCategory Result
+		stashResults Tmp,fixDids
+		setNested ["Tmp","fixDids2","1",~!Tmp,fixDids!~]
+		retrieveResults Tmp,fixDids2
+		templateOut didSimple
+		outNow
+		unset Tmp,fixDids
+		unset Tmp,fixDids2
+
 loop
+	displayProgress ~!Local,progress!~
 	getType Tmp,stopType,~!Result,stop!~
 	getType Tmp,keyType,~!Result,key!~
 	
@@ -22,6 +37,8 @@ loop
 			
 			# Merge details
 			set Result,comment,MERGED(~!Result,taskName!~:~!Result,comment!~ WITH ~!DoneIt,dids,~!Result,stop!~,taskName!~:~!DoneIt,dids,~!Result,stop!~,comment!~)
+			
+			callFeature ~!Local,showDid!~
 	
 	if ~!Tmp,keyType!~,==,string,
 		if ~!Tmp,stopType!~,==,string,
@@ -37,6 +54,7 @@ loop
 		debug 1,fixDids: Fixed did ~!Tmp,lastProcessedDid!~
 		addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Stop is missing. Setting to ~!Result,start!~.
 		setNested DoneIt,dids,~!Tmp,lastProcessedDid!~,stop,~!Result,start!~
+		callFeature ~!Local,showDid!~
 	
 	if ~!Result,start!~,==,,
 		getCategory Result
@@ -45,23 +63,29 @@ loop
 		
 		if ~!Result,key!~,!=,,
 			debug 1,fixDids: Found a did with no start, but has key ~!Result,key!~. Removing it.
+			callFeature ~!Local,showDid!~
 			unset DoneIt,dids,~!Result,key!~
 		else
-			debug 1,fixDids: Found a did with no key. TODO Check if this will work. It probably won't! mass --doneItLoad --unset=DoneIt,dids,
+			debug 1,fixDids: Found a did with no key. TODO Check if this will work. It probably won't! doneit --doneItLoad --unset=DoneIt,dids,
+			callFeature ~!Local,showDid!~
 	elseIf ~!Result,stop!~,==,,
 		debug 2,fixDids: Going to fix did "~!Result,key!~" "~!Result,key!~"
 		set Tmp,lastProcessedDid,~!Result,key!~
 	elseIf ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
 		if ~!Tmp,lastDidID!~,!=,,
 			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Tmp,lastDidID!~. Effectively ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
+			callFeature ~!Local,showDid!~
 			addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Amended stop from ~!DoneIt,dids,~!Tmp,lastDidID!~,stop!~ to ~!Result,start!~
 			setNested DoneIt,dids,~!Tmp,lastDidID!~,stop,~!Result,start!~
+
 	else
 		debug 2,fixDids: ~!Result,start!~ healthy
 		unset Tmp,lastProcessedDid
 	
 	set Tmp,lastDidID,~!Result,key!~
 	set Tmp,lastDidStop,~!Result,stop!~
+
+finishProgress
 
 clear
 retrieveResults Tmp,didsToDelete
