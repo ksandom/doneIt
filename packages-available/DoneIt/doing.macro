@@ -20,6 +20,9 @@ if ~!Tmp,count!~,==,0,
 			listTasks ~!Global,doing-0!~
 			countToVar Tmp,count
 			set Tmp,createNew,true
+	
+	clear
+	nested
 
 if ~!Tmp,count!~,!=,0,
 	# We have a task to do, let's do it.
@@ -70,10 +73,15 @@ if ~!Tmp,count!~,!=,0,
 		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,~!Global,doing-2!~,~!DoneIt,lastDid!~
 	else
 		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,,~!DoneIt,lastDid!~
+	
+	pass isolate
+		listDids
+		last
+		templateOut didOneLine
+		outNow
 
 
 unset Tmp,count
 unset Tmp,createNew
 unset Tmp,changeOver
-clear
-nested
+

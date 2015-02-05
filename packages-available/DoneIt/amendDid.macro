@@ -1,7 +1,7 @@
 # Amend the details of something you've done. --amendDid=[taskName],[who],[comment] ~ doneit,user
 #onDefine aliasFeature amendDid,amend
 
-load doneItLoad
+doneItLoad
 
 countToVar Tmp,count
 if ~!Tmp,count!~,<,1,
@@ -9,6 +9,13 @@ if ~!Tmp,count!~,<,1,
 	last
 
 loop
+	# Display before
+	isolate
+		listDids
+		requireItem id,~!Result,id!~
+		templateOut didOneLine
+		outNow
+	
 	# taskName
 	if ~!Global,amendDid-0!~,!=,,
 		debug 2,amendDid: Setting taskName ~!Global,amendDid-0!~ for key ~!Result,id!~
@@ -27,5 +34,17 @@ loop
 		debug 2,amendDid: Setting comment ~!Global,amendDid-2!~
 		setNested DoneIt,dids,~!Result,id!~,comment,~!Global,amendDid-2!~
 		addDebuggingToDid ~!Result,id!~,amendDid: Changed comment to "~!Global,amendDid-2!~"
+	
+	# Display after
+	isolate
+		# pass
+		listDids
+		requireItem id,~!Result,id!~
+		templateOut didOneLine
+		outNow
+		
+		null
+
+
 
 unset Tmp,count
