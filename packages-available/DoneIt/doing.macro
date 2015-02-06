@@ -68,17 +68,19 @@ if ~!Tmp,count!~,!=,0,
 	
 	# TODO id->ID
 	
-	# TODO finish this
 	if ~!Tmp,createNew!~,==,false,
 		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,~!Global,doing-2!~,~!DoneIt,lastDid!~
 	else
 		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,,~!DoneIt,lastDid!~
 	
-	pass isolate
+	
+	# Output what we have just added
+	isolate
 		listDids
-		last
-		templateOut didOneLine
+		last 2
+		templateOut didNoTotal
 		outNow
+		null
 
 
 unset Tmp,count
