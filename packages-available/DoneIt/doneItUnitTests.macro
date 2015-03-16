@@ -1,0 +1,83 @@
+# Unit tests for doneIt ~ hidden,unitTests,doneit,doneIt
+
+# TODO preserve existing dids
+
+set Me,correctData,
+	unset DoneItTests,dids
+	
+	setNested DoneItTests,dids,1,start,1
+	setNested DoneItTests,dids,1,stop,3
+	setNested DoneItTests,dids,1,comment,First did
+	
+	setNested DoneItTests,dids,3,start,3
+	setNested DoneItTests,dids,3,stop,7
+	
+	setNested DoneItTests,dids,7,start,7
+	setNested DoneItTests,dids,7,stop,9
+	
+	# A did in progress
+	setNested DoneItTests,dids,9,start,9
+	
+	retrieveResults DoneItTests,dids
+
+set Me,overLappingData,
+	unset DoneItTests,dids
+	
+	setNested DoneItTests,dids,1,start,1
+	setNested DoneItTests,dids,1,stop,3
+	setNested DoneItTests,dids,1,comment,First did
+	
+	setNested DoneItTests,dids,3,start,3
+	setNested DoneItTests,dids,3,stop,7
+	
+	# This one begins before the last one ended
+	setNested DoneItTests,dids,5,start,5
+	setNested DoneItTests,dids,5,stop,9
+	
+	# A did in progress
+	setNested DoneItTests,dids,9,start,9
+	
+	retrieveResults DoneItTests,dids
+
+
+
+
+
+
+defineTest Fixdids - happy day,
+	# Make sure previous runs don't influence this one.
+	unset DoneItTests,lastFixProcessed
+	unset DoneItTests,lastFixProblems
+	unset DoneItTests,lastFixRepairs
+	
+	# Get the data and run the repair
+	clear
+	callFeature ~!Me,correctData!~
+	fixDidsInternal DoneItTests
+	
+	# Expect some results
+	expect 4,~!DoneItTests,lastFixProcessed!~,processed
+	expect 0,~!DoneItTests,lastFixProblems!~,problems
+	expect 0,~!DoneItTests,lastFixRepairs!~,repairs
+
+defineTest Fixdids - overlapping,
+	# Make sure previous runs don't influence this one.
+	unset DoneItTests,lastFixProcessed
+	unset DoneItTests,lastFixProblems
+	unset DoneItTests,lastFixRepairs
+	
+	# Get the data and run the repair
+	clear
+	callFeature ~!Me,overLappingData!~
+	fixDidsInternal DoneItTests
+	
+	# Expect some results
+	expect 4,~!DoneItTests,lastFixProcessed!~,processed
+	expect 2,~!DoneItTests,lastFixProblems!~,problems
+	expect 2,~!DoneItTests,lastFixRepairs!~,repairs
+	
+	expect 5,~!DoneItTests,dids,3,stop!~,did 5 stop value
+
+
+
+

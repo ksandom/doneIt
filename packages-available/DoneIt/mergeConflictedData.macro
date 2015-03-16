@@ -1,0 +1,53 @@
+# When doneIt has been used on multiple computers with insufficient synching, conflicting data can result. Dropbox handels this with dated copies of the files. This feature is for bringing all those files back together. --mergeConflictedData=pathContainingAllTheJsonFiles . A common way to call it is doneit --mergeConflictedData=`pwd` when you are sitting in the data directory.
+
+parameters dataDir
+
+doneItLoad
+
+# Get together everything we need to do the merge
+set Local,primaryFileName,DoneIt.data.json
+getFileTree ~!Local,dataDir!~,true
+requireItem type,file
+requireItem path,.*json$
+
+isolate
+	requireItem path,~!Local,primaryFileName!~$
+	countToVar Local,doWeHaveThePrimaryFile
+
+excludeItem path,~!Local,primaryFileName!~$
+countToVar Local,numberOtherResults
+
+
+# Final sanity checks and do the work
+if ~!Local,doWeHaveThePrimaryFile!~,==,1,
+	if ~!Local,numberOtherResults!~,>,0,
+		loop
+			displayProgress ~!Local,progress!~
+			
+			merge
+				dataSet
+					retrieveResults DoneIt,dids
+					countToVar Local,primary
+				dataSet TakeFirst,
+					clear
+					loadStoreFromFile ~!Result,path!~,DoneItMerge
+					retrieveResults DoneItMerge,dids
+			
+			stashResults DoneIt,dids
+		
+		unsetCategory DoneItMerge
+		finishProgress
+		
+		# Now go and clean up the most recent stuff
+		clear
+		done
+		last 300
+		countToVar Local,few
+		debug 0,we have ~!Local,few!~
+		fixDids
+		
+		# debug 0,Now is a good time to verify that everything merged correctly. If it did, you may now delete the unnecessary json files. After that it would be worth running doneIt --fixDids to make sure the start-stop times line up correctly.
+	else
+		debug 0,Could not find any suitable files to merge with "~!Local,primaryFileName!~".
+else
+	debug 0,Could not find primary file "~!Local,primaryFileName!~".

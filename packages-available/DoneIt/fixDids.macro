@@ -1,99 +1,17 @@
 # Fix any known problems with dids ~ doneit,dids,fix
 
 verbose
-doneItLoad
 
-retrieveResults DoneIt,dids
-sortDids
-keyOnPreserve id
+# Get data if we don't have it already.
+countToVar Local,results
+if ~!Local,results!~,<,2,
+	debug 1,We don't have any dids to work with. Took all dids.
+	doneItLoad
+	retrieveResults DoneIt,dids
+else
+	debug 1,There were dids to work with in the result set.
 
-unset Tmp,lastProcessedDid
+# Do the work
+fixDidsInternal DoneIt
 
-
-set Local,showDid,
-	isolate
-		# TODO test this.
-		getCategory Result
-		stashResults Tmp,fixDids
-		setNested ["Tmp","fixDids2","1",~!Tmp,fixDids!~]
-		retrieveResults Tmp,fixDids2
-		templateOut didSimple
-		outNow
-		unset Tmp,fixDids
-		unset Tmp,fixDids2
-
-loop
-	displayProgress ~!Local,progress!~
-	getType Tmp,stopType,~!Result,stop!~
-	getType Tmp,keyType,~!Result,key!~
-	
-	# Fix occurances of strings where they shouldn't be
-	if ~!Tmp,stopType!~,==,string,
-		if ~!Tmp,stop!~,!=,,
-			debug 1,fixDids: Found a stop of type string: "~!Result,stop!~". Merging in the details of the next did before deleting the next did.
-			addDebuggingToDid ~!Result,key!~,fixDid: Stop="~!Result,stop!~".
-			# TODO the problem looks like it stems from the behavior of nested code on the Result category.
-			set Result,stop,~!DoneIt,dids,~!Result,stop!~,stop!~
-			
-			# Merge details
-			set Result,comment,MERGED(~!Result,taskName!~:~!Result,comment!~ WITH ~!DoneIt,dids,~!Result,stop!~,taskName!~:~!DoneIt,dids,~!Result,stop!~,comment!~)
-			
-			callFeature ~!Local,showDid!~
-	
-	if ~!Tmp,keyType!~,==,string,
-		if ~!Tmp,stopType!~,==,string,
-			# NOTE This will work because the stopType will be set to the next one, so the next run will simply pick up the next linked did. Potentially a simple while loop would be sufficient to do this. Or simply not progress the lastDidID at the end of the iteration.
-			debug 0,fixDids: Found a did that has both a key(~!Result,key!~) and stop(~!Result,stop!~) of type string. Currently this can't be fixed in a single pass, so --fixDids will need to be run again.
-		
-		debug 1,fixDids: Found a key of type string: "~!Result,key!~". Marking to delete.
-		setNested Tmp,didsToDelete,~!Result,key!~,true
-	
-	
-	# Fix mismatching dids
-	if ~!Tmp,lastProcessedDid!~,!=,,
-		debug 1,fixDids: Fixed did ~!Tmp,lastProcessedDid!~
-		addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Stop is missing. Setting to ~!Result,start!~.
-		setNested DoneIt,dids,~!Tmp,lastProcessedDid!~,stop,~!Result,start!~
-		callFeature ~!Local,showDid!~
-	
-	if ~!Result,start!~,==,,
-		getCategory Result
-		nested
-		outNow
-		
-		if ~!Result,key!~,!=,,
-			debug 1,fixDids: Found a did with no start, but has key ~!Result,key!~. Removing it.
-			callFeature ~!Local,showDid!~
-			unset DoneIt,dids,~!Result,key!~
-		else
-			debug 1,fixDids: Found a did with no key. TODO Check if this will work. It probably won't! doneit --doneItLoad --unset=DoneIt,dids,
-			callFeature ~!Local,showDid!~
-	elseIf ~!Result,stop!~,==,,
-		debug 2,fixDids: Going to fix did "~!Result,key!~" "~!Result,key!~"
-		set Tmp,lastProcessedDid,~!Result,key!~
-	elseIf ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
-		if ~!Tmp,lastDidID!~,!=,,
-			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Tmp,lastDidID!~. Effectively ~!Result,start!~,!=,~!Tmp,lastDidStop!~,
-			callFeature ~!Local,showDid!~
-			addDebuggingToDid ~!Tmp,lastDidID!~,fixDid: Amended stop from ~!DoneIt,dids,~!Tmp,lastDidID!~,stop!~ to ~!Result,start!~
-			setNested DoneIt,dids,~!Tmp,lastDidID!~,stop,~!Result,start!~
-
-	else
-		debug 2,fixDids: ~!Result,start!~ healthy
-		unset Tmp,lastProcessedDid
-	
-	set Tmp,lastDidID,~!Result,key!~
-	set Tmp,lastDidStop,~!Result,stop!~
-
-finishProgress
-
-clear
-retrieveResults Tmp,didsToDelete
-loop
-	debug 1,fixDids: Deleting ~!Result,key!~
-	unset DoneIt,dids,~!Result,key!~
-
-unset Tmp,lastProcessedDid
-unset Tmp,lastDidID
-unset Tmp,lastDidStop
-clear
+lessVerbose

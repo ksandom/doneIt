@@ -1,0 +1,104 @@
+# The part that does all the work for --fixDids . --fixDidsInternal=Category where Category is the DoneIt primary store. This will usually be  ~ doneit,dids,fix,hidden
+parameters Category
+
+sortOnItemKey start
+keyOnPreserve start
+
+set Local,showOriginalDid,
+	isolate
+		# TODO test this.
+		getCategory Result
+		stashResults Tmp,fixDids
+		setNested ["Tmp","fixDids2","1",~!Tmp,fixDids!~]
+		retrieveResults Tmp,fixDids2
+		templateOut didSimple
+		outNow
+		unset Tmp,fixDids
+		unset Tmp,fixDids2
+
+set Local,showDidFromDB,
+	parameters did
+	isolate
+		listDids
+		chooseSubResult ~!Local,did!~
+
+set Local,fixedSomething,
+	basicMaths ~!Local,Category!~,lastFixRepairs,~!~!Local,Category!~,lastFixRepairs!~,+,1
+	basicMaths ~!Local,Category!~,lastFixProblems,~!~!Local,Category!~,lastFixProblems!~,+,1
+
+set Local,foundProblemButDidntFixit,
+	basicMaths ~!Local,Category!~,lastFixProblems,~!~!Local,Category!~,lastFixProblems!~,+,1
+	
+set Local,incrementProcessed,
+	basicMaths ~!Local,Category!~,lastFixProcessed,~!~!Local,Category!~,lastFixProcessed!~,+,1
+
+set ~!Local,Category!~,lastFixProcessed,0
+set ~!Local,Category!~,lastFixProblems,0
+set ~!Local,Category!~,lastFixRepairs,0
+loop
+	callFeature ~!Local,incrementProcessed!~
+	displayProgress ~!Local,progress!~
+	getType Tmp,stopType,~!Result,stop!~
+	getType Tmp,keyType,~!Result,key!~
+	
+	# Fix occurances of strings where they shouldn't be
+	if ~!Tmp,stopType!~,==,string,
+		if ~!Tmp,stop!~,!=,,
+			debug 1,fixDids: Found a stop of type string: "~!Result,stop!~". Merging in the details of the next did before deleting the next did.
+			addDebuggingToDid ~!Result,key!~,fixDid: Stop="~!Result,stop!~".
+			# TODO Make this a direct reference
+			setNested ~!Local,category!~,dids,~!Result,key!~,stop,~!~!Local,Category!~,dids,~!Result,stop!~,stop!~
+			
+			# Merge details
+			# TODO Make this a direct reference
+			setNested ~!Local,category!~,dids,~!Result,key!~,comment,MERGED(~!Result,taskName!~:~!Result,comment!~ WITH ~!~!Local,Category!~,dids,~!Result,stop!~,taskName!~:~!~!Local,Category!~,dids,~!Result,stop!~,comment!~)
+			
+			callFeature ~!Local,showOriginalDid!~
+			callFeature ~!Local,fixedSomething!~
+	
+	if ~!Tmp,keyType!~,==,string,
+		if ~!Tmp,stopType!~,==,string,
+			# NOTE This will work because the stopType will be set to the next one, so the next run will simply pick up the next linked did. Potentially a simple while loop would be sufficient to do this. Or simply not progress the lastDidID at the end of the iteration.
+			debug 0,fixDids: Found a did that has both a key(~!Result,key!~) and stop(~!Result,stop!~) of type string. Currently this can't be fixed in a single pass, so --fixDids will need to be run again.
+		
+		debug 1,fixDids: Found a key of type string: "~!Result,key!~". Marking to delete.
+		setNested Tmp,didsToDelete,~!Result,key!~,true
+	
+	# Fix mis-matches
+	if ~!Result,start!~,==,,
+		if ~!Result,key!~,!=,,
+			debug 1,fixDids: Found a did with no start, but has key ~!Result,key!~. Removing it.
+			callFeature ~!Local,showOriginalDid!~
+			unset ~!Local,Category!~,dids,~!Result,key!~
+			callFeature ~!Local,fixedSomething!~
+		else
+			debug 1,fixDids: Found a did with no key. TODO Check if this will work. It probably won't! doneit --doneItLoad --unset=~!Local,Category!~,dids,
+			callFeature ~!Local,showOriginalDid!~
+			callFeature ~!Local,foundProblemButDidntFixit!~
+	elseIf ~!Result,stop!~,==,,
+		if ~!Result,nextKey!~,!=,,
+			debug 1,fixDids: "~!Result,key!~" Has no stop value, but there is a next did "~!Result,nextKey!~"
+			addDebuggingToDid ~!Result,key!~,fixDid: Stop is missing. Setting to ~!Result,start!~. Key=~!Result,key!~ nextKey=~!Result,nextKey!~
+			setNested ~!Local,Category!~,dids,~!Result,key!~,stop,~!~!Local,Category!~,dids,~!Result,nextKey!~,start!~
+			callFeature ~!Local,showOriginalDid!~
+			callFeature ~!Local,fixedSomething!~
+	elseIf ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~,
+		if ~!Result,previousKey!~,!=,,
+			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Result,previousKey!~. Effectively ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~,
+			callFeature ~!Local,showOriginalDid!~
+			addDebuggingToDid ~!Result,previousKey!~,fixDid: Amended stop from ~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~ to ~!Result,start!~
+			setNested ~!Local,Category!~,dids,~!Result,previousKey!~,stop,~!Result,start!~
+			callFeature ~!Local,fixedSomething!~
+
+finishProgress
+
+clear
+retrieveResults Tmp,didsToDelete
+loop
+	if ~!Result,line!~,==,true,
+		debug 1,fixDids: Deleting ~!Result,key!~
+		unset ~!Local,Category!~,dids,~!Result,key!~
+		callFeature ~!Local,fixedSomething!~
+
+clear
+
