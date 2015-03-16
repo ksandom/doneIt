@@ -5,6 +5,9 @@ sortOnItemKey start
 keyOnPreserve start
 
 set Local,showOriginalDid,
+	set Local,tmpPreviousKey,~!Result,previousKey!~
+	set Local,tmpNextKey,~!Result,nextKey!~
+	
 	isolate
 		# TODO test this.
 		getCategory Result
@@ -15,6 +18,10 @@ set Local,showOriginalDid,
 		outNow
 		unset Tmp,fixDids
 		unset Tmp,fixDids2
+		
+	set Result,previousKey,~!Local,tmpPreviousKey!~
+	set Result,nextKey,~!Local,tmpNextKey!~
+
 
 set Local,showDidFromDB,
 	parameters did
@@ -84,10 +91,14 @@ loop
 			callFeature ~!Local,fixedSomething!~
 	elseIf ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~,
 		if ~!Result,previousKey!~,!=,,
-			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Result,previousKey!~. Effectively ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~,
-			callFeature ~!Local,showOriginalDid!~
+			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Result,previousKey!~. Effectively ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~, previousKey=~!Result,previousKey!~
 			addDebuggingToDid ~!Result,previousKey!~,fixDid: Amended stop from ~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~ to ~!Result,start!~
+			
+			callFeature ~!Local,showOriginalDid!~
+			
+			debug 1,setNested ~!Local,Category!~,dids,~!Result,previousKey!~,stop,~!Result,start!~
 			setNested ~!Local,Category!~,dids,~!Result,previousKey!~,stop,~!Result,start!~
+			
 			callFeature ~!Local,fixedSomething!~
 
 finishProgress
