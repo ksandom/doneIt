@@ -1,6 +1,7 @@
 # Fix any known problems with dids ~ doneit,dids,fix
 
 verbose
+set Me,showDidDebug,true
 
 # Get data if we don't have it already.
 countToVar Local,results

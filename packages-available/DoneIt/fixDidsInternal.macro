@@ -5,29 +5,31 @@ sortOnItemKey start
 keyOnPreserve start
 
 set Local,showOriginalDid,
-	set Local,tmpPreviousKey,~!Result,previousKey!~
-	set Local,tmpNextKey,~!Result,nextKey!~
-	
-	isolate
-		# TODO test this.
-		getCategory Result
-		stashResults Tmp,fixDids
-		setNested ["Tmp","fixDids2","1",~!Tmp,fixDids!~]
-		retrieveResults Tmp,fixDids2
-		templateOut didSimple
-		outNow
-		unset Tmp,fixDids
-		unset Tmp,fixDids2
+	if ~!Me,showDidDebug!~,==,true,
+		set Local,tmpPreviousKey,~!Result,previousKey!~
+		set Local,tmpNextKey,~!Result,nextKey!~
 		
-	set Result,previousKey,~!Local,tmpPreviousKey!~
-	set Result,nextKey,~!Local,tmpNextKey!~
+		isolate
+			# TODO test this.
+			getCategory Result
+			stashResults Tmp,fixDids
+			setNested ["Tmp","fixDids2","1",~!Tmp,fixDids!~]
+			retrieveResults Tmp,fixDids2
+			templateOut didSimple
+			outNow
+			unset Tmp,fixDids
+			unset Tmp,fixDids2
+			
+		set Result,previousKey,~!Local,tmpPreviousKey!~
+		set Result,nextKey,~!Local,tmpNextKey!~
 
 
 set Local,showDidFromDB,
-	parameters did
-	isolate
-		listDids
-		chooseSubResult ~!Local,did!~
+	if ~!Me,showDidDebug!~,==,true,
+		parameters did
+		isolate
+			listDids
+			chooseSubResult ~!Local,did!~
 
 set Local,fixedSomething,
 	basicMaths ~!Local,Category!~,lastFixRepairs,~!~!Local,Category!~,lastFixRepairs!~,+,1
