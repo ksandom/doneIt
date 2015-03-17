@@ -39,6 +39,44 @@ set Me,overLappingData,
 	
 	retrieveResults DoneItTests,dids
 
+set Me,missingStop,
+	unset DoneItTests,dids
+	
+	setNested DoneItTests,dids,1,start,1
+	setNested DoneItTests,dids,1,stop,3
+	setNested DoneItTests,dids,1,comment,First did
+	
+	setNested DoneItTests,dids,3,start,3
+	
+	setNested DoneItTests,dids,7,start,7
+	setNested DoneItTests,dids,7,stop,9
+	
+	# A did in progress
+	setNested DoneItTests,dids,9,start,9
+	
+	retrieveResults DoneItTests,dids
+
+set Me,dirtyEntry,
+	unset DoneItTests,dids
+	
+	setNested DoneItTests,dids,1,start,1
+	setNested DoneItTests,dids,1,stop,3
+	setNested DoneItTests,dids,1,comment,First did
+	
+	setNested DoneItTests,dids,3,start,3
+	setNested DoneItTests,dids,3,stop,7
+	
+	setNested DoneItTests,dids,toilet,humor,used
+	
+	setNested DoneItTests,dids,7,start,7
+	setNested DoneItTests,dids,7,stop,9
+	
+	# A did in progress
+	setNested DoneItTests,dids,9,start,9
+	
+	retrieveResults DoneItTests,dids
+
+
 
 
 
@@ -72,16 +110,53 @@ defineTest Fixdids - overlapping,
 	fixDidsInternal DoneItTests
 	
 	retrieveResults DoneItTests,dids
-	printr
-	outNow
 	
 	# Expect some results
 	expect 4,~!DoneItTests,lastFixProcessed!~,processed
 	expect 1,~!DoneItTests,lastFixProblems!~,problems
 	expect 1,~!DoneItTests,lastFixRepairs!~,repairs
 	
-	expect 5,~!DoneItTests,dids,3,stop!~,did 5 stop value
+	expect 5,~!DoneItTests,dids,3,stop!~,did 3 stop value
+
+defineTest Fixdids - missing stop,
+	# Make sure previous runs don't influence this one.
+	unset DoneItTests,lastFixProcessed
+	unset DoneItTests,lastFixProblems
+	unset DoneItTests,lastFixRepairs
 	
+	# Get the data and run the repair
+	clear
+	callFeature ~!Me,missingStop!~
+	fixDidsInternal DoneItTests
+	
+	retrieveResults DoneItTests,dids
+	
+	# Expect some results
+	expect 4,~!DoneItTests,lastFixProcessed!~,processed
+	expect 1,~!DoneItTests,lastFixProblems!~,problems
+	expect 1,~!DoneItTests,lastFixRepairs!~,repairs
+	
+	expect 7,~!DoneItTests,dids,3,stop!~
+
+defineTest Fixdids - dirty entry that should be removed,
+	# Make sure previous runs don't influence this one.
+	unset DoneItTests,lastFixProcessed
+	unset DoneItTests,lastFixProblems
+	unset DoneItTests,lastFixRepairs
+	
+	# Get the data and run the repair
+	clear
+	callFeature ~!Me,missingStop!~
+	fixDidsInternal DoneItTests
+	
+	retrieveResults DoneItTests,dids
+	
+	# Expect some results
+	expect 4,~!DoneItTests,lastFixProcessed!~,processed
+	expect 1,~!DoneItTests,lastFixProblems!~,problems
+	expect 1,~!DoneItTests,lastFixRepairs!~,repairs
+	
+	expect ,~!DoneItTests,dids,toilet,humor!~
 
 
 
