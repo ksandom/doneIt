@@ -9,6 +9,8 @@ if ~!Local,results!~,<,2,
 	debug 1,We don't have any dids to work with. Took all dids.
 	doneItLoad
 	retrieveResults DoneIt,dids
+	keyOnPreserve start
+	stashResults DoneIt,dids
 else
 	debug 1,There were dids to work with in the result set.
 

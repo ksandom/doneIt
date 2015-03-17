@@ -93,7 +93,8 @@ loop
 			callFeature ~!Local,fixedSomething!~
 	elseIf ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~,
 		if ~!Result,previousKey!~,!=,,
-			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Result,previousKey!~. Effectively ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~, previousKey=~!Result,previousKey!~
+			debug 1,fixDids: Start time of did ~!Result,key!~ does not aline with the stop time of did ~!Result,previousKey!~. Effectively ~!Result,start!~,!=,~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~, previousKey=~!Result,previousKey!~ stopKey=~!Local,Category!~,dids,~!Result,previousKey!~ stopData=~!stopKey=~!Local,Category!~,dids,~!Result,previousKey!~!~
+			
 			addDebuggingToDid ~!Result,previousKey!~,fixDid: Amended stop from ~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~ to ~!Result,start!~
 			
 			callFeature ~!Local,showOriginalDid!~
