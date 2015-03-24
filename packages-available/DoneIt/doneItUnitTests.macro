@@ -1,6 +1,7 @@
 # Unit tests for doneIt ~ hidden,unitTests,doneit,doneIt
 
-# TODO preserve existing dids
+set Me,showDidDebug,true
+
 
 set Me,correctData,
 	unset DoneItTests,dids

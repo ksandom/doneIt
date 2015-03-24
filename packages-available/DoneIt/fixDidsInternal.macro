@@ -25,8 +25,8 @@ set Local,showOriginalDid,
 
 
 set Local,showDidFromDB,
+	parameters did
 	if ~!Me,showDidDebug!~,==,true,
-		parameters did
 		isolate
 			listDids
 			chooseSubResult ~!Local,did!~
@@ -97,7 +97,8 @@ loop
 			
 			addDebuggingToDid ~!Result,previousKey!~,fixDid: Amended stop from ~!~!Local,Category!~,dids,~!Result,previousKey!~,stop!~ to ~!Result,start!~
 			
-			callFeature ~!Local,showOriginalDid!~
+			callFeature ~!Local,showDidFromDB!~,~!Result,previousKey!~
+			callFeature ~!Local,showDidFromDB!~,~!Result,key!~
 			
 			debug 1,setNested ~!Local,Category!~,dids,~!Result,previousKey!~,stop,~!Result,start!~
 			setNested ~!Local,Category!~,dids,~!Result,previousKey!~,stop,~!Result,start!~
