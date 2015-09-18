@@ -12,9 +12,11 @@ set Me,correctData,
 	
 	setNested DoneItTests,dids,3,start,3
 	setNested DoneItTests,dids,3,stop,7
+	setNested DoneItTests,dids,3,comment,Second did
 	
 	setNested DoneItTests,dids,7,start,7
 	setNested DoneItTests,dids,7,stop,9
+	setNested DoneItTests,dids,7,comment,Third did
 	
 	# A did in progress
 	setNested DoneItTests,dids,9,start,9
@@ -160,5 +162,23 @@ defineTest Fixdids - dirty entry that should be removed,
 	expect ,~!DoneItTests,dids,toilet,humor!~
 
 
-
+defineTest splitDid,
+	collectionUnload DoneIt
+	clear
+	callFeature ~!Me,correctData!~
+	stashResults DoneIt,dids
+	
+	# Grab the middle result
+	first 2
+	last
+	
+	# Do the action
+	splitDid 2
+	
+	getCategory DoneIt
+	printr
+	outNow
+	
+	# Test the result
+	expect 5,~!DoneIt,dids,5,start!~
 
