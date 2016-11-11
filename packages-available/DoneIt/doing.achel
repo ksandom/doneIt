@@ -1,4 +1,4 @@
-# What are you doing right now? And for who? --doing=name[,who[,description[,overrideTimestamp]]] eg --doing='fixComp',bob,'fixing computer' --doing=fixComp ~ doneit,user
+# What are you doing right now? And for who? --doing=name[,who[,description[,timeOffset]]] eg --doing='fixComp',bob,'fixing computer' . timeOffset will offset the timestamp by the specified amount. The timestamp defaults to the current time. A positive timeOffset will add that offset to the beginning of the task that is about to bcome obsolete. A negative timeOffset subtracts from the currnt time. Ie -180 says that you started the task 3 minutes ago. ~ doneit,user
 
 # Do we match any tasks
 listTasks ~!Global,doing-0!~

@@ -1,21 +1,17 @@
-# Resume a task ~ doneit,user
+# Resume a task. --resume=[positionOffset][,timeOffset] Without parameters will assume the previous task. positionOffset specifies which of the most recent tasks to resume by counting back by the number specified. Eg specifying 3 says: not the previous task, but the task before that. If unspecified, the default is 2. Ie not the current task, but the task before that. timeOffset is the same timeOffset used by --doing. ~ doneit,user
+parameters {"positionOffset":"2","timeOffset":""}
 
-countToVar Tmp,count
-if ~!Tmp,count!~,<,1,
+countToVar Local,count
+if ~!Local,count!~,<,1,
 	today
-	
-	if ~!Global,resume!~,==,,
-		last 2
-	else
-		last ~!Global,resume!~
-	
+	last ~!Local,positionOffset!~
 	first
 else
-	if ~!Global,resume!~,!=,,
-		last ~!Global,resume!~
+	if ~!Local,positionOffset!~,!=,,
+		last ~!Local,positionOffset!~
 		first
-
 
 last
 loop
-	doing ~!Result,taskName!~,~!Result,who!~,~!Result,comment!~
+	debug 1,Resuming ~!Result,taskName!~,~!Result,who!~,~!Result,comment!~ offset=~!Local,timeOffset!~
+	doing ~!Result,taskName!~,~!Result,who!~,~!Result,comment!~,~!Local,timeOffset!~
