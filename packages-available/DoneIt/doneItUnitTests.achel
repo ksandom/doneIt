@@ -1,82 +1,82 @@
-# Unit tests for doneIt ~ hidden,unitTests,doneit,doneIt
+# Unit tests for doneIt ~ hidden,unitTest,doneit,doneIt
 
 set Me,showDidDebug,true
 
 
 set Me,correctData,
 	unset DoneItTests,dids
-	
+
 	setNested DoneItTests,dids,1,start,1
 	setNested DoneItTests,dids,1,stop,3
 	setNested DoneItTests,dids,1,comment,First did
-	
+
 	setNested DoneItTests,dids,3,start,3
 	setNested DoneItTests,dids,3,stop,7
 	setNested DoneItTests,dids,3,comment,Second did
-	
+
 	setNested DoneItTests,dids,7,start,7
 	setNested DoneItTests,dids,7,stop,9
 	setNested DoneItTests,dids,7,comment,Third did
-	
+
 	# A did in progress
 	setNested DoneItTests,dids,9,start,9
-	
+
 	retrieveResults DoneItTests,dids
 
 set Me,overLappingData,
 	unset DoneItTests,dids
-	
+
 	setNested DoneItTests,dids,1,start,1
 	setNested DoneItTests,dids,1,stop,3
 	setNested DoneItTests,dids,1,comment,First did
-	
+
 	setNested DoneItTests,dids,3,start,3
 	setNested DoneItTests,dids,3,stop,7
-	
+
 	# This one begins before the last one ended
 	setNested DoneItTests,dids,5,start,5
 	setNested DoneItTests,dids,5,stop,9
-	
+
 	# A did in progress
 	setNested DoneItTests,dids,9,start,9
-	
+
 	retrieveResults DoneItTests,dids
 
 set Me,missingStop,
 	unset DoneItTests,dids
-	
+
 	setNested DoneItTests,dids,1,start,1
 	setNested DoneItTests,dids,1,stop,3
 	setNested DoneItTests,dids,1,comment,First did
-	
+
 	setNested DoneItTests,dids,3,start,3
-	
+
 	setNested DoneItTests,dids,7,start,7
 	setNested DoneItTests,dids,7,stop,9
-	
+
 	# A did in progress
 	setNested DoneItTests,dids,9,start,9
-	
+
 	retrieveResults DoneItTests,dids
 
 set Me,dirtyEntry,
 	unset DoneItTests,dids
-	
+
 	setNested DoneItTests,dids,1,start,1
 	setNested DoneItTests,dids,1,stop,3
 	setNested DoneItTests,dids,1,comment,First did
-	
+
 	setNested DoneItTests,dids,3,start,3
 	setNested DoneItTests,dids,3,stop,7
-	
+
 	setNested DoneItTests,dids,toilet,humor,used
-	
+
 	setNested DoneItTests,dids,7,start,7
 	setNested DoneItTests,dids,7,stop,9
-	
+
 	# A did in progress
 	setNested DoneItTests,dids,9,start,9
-	
+
 	retrieveResults DoneItTests,dids
 
 
@@ -90,12 +90,12 @@ defineTest Fixdids - happy day,
 	unset DoneItTests,lastFixProcessed
 	unset DoneItTests,lastFixProblems
 	unset DoneItTests,lastFixRepairs
-	
+
 	# Get the data and run the repair
 	clear
 	callFeature ~!Me,correctData!~
 	fixDidsInternal DoneItTests
-	
+
 	# Expect some results
 	expect 4,~!DoneItTests,lastFixProcessed!~,processed
 	expect 0,~!DoneItTests,lastFixProblems!~,problems
@@ -106,19 +106,19 @@ defineTest Fixdids - overlapping,
 	unset DoneItTests,lastFixProcessed
 	unset DoneItTests,lastFixProblems
 	unset DoneItTests,lastFixRepairs
-	
+
 	# Get the data and run the repair
 	clear
 	callFeature ~!Me,overLappingData!~
 	fixDidsInternal DoneItTests
-	
+
 	retrieveResults DoneItTests,dids
-	
+
 	# Expect some results
 	expect 4,~!DoneItTests,lastFixProcessed!~,processed
 	expect 1,~!DoneItTests,lastFixProblems!~,problems
 	expect 1,~!DoneItTests,lastFixRepairs!~,repairs
-	
+
 	expect 5,~!DoneItTests,dids,3,stop!~,did 3 stop value
 
 defineTest Fixdids - missing stop,
@@ -126,19 +126,19 @@ defineTest Fixdids - missing stop,
 	unset DoneItTests,lastFixProcessed
 	unset DoneItTests,lastFixProblems
 	unset DoneItTests,lastFixRepairs
-	
+
 	# Get the data and run the repair
 	clear
 	callFeature ~!Me,missingStop!~
 	fixDidsInternal DoneItTests
-	
+
 	retrieveResults DoneItTests,dids
-	
+
 	# Expect some results
 	expect 4,~!DoneItTests,lastFixProcessed!~,processed
 	expect 1,~!DoneItTests,lastFixProblems!~,problems
 	expect 1,~!DoneItTests,lastFixRepairs!~,repairs
-	
+
 	expect 7,~!DoneItTests,dids,3,stop!~
 
 defineTest Fixdids - dirty entry that should be removed,
@@ -146,19 +146,19 @@ defineTest Fixdids - dirty entry that should be removed,
 	unset DoneItTests,lastFixProcessed
 	unset DoneItTests,lastFixProblems
 	unset DoneItTests,lastFixRepairs
-	
+
 	# Get the data and run the repair
 	clear
 	callFeature ~!Me,missingStop!~
 	fixDidsInternal DoneItTests
-	
+
 	retrieveResults DoneItTests,dids
-	
+
 	# Expect some results
 	expect 4,~!DoneItTests,lastFixProcessed!~,processed
 	expect 1,~!DoneItTests,lastFixProblems!~,problems
 	expect 1,~!DoneItTests,lastFixRepairs!~,repairs
-	
+
 	expect ,~!DoneItTests,dids,toilet,humor!~
 
 
@@ -167,18 +167,18 @@ defineTest splitDid,
 	clear
 	callFeature ~!Me,correctData!~
 	stashResults DoneIt,dids
-	
+
 	# Grab the middle result
 	first 2
 	last
-	
+
 	# Do the action
 	splitDid 2
-	
+
 	getCategory DoneIt
 	printr
 	outNow
-	
+
 	# Test the result
 	expect 5,~!DoneIt,dids,5,start!~
 
