@@ -1,24 +1,25 @@
 # Close an existing did --closeDid=didID[,overrideStopTimeStamp] ~ doneit,hidden
 
-debug 1,closeDid: Recieved ~!Global,closeDid-0!~,~!Global,closeDid-1!~
+parameters didID,overrideStopTimeStamp
 
-if ~!Global,closeDid-1!~,==,,
-	now Tmp,stop
-	addDebuggingToDid ~!Global,closeDid-0!~,closeDid: Closing did at now (~!Tmp,stop!~).
+debug 1,closeDid: Recieved ~!Local,didID!~,~!Local,overrideStopTimeStamp!~
+
+set Local,stop
+if ~!Local,overrideStopTimeStamp!~,==,,
+	now Local,stop
+	addDebuggingToDid ~!Local,didID!~,closeDid: Closing did at now (~!Local,stop!~).
 else
-	debug 1,closeDid: Will close off the old task at ~!Global,closeDid-1!~
-	set Tmp,stop,~!Global,closeDid-1!~
-	addDebuggingToDid ~!Global,closeDid-0!~,closeDid: Closing did at the manually specified time of ~!Tmp,stop!~.
+	debug 1,closeDid: Will close off the old task at ~!Local,overrideStopTimeStamp!~
+	set Local,stop,~!Local,overrideStopTimeStamp!~
+	addDebuggingToDid ~!Local,didID!~,closeDid: Closing did at the manually specified time of ~!Local,stop!~.
 
-setNested DoneIt,dids,~!Global,closeDid-0!~,stop,~!Tmp,stop!~
-timeDiff Tmp,duration,~!DoneIt,dids,~!Global,closeDid-0!~,start!~,~!DoneIt,dids,~!Global,closeDid-0!~,stop!~
-setNested DoneIt,dids,~!Global,closeDid-0!~,duration,~!Tmp,duration!~
+setNested DoneIt,dids,~!Local,didID!~,stop,~!Local,stop!~
+timeDiff Local,duration,~!DoneIt,dids,~!Local,didID!~,start!~,~!DoneIt,dids,~!Local,didID!~,stop!~
+setNested DoneIt,dids,~!Local,didID!~,duration,~!Local,duration!~
 
-fuzzyTime Tmp,fuzzyDuration,~!DoneIt,dids,~!Global,closeDid-0!~,duration!~
-setNested DoneIt,dids,~!Global,closeDid-0!~,fuzzyDuration,~!Tmp,fuzzyDuration!~
+fuzzyTime Local,fuzzyDuration,~!DoneIt,dids,~!Local,didID!~,duration!~
+setNested DoneIt,dids,~!Local,didID!~,fuzzyDuration,~!Local,fuzzyDuration!~
 
-debug 1,closeDid: Closed did ~!Global,closeDid-0!~ (~!DoneIt,tasks,~!DoneIt,dids,~!Global,closeDid-0!~,taskName!~,description!~) lasting ~!Tmp,duration!~ seconds (~!Tmp,fuzzyDuration!~)
+debug 1,closeDid: Closed did ~!Local,didID!~ (~!DoneIt,tasks,~!DoneIt,dids,~!Local,didID!~,taskName!~,description!~) lasting ~!Local,duration!~ seconds (~!Local,fuzzyDuration!~)
 
-unset Tmp,duration
-unset Tmp,fuzzyDuration
-unset Tmp,stop
+unset Local,duration

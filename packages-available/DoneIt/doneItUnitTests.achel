@@ -2,6 +2,7 @@
 
 set Me,showDidDebug,true
 
+# TODO Make unit tests non-persistent.
 
 set Me,correctData,
 	unset DoneItTests,dids

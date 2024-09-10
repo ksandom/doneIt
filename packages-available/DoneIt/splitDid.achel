@@ -5,55 +5,58 @@
 # TODO Currently this feature does some funky things when working with more than one record. Once this is fixed, first can be removed.
 # first
 
+parameters secondsAfterStartToSplit,taskName,who,comment
+
 thereCanBeOnly 1,splitDid,
 	loop
 		# Check that we have sane values
 		set Tmp,passed,true
-		
-		if ~!Global,splitDid-0!~,<,0,
+
+		if ~!Local,secondsAfterStartToSplit!~,<,0,
 			set Tmp,passed,false
-			debug 0,splitDid: secondsAfterStartToSplit (~!Global,splitDid-0!~) is too small
-		
-		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Global,splitDid-0!~
-		
-		
+			debug 0,splitDid: secondsAfterStartToSplit (~!Local,secondsAfterStartToSplit!~) is too small
+
+		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Local,secondsAfterStartToSplit!~
+
+
 		if ~!Result,stop!~,!=,,
 			if ~!Tmp,splitTime!~,>,~!Result,stop!~,
 				set Tmp,passed,false
 				debug 0,splitDid: secondsAfterStartToSplit is greater than the duration of the did.
-		
+
 		if ~!Tmp,passed!~,==,true,
 			addDebuggingToDid ~!Result,start!~,splitDid: Creating new did ~!Tmp,splitTime!~
-			
+
 			debug 1,closeDid ~!Result,start!~,~!Tmp,splitTime!~
 			closeDid ~!Result,start!~,~!Tmp,splitTime!~
-			
+
 			# TODO write code to take optional information
-			if ~!Global,splitDid-1!~,!=,,
-				set Tmp,taskName,~!Global,splitDid-1!~
+			if ~!Local,taskName!~,!=,,
+				set Tmp,taskName,~!Local,taskName!~
 			else
 				set Tmp,taskName,~!Result,taskName!~
-			
-			if ~!Global,splitDid-2!~,!=,,
-				set Tmp,who,~!Global,splitDid-2!~
+
+			if ~!Local,who!~,!=,,
+				set Tmp,who,~!Local,who!~
 			else
 				set Tmp,who,~!Result,who!~
-			
-			if ~!Global,splitDid-3!~,!=,,
-				set Tmp,comment,~!Global,splitDid-3!~
+
+			if ~!Local,comment!~,!=,,
+				set Tmp,comment,~!Local,comment!~
 			else
 				set Tmp,comment,~!Result,comment!~
-			
+
 			addDebuggingToDid ~!Tmp,splitTime!~,splitDid: Created from ~!Result,start!~
 			debug 1,openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
 			openDid ~!Tmp,taskName!~,~!Tmp,who!~,~!Tmp,comment!~,~!Tmp,splitTime!~
-			
+
 			if ~!Result,stop!~,!=,,
 				# We have a stop position
 				debug 1,closeDid ~!Tmp,splitTime!~,~!Result,stop!~
 				closeDid ~!Tmp,splitTime!~,~!Result,stop!~
-		
-		
+
+
+		# TODO Migrate to Local variables.
 		unset Tmp,passed
 		unset Tmp,splitTime
 		unset Tmp,taskName
@@ -64,4 +67,5 @@ thereCanBeOnly 1,splitDid,
 	sortDids
 	retrieveResults Tmp,dids
 
+	# TODO Migrate to Local variables.
 	unset Tmp,dids

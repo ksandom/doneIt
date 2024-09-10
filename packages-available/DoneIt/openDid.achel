@@ -1,13 +1,15 @@
 # Open a did. --openDid=name,who,description,startTimestamp ~ doneit,hidden
 
-debug 1,openDid: Starting ~!DoneIt,tasks,~!Global,openDid-0!~,description!~
-debug 1,openDid: Recieved ~!Global,openDid-0!~,~!Global,openDid-1!~,~!Global,openDid-2!~,~!Global,openDid-3!~
-setNested DoneIt,dids,~!Global,openDid-3!~,id,~!Global,openDid-3!~
-setNested DoneIt,dids,~!Global,openDid-3!~,taskName,~!Global,openDid-0!~
-setNested DoneIt,dids,~!Global,openDid-3!~,start,~!Global,openDid-3!~
-setNested DoneIt,dids,~!Global,openDid-3!~,who,~!Global,openDid-1!~
+parameters name,who,description,startTimestamp
 
-if ~!Global,openDid-2!~,!=,,
-	setNested DoneIt,dids,~!Global,openDid-3!~,comment,~!Global,openDid-2!~
+debug 1,openDid: Starting ~!DoneIt,tasks,~!Local,name!~,description!~
+debug 1,openDid: Recieved ~!Local,name!~,~!Local,who!~,~!Local,description!~,~!Local,startTimestamp!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,id,~!Local,startTimestamp!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,taskName,~!Local,name!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,start,~!Local,startTimestamp!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,who,~!Local,who!~
 
-addDebuggingToDid ~!Global,openDid-3!~,openDid: Opened did.
+if ~!Local,description!~,!=,,
+	setNested DoneIt,dids,~!Local,startTimestamp!~,comment,~!Local,description!~
+
+addDebuggingToDid ~!Local,startTimestamp!~,openDid: Opened did.

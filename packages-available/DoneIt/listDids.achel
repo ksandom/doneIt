@@ -1,10 +1,12 @@
-# List everything you've done ~ doneit
+# List everything you've done. --listDids=[search] ~ doneit
 #onLoaded setFeatureType listDids,generateDids
 #onDefine aliasFeature listDids,done
+
+parameters search
 
 doneItLoad
 
 retrieveResults DoneIt,dids
 
-if ~!Global,listDids!~,!=,,
-	requireItem taskName,~!Global,listDids!~
+if ~!Local,search!~,!=,,
+	requireItem taskName,~!Local,search!~

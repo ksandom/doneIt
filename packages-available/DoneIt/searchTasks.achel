@@ -1,7 +1,9 @@
-# Search tasks. Much link list, but will search every field, not just shortDesc. ~ doneit
+# Search tasks. Much link list, but will search every field, not just shortDesc. --searchTasks=search ~ doneit
 #onLoaded setFeatureType searchTasks,generateTasks
+
+parameters search
 
 load doneItLoad
 
 retrieveResults DoneIt,tasks
-refine ~!Global,searchTasks!~
+refine ~!Local,search!~

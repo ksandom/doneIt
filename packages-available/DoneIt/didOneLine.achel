@@ -1,0 +1,8 @@
+# Visualise the current did in a loop. --didOneLine=didID ~ did
+
+parameters didID
+
+listDids
+requireItem id,~!Local,didID!~
+templateOut didOneLine
+outNow
