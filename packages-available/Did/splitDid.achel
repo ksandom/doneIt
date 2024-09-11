@@ -6,18 +6,33 @@
 # first
 
 parameters secondsAfterStartToSplit,taskName,who,comment
+set Me,secondsAfterStartToSplit,~!Local,secondsAfterStartToSplit!~
+set Me,taskName,~!Local,taskName!~
+set Me,who,~!Local,who!~
+set Me,comment,~!Local,comment!~
 
 thereCanBeOnly 1,splitDid,
 	loop
 		# Check that we have sane values
 		set Tmp,passed,true
 
-		if ~!Local,secondsAfterStartToSplit!~,<,0,
+		if ~!Me,secondsAfterStartToSplit!~,<,0,
 			set Tmp,passed,false
-			debug 0,splitDid: secondsAfterStartToSplit (~!Local,secondsAfterStartToSplit!~) is too small
+			debug 0,splitDid: secondsAfterStartToSplit (~!Me,secondsAfterStartToSplit!~) is too small
 
-		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Local,secondsAfterStartToSplit!~
+		if ~!Result,start!~,==,,
+			set Tmp,passed,false
+			debug 0,splitDid: start (~!Result,start!~) of the selected "did" does not appear to be set. This is usually a corruption. It is not safe to run splitDid on this entry.
 
+		if ~!Result,stop!~,==,,
+			set Tmp,passed,false
+			debug 0,splitDid: stop (~!Result,stop!~) of the selected "did" does not appear to be set. This is usually a corruption. It is not safe to run splitDid on this entry.
+
+		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Me,secondsAfterStartToSplit!~
+
+		if ~!Tmp,splitTime!~,==,0,
+			set Tmp,passed,false
+			debug 0,splitDid: The start time for the new "did" was not successfully calculated. This is usually a corruption. It is not safe to run splitDid on this entry.
 
 		if ~!Result,stop!~,!=,,
 			if ~!Tmp,splitTime!~,>,~!Result,stop!~,
@@ -31,18 +46,18 @@ thereCanBeOnly 1,splitDid,
 			closeDid ~!Result,start!~,~!Tmp,splitTime!~
 
 			# TODO write code to take optional information
-			if ~!Local,taskName!~,!=,,
-				set Tmp,taskName,~!Local,taskName!~
+			if ~!Me,taskName!~,!=,,
+				set Tmp,taskName,~!Me,taskName!~
 			else
 				set Tmp,taskName,~!Result,taskName!~
 
-			if ~!Local,who!~,!=,,
-				set Tmp,who,~!Local,who!~
+			if ~!Me,who!~,!=,,
+				set Tmp,who,~!Me,who!~
 			else
 				set Tmp,who,~!Result,who!~
 
-			if ~!Local,comment!~,!=,,
-				set Tmp,comment,~!Local,comment!~
+			if ~!Me,comment!~,!=,,
+				set Tmp,comment,~!Me,comment!~
 			else
 				set Tmp,comment,~!Result,comment!~
 
@@ -56,7 +71,7 @@ thereCanBeOnly 1,splitDid,
 				closeDid ~!Tmp,splitTime!~,~!Result,stop!~
 
 
-		# TODO Migrate to Local variables.
+		# TODO Migrate to Me variables.
 		unset Tmp,passed
 		unset Tmp,splitTime
 		unset Tmp,taskName
@@ -67,5 +82,5 @@ thereCanBeOnly 1,splitDid,
 	sortDids
 	retrieveResults Tmp,dids
 
-	# TODO Migrate to Local variables.
+	# TODO Migrate to Me variables.
 	unset Tmp,dids

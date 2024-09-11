@@ -2,7 +2,8 @@
 
 set Me,showDidDebug,true
 
-# TODO Make unit tests non-persistent.
+# Used for making the unitTests non-persistent.
+set DoneItExternal,unitTests,true
 
 set Me,correctData,
 	unset DoneItTests,dids
@@ -174,12 +175,70 @@ defineTest splitDid,
 	last
 
 	# Do the action
-	splitDid 2
+	splitDid 2,bp,exampleA,example1
 
 	getCategory DoneIt
-	printr
 	outNow
 
 	# Test the result
-	expect 5,~!DoneIt,dids,5,start!~
+	expect 3,~!DoneIt,dids,_3,start!~
+	expect 5,~!DoneIt,dids,_3,stop!~
+
+	expect 5,~!DoneIt,dids,_5,start!~
+	expect 7,~!DoneIt,dids,_5,stop!~
+
+	expect 7,~!DoneIt,dids,_7,start!~
+	expect 9,~!DoneIt,dids,_7,stop!~
+
+defineTest splitDid - detect missing start,
+	collectionUnload DoneIt
+	clear
+	callFeature ~!Me,correctData!~
+	stashResults DoneIt,dids
+	unset DoneIt,dids,3,start
+
+	listDids
+
+	# Grab the middle result
+	first 2
+	last
+
+	# Do the action
+	splitDid 2,bp,exampleA,example1
+
+	getCategory DoneIt
+
+	# Test the result
+	expect 7,~!DoneIt,dids,_3,stop!~
+
+	expect ,~!DoneIt,dids,_5,start!~
+
+	expect 7,~!DoneIt,dids,_7,start!~
+	expect 9,~!DoneIt,dids,_7,stop!~
+
+defineTest splitDid - detect missing stop,
+	collectionUnload DoneIt
+	clear
+	callFeature ~!Me,correctData!~
+	stashResults DoneIt,dids
+	unset DoneIt,dids,3,stop
+
+	listDids
+
+	# Grab the middle result
+	first 2
+	last
+
+	# Do the action
+	splitDid 2,bp,exampleA,example1
+
+	getCategory DoneIt
+
+	# Test the result
+	expect 3,~!DoneIt,dids,_3,start!~
+
+	expect ,~!DoneIt,dids,_5,start!~
+
+	expect 7,~!DoneIt,dids,_7,start!~
+	expect 9,~!DoneIt,dids,_7,stop!~
 

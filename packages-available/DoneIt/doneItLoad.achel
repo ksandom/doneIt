@@ -3,6 +3,12 @@
 # TODO Update to Achel.
 # registerForEvent Mass,finishGeneral,doneItSave
 
-# load loadStoreFromData DoneIt
+if ~!DoneItExternal,unitTests!~,!=,true,
+    # Normal flow.
+    collectionLoad DoneIt
+else
+    if ~!DoneItExternal,loaded!~,!=,true,
+        # We are inside unitTests, and haven't set things up yet. Let's load basic data.
+        set DoneItExternal,loaded,true
 
-collectionLoad DoneIt
+        installDoneIt
