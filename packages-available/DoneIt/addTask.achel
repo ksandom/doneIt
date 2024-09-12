@@ -1,46 +1,46 @@
-# Add a task. --addTask=name,[who],description,[context][,update,silent] . IF there is already a task with the same name, the request will be rejected and an error displayed to debug0. However if update is specified in that sitution, the existing entry will be updated to match the request. Alternatively silent can be specified to make it silently ignore the request. If context is not set it will default to "work". ~ doneit,task,user
+# Add a task. --addTask=name,[who],description,[context][,update|silent] . IF there is already a task with the same name, the request will be rejected and an error displayed to debug0. However if update is specified in that sitution, the existing entry will be updated to match the request. Alternatively silent can be specified to make it silently ignore the request. If context is not set it will default to "work". ~ doneit,task,user
+
+parameters name,who,description,context,update,silent
 
 load doneItLoad
 
 # Find out if we have any tasks matching the name already
 listTasks
-requireItem name,^~!Global,addTask-0!~$
-countToVar Tmp,count
+requireItem name,^~!Local,name!~$
+countToVar Local,count
 
 # Set context
-if ~!Global,addTask-3!~,==,,
-	set Tmp,context,work
+# TODO Use parameters to do this.
+if ~!Local,context!~,==,,
+	set Local,context,work
 else
-	set Tmp,context,~!Global,addTask-3!~
+	set Local,context,~!Local,context!~
 
-if ~!Tmp,count!~,==,0,
-	set Tmp,lastTask,~!Global,addTask-0!~
-	
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-1!~
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,name,~!Global,addTask-0!~
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,context,~!Tmp,context!~
-	setNested DoneIt,tasks,~!Tmp,lastTask!~,description,~!Global,addTask-2!~
+if ~!Local,count!~,==,0,
+	set Local,lastTask,~!Local,name!~
+
+	setNested DoneIt,tasks,~!Local,lastTask!~,lastWho,~!Local,who!~
+	setNested DoneIt,tasks,~!Local,lastTask!~,name,~!Local,name!~
+	setNested DoneIt,tasks,~!Local,lastTask!~,context,~!Local,context!~
+	setNested DoneIt,tasks,~!Local,lastTask!~,description,~!Local,description!~
 else
-	if ~!Global,addTask-4!~,==,update,
+	if ~!Local,update!~,==,update,
 		first
 		loop
-			debug 2,addTask: Updating ~!Global,addTask-0!~ context=~!Tmp,context!~ lastWho=~!Global,addTask-1!~
-			set Tmp,lastTask,~!Result,name!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,lastWho,~!Global,addTask-1!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,name,~!Global,addTask-0!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,context,~!Tmp,context!~
-			setNested DoneIt,tasks,~!Tmp,lastTask!~,description,~!Global,addTask-2!~
+			debug 2,addTask: Updating ~!Local,name!~ context=~!Local,context!~ lastWho=~!Local,who!~
+			set Local,lastTask,~!Result,name!~
+			setNested DoneIt,tasks,~!Local,lastTask!~,lastWho,~!Local,who!~
+			setNested DoneIt,tasks,~!Local,lastTask!~,name,~!Local,name!~
+			setNested DoneIt,tasks,~!Local,lastTask!~,context,~!Local,context!~
+			setNested DoneIt,tasks,~!Local,lastTask!~,description,~!Local,description!~
 		clear
-			
-	elseIf ~!Global,addTask-4!~,==,silent,
+
+	elseIf ~!Local,update!~,==,silent,
 		# Don't complain if we already have it.
 		clear
-		
-	else
-		debug 0,addTask: ~!Global,addTask-0!~ already exists.
 
-unset Tmp,count
-unset Tmp,context
-unset Tmp,lastTask
+	else
+		debug 0,addTask: ~!Local,name!~ already exists.
+
 clear
 nested

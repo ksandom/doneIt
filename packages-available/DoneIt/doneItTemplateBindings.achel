@@ -1,5 +1,6 @@
 # Bindings for doneIt templates. ~ bindings,hidden
 
+# TODO Update to Achel.
 #onDefine registerForEvent Mass,finishGeneral,howLong
 #onDefine registerForEvent Template,beforeProcessing-did,processDids
 #onDefine registerForEvent Template,beforeProcessing-didMore,processDids

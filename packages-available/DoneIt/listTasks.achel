@@ -1,9 +1,11 @@
-# List tasks ~ doneit
+# List tasks. --listTasks=[search] ~ doneit
 #onLoaded setFeatureType listTasks,generateTasks
 #onLoaded aliasFeature listTasks,tasks
+
+parameters search
 
 load doneItLoad
 
 retrieveResults DoneIt,tasks
-if ~!Global,listTasks!~,!=,,
-	requireItem name,^~!Global,listTasks!~$
+if ~!Local,search!~,!=,,
+	requireItem name,^~!Local,search!~$

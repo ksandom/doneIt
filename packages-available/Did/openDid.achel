@@ -1,0 +1,15 @@
+# Open a did. --openDid=name,who,description,startTimestamp ~ doneit,hidden
+
+parameters name,who,description,startTimestamp
+
+debug 1,openDid: Starting ~!DoneIt,tasks,~!Local,name!~,description!~
+debug 1,openDid: Recieved ~!Local,name!~,~!Local,who!~,~!Local,description!~,~!Local,startTimestamp!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,id,~!Local,startTimestamp!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,taskName,~!Local,name!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,start,~!Local,startTimestamp!~
+setNested DoneIt,dids,~!Local,startTimestamp!~,who,~!Local,who!~
+
+if ~!Local,description!~,!=,,
+	setNested DoneIt,dids,~!Local,startTimestamp!~,comment,~!Local,description!~
+
+addDebuggingToDid ~!Local,startTimestamp!~,openDid: Opened did.

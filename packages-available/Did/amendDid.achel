@@ -1,0 +1,41 @@
+# Amend the details of something you've done. --amendDid=[taskName],[who],[comment] ~ doneit,user
+#onDefine aliasFeature amendDid,amend
+
+parameters taskName,who,comment
+
+doneItLoad
+
+countToVar Local,count
+if ~!Local,count!~,<,1,
+	today
+	last
+
+loop
+	if ~!Result,id!~,!=,,
+		# Display before
+		isolate
+			didOneLine ~!Result,id!~
+
+		# taskName
+		if ~!Local,taskName!~,!=,,
+			debug 2,amendDid: Setting taskName ~!Local,taskName!~ for key ~!Result,id!~
+			debug 2,setNested DoneIt,dids,~!Result,id!~,taskName,~!Local,taskName!~
+			setNested DoneIt,dids,~!Result,id!~,taskName,~!Local,taskName!~
+			addDebuggingToDid ~!Result,id!~,amendDid: Changed taskName to "~!Local,taskName!~"
+
+		# who
+		if ~!Local,who!~,!=,,
+			debug 2,amendDid: Setting who ~!Local,who!~
+			setNested DoneIt,dids,~!Result,id!~,who,~!Local,who!~
+			addDebuggingToDid ~!Result,id!~,amendDid: Changed who to "~!Local,who!~"
+
+		# comment
+		if ~!Local,comment!~,!=,,
+			debug 2,amendDid: Setting comment ~!Local,comment!~
+			setNested DoneIt,dids,~!Result,id!~,comment,~!Local,comment!~
+			addDebuggingToDid ~!Result,id!~,amendDid: Changed comment to "~!Local,comment!~"
+
+		# Display after
+		isolate
+			didOneLine ~!Result,id!~
+			null

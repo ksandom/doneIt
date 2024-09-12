@@ -1,0 +1,3 @@
+# Amend a comment on all DoneIt dids in the resultSet, or the latest entry if the resultSet is empty. ~ doneit
+
+amend ,,~!Global,comment!~

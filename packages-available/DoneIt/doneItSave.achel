@@ -1,4 +1,5 @@
 # Save tasks ~ doneit,save,tasks,hidden
 
-debug 2,doneitSave: Saving DoneIt.
+# debug 2,doneitSave: Saving DoneIt.
+# TODO This is doing nothing while saying that it's doing something. Is this still needed?
 # saveStoreToData DoneIt

@@ -8,12 +8,12 @@ thereCanBeOnly 1,There were too many results. Please refine your results with so
 			set Tmp,didToDeleteStop,~!Result,stop!~
 		else
 			unset Tmp,didToDeleteStop
-	
+
 	# get the next did details
 	if ~!Tmp,didToDeleteStop!~,!=,,
 		set Tmp,nextDidID,~!Tmp,didToDeleteStop!~
 		set Tmp,nextDidStop,~!DoneIt,dids,~!Tmp,didToDeleteStop!~,stop!~
-	
+
 	# get the previous did details
 	done
 	requireItem stop,~!Tmp,didToDeleteID!~
@@ -21,23 +21,23 @@ thereCanBeOnly 1,There were too many results. Please refine your results with so
 	loop
 		set Tmp,previousDidID,~!Result,key!~
 		set Tmp,previousDidStop,~!Result,stop!~
-	
-	
+
+
 	# modify the previous did. set stop time
 	setNested DoneIt,dids,~!Tmp,previousDidID!~,stop,~!Tmp,didToDeleteStop!~
-	
+
 	# delete the old did
 	unset DoneIt,dids,~!Tmp,didToDeleteID!~
-	
+
 	# recalculate time on the previous did
 	done
 	requireItem id,~!Tmp,previousDidID!~
-	
+
 	if ~!Verbosity,level!~,>,0,
 		getCategory Tmp
 		nested
-		
-	# todo cleanup
+
+	# TODO Migrate to local variables.
 	unset Tmp,didToDeleteID
 	unset Tmp,didToDeleteStop
 	unset Tmp,nextDidID

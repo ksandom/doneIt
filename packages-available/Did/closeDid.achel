@@ -1,0 +1,25 @@
+# Close an existing did --closeDid=didID[,overrideStopTimeStamp] ~ doneit,hidden
+
+parameters didID,overrideStopTimeStamp
+
+debug 1,closeDid: Recieved ~!Local,didID!~,~!Local,overrideStopTimeStamp!~
+
+set Local,stop
+if ~!Local,overrideStopTimeStamp!~,==,,
+	now Local,stop
+	addDebuggingToDid ~!Local,didID!~,closeDid: Closing did at now (~!Local,stop!~).
+else
+	debug 1,closeDid: Will close off the old task at ~!Local,overrideStopTimeStamp!~
+	set Local,stop,~!Local,overrideStopTimeStamp!~
+	addDebuggingToDid ~!Local,didID!~,closeDid: Closing did at the manually specified time of ~!Local,stop!~.
+
+setNested DoneIt,dids,~!Local,didID!~,stop,~!Local,stop!~
+timeDiff Local,duration,~!DoneIt,dids,~!Local,didID!~,start!~,~!DoneIt,dids,~!Local,didID!~,stop!~
+setNested DoneIt,dids,~!Local,didID!~,duration,~!Local,duration!~
+
+fuzzyTime Local,fuzzyDuration,~!DoneIt,dids,~!Local,didID!~,duration!~
+setNested DoneIt,dids,~!Local,didID!~,fuzzyDuration,~!Local,fuzzyDuration!~
+
+debug 1,closeDid: Closed did ~!Local,didID!~ (~!DoneIt,tasks,~!DoneIt,dids,~!Local,didID!~,taskName!~,description!~) lasting ~!Local,duration!~ seconds (~!Local,fuzzyDuration!~)
+
+unset Local,duration

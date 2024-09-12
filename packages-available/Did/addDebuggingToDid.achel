@@ -1,5 +1,6 @@
 # Add debugging information to a did. Note that you currently can not have commas in the debuggingText as it will get interpreted as separate vairables. --addDebuggingToDid=didID,debuggingText
+parameters didID,debuggingText
 
 doneItLoad
 
-setNested DoneIt,dids,~!Global,addDebuggingToDid-0!~,debug,,~!Global,addDebuggingToDid-1!~
+setNested DoneIt,dids,~!Local,didID!~,debug,,~!Local,debuggingText!~

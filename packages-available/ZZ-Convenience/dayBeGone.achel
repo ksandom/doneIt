@@ -1,4 +1,6 @@
 # Do this when the working day has finished. --dayBeGone[=quote] ~ doneit,user
 #onDefine aliasFeature dayBeGone,dbg
 
-doing bp
+parameters quote
+
+doing bp,,~!Local,quote!~
