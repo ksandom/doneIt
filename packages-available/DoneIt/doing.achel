@@ -7,25 +7,6 @@ listTasks ~!Local,name!~
 countToVar Local,count
 
 
-set Local,createNew,false
-if ~!Local,count!~,==,0,
-	# We don't have a task to do.
-
-	if ~!Local,description!~,==,,
-		debug 0,doing: I can't find a task matching "^~!Local,name!~$". If you'd like to add it please include who and a description.
-	else
-		if ~!Local,who!~,==,,
-			debug 0,doing: I can't find a task matching "^~!Local,name!~$". If you'd like to add it please include who and a description.
-		else
-			debug 1,doing: Adding task ~!Local,description!~
-			addTask ~!Local,name!~,~!Local,who!~,~!Local,description!~
-			listTasks ~!Local,name!~
-			countToVar Local,count
-			set Local,createNew,true
-
-	clear
-	nested
-
 if ~!Local,count!~,!=,0,
 	# We have a task to do, let's do it.
 
@@ -41,9 +22,8 @@ if ~!Local,count!~,!=,0,
 	else
 		if ~!Local,timeOffset!~,<,0,
 			debug 1,doing: It's a negative offset, go from now+(-offset)
-			now Tmp,now
-			basicMaths Local,changeOver,~!Tmp,now!~,+,~!Local,timeOffset!~
-			unset Tmp,now
+			now Local,now
+			basicMaths Local,changeOver,~!Local,now!~,+,~!Local,timeOffset!~
 		else
 			debug 1,doing: It's a positive offset, go from the end of the previous task + offset
 			basicMaths Local,changeOver,~!DoneIt,dids,~!DoneIt,lastDid!~,start!~,+,~!Local,timeOffset!~
@@ -82,5 +62,16 @@ if ~!Local,count!~,!=,0,
 		listDids
 		last 2
 		templateOut didNoTotal
+		outNow
+		null
+
+else
+	# We don't have a task. Complain about it.
+	debug 0,Was not able to find task "~!Local,name!~". You can see available tasks with --listTasks. And you can create a new one with --addTask. Use --help to find out how to use these.
+
+	isolate
+		help --(listTasks|addTask)
+		requireItem name,(listTasks|addTask)
+		finishHelp
 		outNow
 		null
