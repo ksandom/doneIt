@@ -30,9 +30,13 @@ thereCanBeOnly 1,splitDid,
 
 		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Me,secondsAfterStartToSplit!~
 
-		if ~!Tmp,splitTime!~,==,0,
+		if ~!Tmp,splitTime!~,==,~!Result,start!~,
 			set Tmp,passed,false
-			debug 0,splitDid: The start time for the new "did" was not successfully calculated. This is usually a corruption. It is not safe to run splitDid on this entry.
+			debug 0,splitDid: The start time for the new "did" was not successfully calculated. This is usually a invalid input from the user. It is not safe to run splitDid on this entry.
+			isolate
+				help splitDid
+				finishHelp
+				outNow
 
 		if ~!Result,stop!~,!=,,
 			if ~!Tmp,splitTime!~,>,~!Result,stop!~,
