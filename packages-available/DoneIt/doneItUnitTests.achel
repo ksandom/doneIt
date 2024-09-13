@@ -181,14 +181,14 @@ defineTest splitDid,
 	outNow
 
 	# Test the result
-	expect 3,~!DoneIt,dids,_3,start!~
-	expect 5,~!DoneIt,dids,_3,stop!~
+	expect 3,~!DoneIt,dids,3,start!~
+	expect 5,~!DoneIt,dids,3,stop!~
 
-	expect 5,~!DoneIt,dids,_5,start!~
-	expect 7,~!DoneIt,dids,_5,stop!~
+	expect 5,~!DoneIt,dids,5,start!~
+	expect 7,~!DoneIt,dids,5,stop!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 
 defineTest splitDid - detect missing start,
 	collectionUnload DoneIt
@@ -209,12 +209,12 @@ defineTest splitDid - detect missing start,
 	getCategory DoneIt
 
 	# Test the result
-	expect 7,~!DoneIt,dids,_3,stop!~
+	expect 7,~!DoneIt,dids,3,stop!~
 
-	expect ,~!DoneIt,dids,_5,start!~
+	expect ,~!DoneIt,dids,5,start!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 
 defineTest splitDid - detect missing stop,
 	collectionUnload DoneIt
@@ -235,12 +235,12 @@ defineTest splitDid - detect missing stop,
 	getCategory DoneIt
 
 	# Test the result
-	expect 3,~!DoneIt,dids,_3,start!~
+	expect 3,~!DoneIt,dids,3,start!~
 
-	expect ,~!DoneIt,dids,_5,start!~
+	expect ,~!DoneIt,dids,5,start!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 
 defineTest splitDid - invalid offset,
 	collectionUnload DoneIt
@@ -260,13 +260,13 @@ defineTest splitDid - invalid offset,
 	getCategory DoneIt
 
 	# Test the result
-	expect 3,~!DoneIt,dids,_3,start!~
-	expect 7,~!DoneIt,dids,_3,stop!~
+	expect 3,~!DoneIt,dids,3,start!~
+	expect 7,~!DoneIt,dids,3,stop!~
 
-	expect ,~!DoneIt,dids,_5,start!~
+	expect ,~!DoneIt,dids,5,start!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 
 defineTest splitDid - negative offset,
 	collectionUnload DoneIt
@@ -286,14 +286,14 @@ defineTest splitDid - negative offset,
 	getCategory DoneIt
 
 	# Test the result
-	expect 3,~!DoneIt,dids,_3,start!~
-	expect 6,~!DoneIt,dids,_3,stop!~
+	expect 3,~!DoneIt,dids,3,start!~
+	expect 6,~!DoneIt,dids,3,stop!~
 
-	expect 6,~!DoneIt,dids,_6,start!~
-	expect 7,~!DoneIt,dids,_6,stop!~
+	expect 6,~!DoneIt,dids,6,start!~
+	expect 7,~!DoneIt,dids,6,stop!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 
 defineTest splitDid - positive offset too big,
 	collectionUnload DoneIt
@@ -313,13 +313,13 @@ defineTest splitDid - positive offset too big,
 	getCategory DoneIt
 
 	# Test the result
-	expect 3,~!DoneIt,dids,_3,start!~
-	expect 7,~!DoneIt,dids,_3,stop!~
+	expect 3,~!DoneIt,dids,3,start!~
+	expect 7,~!DoneIt,dids,3,stop!~
 
-	expect ,~!DoneIt,dids,_5,start!~
+	expect ,~!DoneIt,dids,5,start!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 
 defineTest splitDid - negative offset too small,
 	collectionUnload DoneIt
@@ -339,11 +339,11 @@ defineTest splitDid - negative offset too small,
 	getCategory DoneIt
 
 	# Test the result
-	expect 3,~!DoneIt,dids,_3,start!~
-	expect 7,~!DoneIt,dids,_3,stop!~
+	expect 3,~!DoneIt,dids,3,start!~
+	expect 7,~!DoneIt,dids,3,stop!~
 
-	expect ,~!DoneIt,dids,_5,start!~
+	expect ,~!DoneIt,dids,5,start!~
 
-	expect 7,~!DoneIt,dids,_7,start!~
-	expect 9,~!DoneIt,dids,_7,stop!~
+	expect 7,~!DoneIt,dids,7,start!~
+	expect 9,~!DoneIt,dids,7,stop!~
 

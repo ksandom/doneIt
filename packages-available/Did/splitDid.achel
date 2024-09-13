@@ -30,9 +30,11 @@ thereCanBeOnly 1,splitDid,
 
 		if ~!Me,secondsAfterStartToSplit!~,>,0,
 			basicMaths Tmp,splitTime,~!Result,start!~,+,~!Me,secondsAfterStartToSplit!~
+			debug 1,splitDid: Forward: basicMaths ~!Tmp,splitTime!~,~!Result,start!~,+,~!Me,secondsAfterStartToSplit!~
 		else
 			# Negative offset. It should be offset from the stop instead of the start.
 			basicMaths Tmp,splitTime,~!Result,stop!~,+,~!Me,secondsAfterStartToSplit!~
+			debug 1,splitDid: Reverse: basicMaths ~!Tmp,splitTime!~,~!Result,stop!~,+,~!Me,secondsAfterStartToSplit!~
 
 		basicMaths Local,previousDuration,~!Result,stop!~,-,~!Result,start!~
 		basicMaths Local,previousDuration,~!Local,previousDuration!~,-,1
