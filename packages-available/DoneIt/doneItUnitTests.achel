@@ -268,3 +268,82 @@ defineTest splitDid - invalid offset,
 	expect 7,~!DoneIt,dids,_7,start!~
 	expect 9,~!DoneIt,dids,_7,stop!~
 
+defineTest splitDid - negative offset,
+	collectionUnload DoneIt
+	clear
+	callFeature ~!Me,correctData!~
+	stashResults DoneIt,dids
+
+	listDids
+
+	# Grab the middle result
+	first 2
+	last
+
+	# Do the action
+	splitDid -1,bp,exampleA,example1
+
+	getCategory DoneIt
+
+	# Test the result
+	expect 3,~!DoneIt,dids,_3,start!~
+	expect 6,~!DoneIt,dids,_3,stop!~
+
+	expect 6,~!DoneIt,dids,_6,start!~
+	expect 7,~!DoneIt,dids,_6,stop!~
+
+	expect 7,~!DoneIt,dids,_7,start!~
+	expect 9,~!DoneIt,dids,_7,stop!~
+
+defineTest splitDid - positive offset too big,
+	collectionUnload DoneIt
+	clear
+	callFeature ~!Me,correctData!~
+	stashResults DoneIt,dids
+
+	listDids
+
+	# Grab the middle result
+	first 2
+	last
+
+	# Do the action
+	splitDid 15,bp,exampleA,example1
+
+	getCategory DoneIt
+
+	# Test the result
+	expect 3,~!DoneIt,dids,_3,start!~
+	expect 7,~!DoneIt,dids,_3,stop!~
+
+	expect ,~!DoneIt,dids,_5,start!~
+
+	expect 7,~!DoneIt,dids,_7,start!~
+	expect 9,~!DoneIt,dids,_7,stop!~
+
+defineTest splitDid - negative offset too small,
+	collectionUnload DoneIt
+	clear
+	callFeature ~!Me,correctData!~
+	stashResults DoneIt,dids
+
+	listDids
+
+	# Grab the middle result
+	first 2
+	last
+
+	# Do the action
+	splitDid -15,bp,exampleA,example1
+
+	getCategory DoneIt
+
+	# Test the result
+	expect 3,~!DoneIt,dids,_3,start!~
+	expect 7,~!DoneIt,dids,_3,stop!~
+
+	expect ,~!DoneIt,dids,_5,start!~
+
+	expect 7,~!DoneIt,dids,_7,start!~
+	expect 9,~!DoneIt,dids,_7,stop!~
+

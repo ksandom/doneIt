@@ -16,10 +16,6 @@ thereCanBeOnly 1,splitDid,
 		# Check that we have sane values
 		set Tmp,passed,true
 
-		if ~!Me,secondsAfterStartToSplit!~,<,0,
-			set Tmp,passed,false
-			debug 0,splitDid: secondsAfterStartToSplit (~!Me,secondsAfterStartToSplit!~) is too small
-
 		if ~!Result,start!~,==,,
 			set Tmp,passed,false
 			debug 0,splitDid: start (~!Result,start!~) of the selected "did" does not appear to be set. This is usually a corruption. It is not safe to run splitDid on this entry.
@@ -28,7 +24,19 @@ thereCanBeOnly 1,splitDid,
 			set Tmp,passed,false
 			debug 0,splitDid: stop (~!Result,stop!~) of the selected "did" does not appear to be set. This is usually a corruption. It is not safe to run splitDid on this entry.
 
-		basicMaths Tmp,splitTime,~!Result,start!~,+,~!Me,secondsAfterStartToSplit!~
+		if ~!Me,secondsAfterStartToSplit!~,==,0,
+			set Tmp,passed,false
+			debug 0,splitDid: secondsAfterStartToSplit (~!Me,secondsAfterStartToSplit!~) is too small
+
+		if ~!Me,secondsAfterStartToSplit!~,>,0,
+			basicMaths Tmp,splitTime,~!Result,start!~,+,~!Me,secondsAfterStartToSplit!~
+		else
+			# Negative offset. It should be offset from the stop instead of the start.
+			basicMaths Tmp,splitTime,~!Result,stop!~,+,~!Me,secondsAfterStartToSplit!~
+
+		basicMaths Local,previousDuration,~!Result,stop!~,-,~!Result,start!~
+		basicMaths Local,previousDuration,~!Local,previousDuration!~,-,1
+
 
 		if ~!Tmp,splitTime!~,==,~!Result,start!~,
 			set Tmp,passed,false
@@ -37,6 +45,14 @@ thereCanBeOnly 1,splitDid,
 				help splitDid
 				finishHelp
 				outNow
+
+		if ~!Tmp,splitTime!~,<=,~!Result,start!~,
+			set Tmp,passed,false
+			debug 0,splitDid: Calculated splitTime (~!Tmp,splitTime!~) is not greater than  the start (~!Result,start!~) of the previous did. You've likely entered a negative offset (~!Me,secondsAfterStartToSplit!~) that is too small. Minimum possible value for this did: -~!Local,previousDuration!~ .
+
+		if ~!Tmp,splitTime!~,>=,~!Result,stop!~,
+			set Tmp,passed,false
+			debug 0,splitDid: Calculated splitTime (~!Tmp,splitTime!~) is not less than  the stop (~!Result,stop!~) of the previous did. You've likely entered a negative offset (~!Me,secondsAfterStartToSplit!~) that is too big. Maximum value for this did: ~!Local,previousDuration!~ .
 
 		if ~!Result,stop!~,!=,,
 			if ~!Tmp,splitTime!~,>,~!Result,stop!~,
