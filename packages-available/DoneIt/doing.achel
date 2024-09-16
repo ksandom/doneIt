@@ -51,11 +51,7 @@ if ~!Local,count!~,!=,0,
 
 	# TODO id->ID
 
-	if ~!Local,createNew!~,==,false,
-		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,~!Local,description!~,~!DoneIt,lastDid!~
-	else
-		openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,,~!DoneIt,lastDid!~
-
+	openDid ~!DoneIt,lastTask!~,~!DoneIt,lastWho!~,~!Local,description!~,~!DoneIt,lastDid!~
 
 	# Output what we have just added
 	isolate
