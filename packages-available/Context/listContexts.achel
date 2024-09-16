@@ -1,0 +1,7 @@
+# List out the currently available contexts. ~ context
+#onDefine aliasFeature listContexts,listCont,contexts
+#onLoaded setFeatureType listContexts,generateContexts
+
+loadContexts
+
+retrieveResults Contexts,entries

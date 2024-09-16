@@ -1,0 +1,13 @@
+# Add a new context. --addContext=name,description ~ context
+#onDefine aliasFeature addContext,addCont
+
+parameters name,description
+
+loadContexts
+
+if ~!Local,name!~,!=,,
+    set Local,path,Contexts,entries,~!Local,name!~
+    setNested ~!Local,path!~,name,~!Local,name!~
+    setNested ~!Local,path!~,description,~!Local,description!~
+else
+    complain Expected at least a context name to add a context.

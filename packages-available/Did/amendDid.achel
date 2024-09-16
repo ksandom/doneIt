@@ -1,7 +1,7 @@
 # Amend the details of something you've done. --amendDid=[taskName],[who],[comment] ~ doneit,user
 #onDefine aliasFeature amendDid,amend
 
-parameters taskName,who,comment
+parameters taskName,who,comment,contextSearch
 
 doneItLoad
 
@@ -34,6 +34,16 @@ loop
 			debug 2,amendDid: Setting comment ~!Local,comment!~
 			setNested DoneIt,dids,~!Result,id!~,comment,~!Local,comment!~
 			addDebuggingToDid ~!Result,id!~,amendDid: Changed comment to "~!Local,comment!~"
+
+		# context
+		if ~!Local,contextSearch!~,!=,,
+			set Me,context,
+			set Local,ID,~!Result,id!~
+			isolate
+				getContext Me,context,~!Local,contextSearch!~
+			set Result,id,~!Local,ID!~
+			debug 2,amendDid: Setting context ~!Me,context!~ from search ~!Local,contextSearch!~
+			setNested DoneIt,dids,~!Result,id!~,context,~!Me,context!~
 
 		# Display after
 		isolate

@@ -1,0 +1,8 @@
+# Delete an existing context. --listContexts --refine="The context you want to delete" --deleteContext ~ context
+#onDefine aliasFeature deleteContext,delCont
+
+loadContexts
+
+loop
+    debug 1,Deleting context ~!Result,key!~.
+    unset Contexts,entries,~!Result,key!~
