@@ -1,0 +1,6 @@
+# Delete an achievement. --listAchievement --refine="the one you want to delete" --deleteAchievement ~ achievements
+#onDefine aliasFeature deleteAchievement,delAch
+
+loop
+    debug 1,Deleting achievement ~!Result,key!~: ~!Result,name!~ (~!Result,description!~)
+    unset Achievements,entries,~!Result,key!~
