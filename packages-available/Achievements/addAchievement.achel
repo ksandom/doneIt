@@ -1,0 +1,30 @@
+# Add an achievement that might be worthy of putting on a CV. --addAchievement=name,description,comment ~ achievements
+#onDefine aliasFeature addAchievement,addAch,achoo
+
+parameters name,description,comment
+set Me,name,~!Local,name!~
+set Me,description,~!Local,description!~
+set Me,comment,~!Local,comment!~
+
+set Local,pass,true
+if ~!Me,name!~,==,,
+    complain Expected at least a name and comment.
+    set Local,pass,false
+
+if ~!Me,comment!~,==,,
+    complain Expected at least a name and comment.
+    set Local,pass,false
+
+if ~!Local,pass!~,==,true,
+    loadAchievements
+
+    now Me,when
+
+    massSet ["Achievements,entries,~!Me,when!~"],
+        setNested ~!Me,stuff!~,when,~!Me,when!~
+        setNested ~!Me,stuff!~,name,~!Me,name!~
+        setNested ~!Me,stuff!~,description,~!Me,description!~
+        setNested ~!Me,stuff!~,comment,~!Me,comment!~
+
+    listAchievements
+    requireItem when,~!Me,when!~

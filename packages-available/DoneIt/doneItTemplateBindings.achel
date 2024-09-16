@@ -8,6 +8,9 @@
 #onDefine registerForEvent Template,beforeProcessing-didSimple,processDids
 #onDefine registerForEvent Template,beforeProcessing-didOneLine,processDids
 #onDefine registerForEvent Template,beforeProcessing-didNoTotal,processDids
+#onDefine registerForEvent Template,beforeProcessing-achievement,processAchievements
+#onDefine registerForEvent Template,beforeProcessing-achievementMore,processAchievements
+#onDefine registerForEvent Template,beforeProcessing-achievementLess,processAchievements
 
 #onDefine registerForEvent Template,beforeOutput-did,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-didMore,cleanUnresolvedResultVars
@@ -15,5 +18,8 @@
 #onDefine registerForEvent Template,beforeOutput-didSimple,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-didOneLine,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-didNoTotal,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-achievement,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-achievementMore,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-achievementLess,cleanUnresolvedResultVars
 
 pass
