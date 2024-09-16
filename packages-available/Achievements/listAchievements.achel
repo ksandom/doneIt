@@ -1,0 +1,7 @@
+# List out achievements that might be worthy of putting on a CV. ~ achievements
+#onDefine aliasFeature listAchievements,listAch
+#onLoaded setFeatureType listAchievements,generateAchievements
+
+loadAchievements
+
+retrieveResults Achievements,entries
