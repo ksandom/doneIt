@@ -63,6 +63,8 @@ addTask dpa,-,Deploying - inhouse app,work,silent
 addTask dps,-,Deploying - system,work,silent
 
 # work - Dev
+addTask dev,-,Development,work,silent
+addTask test,-,Testing,work,silent
 addTask rf,-,Refactoring - bit.ly/1k94wVZ,work,silent
 
 # personal - General
