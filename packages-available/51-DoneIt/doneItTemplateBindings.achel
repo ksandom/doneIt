@@ -11,6 +11,9 @@
 #onDefine registerForEvent Template,beforeProcessing-achievement,processAchievements
 #onDefine registerForEvent Template,beforeProcessing-achievementMore,processAchievements
 #onDefine registerForEvent Template,beforeProcessing-achievementLess,processAchievements
+#onDefine registerForEvent Template,beforeProcessing-plateTask,processPlate
+#onDefine registerForEvent Template,beforeProcessing-plateTaskMore,processPlate
+#onDefine registerForEvent Template,beforeProcessing-plateTaskLess,processPlate
 
 #onDefine registerForEvent Template,beforeOutput-did,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-didMore,cleanUnresolvedResultVars
@@ -24,5 +27,8 @@
 #onDefine registerForEvent Template,beforeOutput-context,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-contextMore,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-contextLess,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-plateTask,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-plateTaskMore,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-plateTaskLess,cleanUnresolvedResultVars
 
 pass

@@ -1,0 +1,8 @@
+# Add a task to the plate. --addToPlate=taskName,description,comment ~ plate
+#onLoaded setFeatureType showPlate,generatePlateTasks
+
+parameters taskName,description,comment
+
+loadPlate
+
+retrieveResults Plate,entries

@@ -1,0 +1,9 @@
+# Process the Plate to be listed out. ~ hidden
+
+loop
+    if ~!Result,context!~,==,,
+        set Result,context,work
+    if ~!Result,when!~,!=,,
+        fullTimeStamp Result,timeStamp,~!Result,when!~
+    else
+        set Result,timeStamp,NA

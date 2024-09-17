@@ -1,0 +1,4 @@
+# Delete a task from the plate. --showPlate --refine=thingToDelete --deleteFromPlate ~ plate
+
+loop
+    unset Plate,entries,~!Result,key!~
