@@ -1,5 +1,5 @@
 # Switch the currently active context. ~ context
-#onDefine aliasFeature useContext,useCont
+#onDefine aliasFeature useContext,context
 
 parameters refine
 
