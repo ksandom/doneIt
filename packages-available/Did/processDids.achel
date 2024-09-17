@@ -1,9 +1,11 @@
 # Do all the post processig on the dids. This is called automatically when you do a --listDids (--help=--listDids). In rare situations you may want to call this early so that you can do processig based on the results of this feature. ~ doneit
 
 loop
-	set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~
+	if ~!Result,context!~,==,,
+		set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~
+
 	set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
-	
+
 	if ~!Result,stop!~,!=,,
 		debug 3,processDids: Got stop, therefore duration can be calculated.
 		timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
@@ -15,9 +17,9 @@ loop
 		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
 		set Result,fuzzyDuration,~!Result,fuzzyDuration!~ (In progress)
 		unset Tmp,a
-	
+
 	fullTimeStamp Result,startTimeStamp,~!Result,start!~
-	
+
 	set Result,summary,~!Result,taskName!~--~!Result,comment!~
 
 positiveCRC summary,pseudoID

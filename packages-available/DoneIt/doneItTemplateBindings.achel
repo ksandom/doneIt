@@ -21,5 +21,8 @@
 #onDefine registerForEvent Template,beforeOutput-achievement,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-achievementMore,cleanUnresolvedResultVars
 #onDefine registerForEvent Template,beforeOutput-achievementLess,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-context,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-contextMore,cleanUnresolvedResultVars
+#onDefine registerForEvent Template,beforeOutput-contextLess,cleanUnresolvedResultVars
 
 pass

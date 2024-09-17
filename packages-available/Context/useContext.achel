@@ -1,0 +1,21 @@
+# Switch the currently active context. ~ context
+#onDefine aliasFeature useContext,context
+
+parameters refine
+
+loadContexts
+
+if ~!Local,refine!~,!=,,
+    listContexts
+    refine ~!Local,refine!~
+
+countToVar Local,resultCount
+
+if ~!Local,resultCount!~,>,0,
+    first
+    loop
+        if ~!Contexts,current!~,!=,,
+            debug 0,Previous context: ~!Contexts,current!~
+        set Contexts,current,~!Result,key!~
+else
+    debug 0,Current context: ~!Contexts,current!~

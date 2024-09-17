@@ -13,3 +13,12 @@ if ~!Local,description!~,!=,,
 	setNested DoneIt,dids,~!Local,startTimestamp!~,comment,~!Local,description!~
 
 addDebuggingToDid ~!Local,startTimestamp!~,openDid: Opened did.
+
+set Local,context,~!DoneIt,tasks,~!Local,name!~,context!~
+if ~!Local,context!~,!=,personal,
+	getContext Local,context
+	debug 1,The context of ~!Local,name!~ is not personal, so using "~!Local,context!~" set by --useContext.
+else
+	debug 1,The context of ~!Local,name!~ is personal. So using personal.
+
+setNested DoneIt,dids,~!Local,startTimestamp!~,context,~!Local,context!~

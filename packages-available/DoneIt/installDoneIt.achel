@@ -9,6 +9,13 @@
 # * Descriptions: These need to be fairly short.
 # * URLS: I've sprinkled a few short URLs in for fun. Please keep this to a minimum, keep it relatively clean, but most importantly: have fun.
 
+debug 1,DoneIt: Installing default contexts
+addContext personal,Personal free time.
+addContext work,Paid company time.
+
+if ~!Contexts,current!~,==,,
+    useContext personal
+
 debug 1,DoneIt: Installing default tasks
 
 # work - General
@@ -56,6 +63,8 @@ addTask dpa,-,Deploying - inhouse app,work,silent
 addTask dps,-,Deploying - system,work,silent
 
 # work - Dev
+addTask dev,-,Development,work,silent
+addTask test,-,Testing,work,silent
 addTask rf,-,Refactoring - bit.ly/1k94wVZ,work,silent
 
 # personal - General

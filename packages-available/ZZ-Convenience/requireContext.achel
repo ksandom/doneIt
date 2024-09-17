@@ -1,0 +1,13 @@
+# Show only dids from a specific context. --requireContext=context ~ doneit,user
+#onDefine aliasFeature requireContext,relevant,rel
+
+parameters context
+
+ifNoResult today
+
+processDids
+
+if ~!Local,context!~,==,,
+    getContext Local,context
+
+requireItem context,~!Local,context!~

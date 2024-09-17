@@ -1,0 +1,12 @@
+# List out the currently available contexts. --listContexts=search ~ context
+#onDefine aliasFeature listContexts,listCont,contexts
+#onLoaded setFeatureType listContexts,generateContexts
+
+parameters search
+
+loadContexts
+
+retrieveResults Contexts,entries
+
+if ~!Local,search!~,!=,,
+    requireEach ~!Local,search!~
