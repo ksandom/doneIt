@@ -1,7 +1,3 @@
 # Show only work dids ~ doneit,user
 
-# TODO debug why ifNoResult is not returning results
-ifNoResult today
-
-processDids
-requireItem context,work
+requireContext work

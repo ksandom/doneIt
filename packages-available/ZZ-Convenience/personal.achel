@@ -1,7 +1,3 @@
 # Show only personal dids ~ doneit,user
 
-# TODO debug why ifNoResult is not returning results
-ifNoResult today
-
-processDids
-refine personal
+requireContext personal
