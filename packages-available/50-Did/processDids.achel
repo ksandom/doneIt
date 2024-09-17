@@ -4,21 +4,27 @@ loop
 	if ~!Result,context!~,==,,
 		set Result,context,~!DoneIt,tasks,~!Result,taskName!~,context!~
 
-	set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
+	if ~!Result,description!~,==,,
+		set Result,description,~!DoneIt,tasks,~!Result,taskName!~,description!~
 
-	if ~!Result,stop!~,!=,,
-		debug 3,processDids: Got stop, therefore duration can be calculated.
-		timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
-		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+	if ~!Result,start!~,!=,,
+		if ~!Result,stop!~,!=,,
+			debug 3,processDids: Got stop, therefore duration can be calculated.
+			timeDiff Result,duration,~!Result,start!~,~!Result,stop!~
+			fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+		else
+			debug 3,processDids: No stop, therefore duration can not be calculated.
+			now Tmp,a
+			timeDiff Result,duration,~!Result,start!~,~!Tmp,a!~
+			fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+			set Result,fuzzyDuration,~!Result,fuzzyDuration!~ (In progress)
+			unset Tmp,a
 	else
-		debug 3,processDids: No stop, therefore duration can not be calculated.
-		now Tmp,a
-		timeDiff Result,duration,~!Result,start!~,~!Tmp,a!~
-		fuzzyTime Result,fuzzyDuration,~!Result,duration!~
-		set Result,fuzzyDuration,~!Result,fuzzyDuration!~ (In progress)
-		unset Tmp,a
+		set Result,duration,
+		set Result,fuzzyDuration,
 
-	fullTimeStamp Result,startTimeStamp,~!Result,start!~
+	if ~!Result,startTimeStamp!~,!=,,
+		fullTimeStamp Result,startTimeStamp,~!Result,start!~
 
 	set Result,summary,~!Result,taskName!~--~!Result,comment!~
 
