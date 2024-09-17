@@ -23,7 +23,7 @@ loop
 		set Result,duration,
 		set Result,fuzzyDuration,
 
-	if ~!Result,startTimeStamp!~,!=,,
+	if ~!Result,start!~,!=,,
 		fullTimeStamp Result,startTimeStamp,~!Result,start!~
 
 	set Result,summary,~!Result,taskName!~--~!Result,comment!~
