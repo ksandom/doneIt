@@ -1,5 +1,6 @@
 # Process the Acheivements to be listed out. ~ hidden
 
 loop
-    set Result,context,work
+    if ~!Result,context!~,==,,
+        set Result,context,work
     fullTimeStamp Result,timeStamp,~!Result,when!~
