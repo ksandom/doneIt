@@ -1,6 +1,6 @@
 # List out achievements that might be worthy of putting on a CV. ~ achievements
 #onDefine aliasFeature listAchievements,listAch,achievements,ach
-#onLoaded setFeatureType listAchievements,generateAchievements
+#onLoaded setFeatureType listAchievements,generatePlateTasks
 
 loadAchievements
 
