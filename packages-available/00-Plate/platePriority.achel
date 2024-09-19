@@ -1,0 +1,7 @@
+# Amend the priority of every item in the resultSet. Eg --plate --refine=doneIt --platePriority=priority . priority could be a score like 0, 0.5, 50, or a word like high, low etc. ~ plate,amend
+#onDefine aliasFeature platePriority,pPriority
+
+parameters priority
+
+loop
+    updatePlateField ~!Result,key!~,priority,~!Local,priority!~

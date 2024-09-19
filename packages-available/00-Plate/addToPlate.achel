@@ -21,17 +21,20 @@ if ~!Local,pass!~,==,true,
 
     now Me,when
 
+    setPlateDefaults
 
     massSet ["Plate,entries,~!Me,when!~"],
         setNested ~!Me,stuff!~,start,~!Me,when!~
         setNested ~!Me,stuff!~,name,~!Me,name!~
         setNested ~!Me,stuff!~,description,~!Me,description!~
         setNested ~!Me,stuff!~,comment,~!Me,comment!~
-        setNested ~!Me,stuff!~,state,added
+        setNested ~!Me,stuff!~,state,~!Plate,defaults,state!~
+        setNested ~!Me,stuff!~,priority,~!Plate,defaults,priority!~
+        setNested ~!Me,stuff!~,noteWorthy,~!Plate,defaults,noteWorthy!~
 
         getContext Local,context
         setNested ~!Me,stuff!~,context,~!Local,context!~
 
     showPlate
-    requireItem when,~!Me,when!~
+    requireItem start,~!Me,when!~
 

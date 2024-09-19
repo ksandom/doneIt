@@ -1,0 +1,7 @@
+# Amend the name of every item in the resultSet. Eg --plate --refine=doneIt --plateName=name . name should be something short without spaces. For more detail, you can use --plateDescription. ~ plate,amend
+#onDefine aliasFeature plateName,pName
+
+parameters name
+
+loop
+    updatePlateField ~!Result,key!~,name,~!Local,name!~

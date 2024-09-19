@@ -1,3 +1,11 @@
-<~~ ~%timeStamp%~ ~!Color,default!~~!Color,blue!~(~%context%~) ~!Color,default!~  ~!Color,green!~~%name%~ (~%description%~)  ~!Color,default!~ ~%comment%~~!Color,default!~
+<~~
+
+~!Color,green!~~%name%~ (~!Color,default!~~%description%~~!Color,green!~)~!Color,default!~
+  ~!Color,default!~~%fuzzyDuration%~ (~%timeStamp%~)
+  Context:      ~!Color,default!~~!Color,blue!~~%context%~~!Color,default!~
+  State:        ~%stateColourCode%~~%state%~~!Color,default!~
+  Priority:     ~%priority%~
+  Note worthy:  ~%noteWorthy%~
+  Comment:      ~%comment%~~!Color,default!~
 
 ~>

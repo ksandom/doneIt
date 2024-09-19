@@ -1,7 +1,7 @@
-# Amend the state of every item in the resultSet. Eg --plate --refine=doneIt --plateState=active ~ plate
+# Amend the state of every item in the resultSet. Eg --plate --refine=doneIt --plateState=active . state could be something like added, or active. ~ plate,amend
 #onDefine aliasFeature plateState,pState
 
 parameters state
 
 loop
-    set Result,state,~!Local,state!~
+    updatePlateField ~!Result,key!~,state,~!Local,state!~

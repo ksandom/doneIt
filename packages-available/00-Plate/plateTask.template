@@ -1,3 +1,4 @@
-<~~ ~%timeStamp%~ - ~%fuzzyDuration%~ ~!Color,default!~~!Color,blue!~(~%context%~)  ~!Color,~%stateColour%~!~~%state%~~!Color,default!~  ~!Color,green!~~%name%~ (~!Color,default!~~%description%~~!Color,green!~)~!Color,default!~  -  ~%comment%~~!Color,default!~
+<~~ ~!Color,default!~~!Color,blue!~(~%context%~)  ~%stateColourCode%~~%state%~~!Color,default!~  ~%priority%~  ~%noteWorthy%~  ~!Color,green!~~%name%~ (~!Color,default!~~%description%~~!Color,green!~)~!Color,default!~  ~!Color,brightBlack!~-  ~!Color,default!~~%fuzzyDuration%~
+  ~%comment%~~!Color,default!~
 
 ~>

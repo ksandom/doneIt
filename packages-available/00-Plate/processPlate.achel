@@ -26,3 +26,5 @@ loop
         set Result,stateColour,blackHLPurple
     elseIf ~!Result,state!~,==,active,
         set Result,stateColour,blackHLGreen
+
+    set Result,stateColourCode,~!Color,~!Result,stateColour!~!~
