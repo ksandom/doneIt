@@ -23,10 +23,11 @@ if ~!Local,pass!~,==,true,
 
 
     massSet ["Plate,entries,~!Me,when!~"],
-        setNested ~!Me,stuff!~,when,~!Me,when!~
+        setNested ~!Me,stuff!~,start,~!Me,when!~
         setNested ~!Me,stuff!~,name,~!Me,name!~
         setNested ~!Me,stuff!~,description,~!Me,description!~
         setNested ~!Me,stuff!~,comment,~!Me,comment!~
+        setNested ~!Me,stuff!~,state,added
 
         getContext Local,context
         setNested ~!Me,stuff!~,context,~!Local,context!~

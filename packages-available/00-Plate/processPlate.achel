@@ -3,7 +3,26 @@
 loop
     if ~!Result,context!~,==,,
         set Result,context,work
-    if ~!Result,when!~,!=,,
-        fullTimeStamp Result,timeStamp,~!Result,when!~
+
+    if ~!Result,start!~,!=,,
+        # Starting time stamp.
+        fullTimeStamp Result,timeStamp,~!Result,start!~
+
+        # How long has this been going on.
+        now Local,now
+        basicMaths Result,duration,~!Local,now!~,-,~!Result,start!~
+        fuzzyTime Result,fuzzyDuration,~!Result,duration!~
     else
         set Result,timeStamp,NA
+        set Result,duration,
+        set Result,fuzzyDuration,
+
+    set Result,stateColour,cyan
+    if ~!Result,state!~,==,finished,
+        set Result,stateColour,green
+    elseIf ~!Result,state!~,==,block,
+        set Result,stateColour,blackHLRed
+    elseIf ~!Result,state!~,==,hold,
+        set Result,stateColour,blackHLPurple
+    elseIf ~!Result,state!~,==,active,
+        set Result,stateColour,blackHLGreen
