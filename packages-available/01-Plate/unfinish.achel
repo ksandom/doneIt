@@ -1,0 +1,9 @@
+# Resume an item in the plate that was previously marked as --finished. --listOfAchievements --refine=thingToFinish --unfinish ~ plate
+
+loadPlate
+
+loop
+    updatePlateField ~!Result,key!~,state,~!Result,stateBeforeFinishing!~
+
+    updatePlateField ~!Result,key!~,stop,
+
