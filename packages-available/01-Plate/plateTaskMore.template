@@ -7,5 +7,7 @@
   Priority:     ~%priority%~
   Note worthy:  ~%noteWorthy%~
   Comment:      ~%comment%~~!Color,default!~
+  Notes (~%numberOfNotes%~):
+~%notesOut%~
 
 ~>
