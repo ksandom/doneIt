@@ -1,4 +1,4 @@
 # Tag settings
-  lastWhen='2024-09-13'
-  lastHash='1f15b00c5de6552b9f4506757544e96ab77398d4'
-  point=2
+  lastWhen='2024-09-23'
+  lastHash='4c6b7eb3a392eab551fbe832510e04609f0c96e5'
+  point=0
