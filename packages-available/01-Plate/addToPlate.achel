@@ -1,0 +1,40 @@
+# Add a task to the plate. --addToPlate=taskName,description,comment ~ plate
+parameters name,description,comment
+
+loadPlate
+
+set Me,name,~!Local,name!~
+set Me,description,~!Local,description!~
+set Me,comment,~!Local,comment!~
+
+set Local,pass,true
+if ~!Me,name!~,==,,
+    complain Expected at least a name and comment.
+    set Local,pass,false
+
+if ~!Me,comment!~,==,,
+    complain Expected at least a name and comment.
+    set Local,pass,false
+
+if ~!Local,pass!~,==,true,
+    loadAchievements
+
+    now Me,when
+
+    setPlateDefaults
+
+    massSet ["Plate,entries,~!Me,when!~"],
+        setNested ~!Me,stuff!~,start,~!Me,when!~
+        setNested ~!Me,stuff!~,name,~!Me,name!~
+        setNested ~!Me,stuff!~,description,~!Me,description!~
+        setNested ~!Me,stuff!~,comment,~!Me,comment!~
+        setNested ~!Me,stuff!~,state,~!Plate,defaults,state!~
+        setNested ~!Me,stuff!~,priority,~!Plate,defaults,priority!~
+        setNested ~!Me,stuff!~,noteWorthy,~!Plate,defaults,noteWorthy!~
+
+        getContext Local,context
+        setNested ~!Me,stuff!~,context,~!Local,context!~
+
+    showPlate
+    requireItem start,~!Me,when!~
+

@@ -1,0 +1,14 @@
+# Set a specific plate default value. --setPlateDefault=configName,value,default ~ plate,config,hidden
+
+parameters configName,value,default
+
+if ~!Local,value!~,!=,,
+    set Local,oldValue,~!Plate,defaults,~!Local,configName!~!~
+    setNested Plate,defaults,~!Local,configName!~,~!Local,value!~
+
+    debug 0,Changed default value for "~!Local,configName!~" from "~!Local,oldValue!~" to ~!Plate,defaults,~!Local,configName!~!~.
+elseIf ~!Plate,defaults,~!Local,configName!~!~,==,,
+    setNested Plate,defaults,~!Local,configName!~,~!Local,default!~
+    debug 0,Set default value for "~!Local,configName!~" to ~!Plate,defaults,~!Local,configName!~!~.
+else
+    debug 1,No change to ~!Local,configName!~.

@@ -1,0 +1,7 @@
+# Amend the description of every item in the resultSet. Eg --plate --refine=doneIt --plateDescription=description . description should help you immediately itentify what you're talking about without being long. For that you should use --plateComment. ~ plate,amend
+#onDefine aliasFeature plateDescription,pDescription,pDesc
+
+parameters description
+
+loop
+    updatePlateField ~!Result,key!~,description,~!Local,description!~

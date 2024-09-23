@@ -1,0 +1,5 @@
+# List what's currently on your plate in the current context. For a more flexible view, use --showPlate . ~ plate
+
+showPlate
+processPlate
+requireContext

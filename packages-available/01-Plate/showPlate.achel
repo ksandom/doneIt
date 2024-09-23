@@ -1,0 +1,8 @@
+# Show the contents of the plate across all contexts. Use --plate to show just the entries from the current context. Suggested states: active, hold, blocked, finished ~ plate
+#onLoaded setFeatureType showPlate,generatePlateTasks
+
+parameters taskName,description,comment
+
+loadPlate
+
+retrieveResults Plate,entries

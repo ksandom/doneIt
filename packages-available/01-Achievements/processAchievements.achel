@@ -1,0 +1,10 @@
+# Process the Acheivements to be listed out. ~ hidden
+
+loop
+    if ~!Result,context!~,==,,
+        set Result,context,work
+
+    if ~!Result,start!~,!=,,
+        fullTimeStamp Result,timeStamp,~!Result,start!~
+
+processNotes

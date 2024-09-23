@@ -1,0 +1,22 @@
+# Get the category relevant to the data in the resultSet. We need this to we can persist the notes to the right place. --getNoteCategory=Category,variable ~ doneIt,notes
+
+parameters Category,variable
+
+getDataType Local,dataType
+set Local,result,Local
+
+if ~!Local,dataType!~,==,task,
+    set Local,result,DoneIt,tasks
+elseIf ~!Local,dataType!~,==,did,
+    set Local,result,DoneIt,dids
+elseIf ~!Local,dataType!~,==,achievement,
+    set Local,result,Achievements,entries
+elseIf ~!Local,dataType!~,==,context,
+    set Local,result,Contexts,entries
+elseIf ~!Local,dataType!~,==,plateTask,
+    set Local,result,Plate,entries
+else
+    complain getNoteCategory: Unrecognised data type "~!Local,dataType!~".
+
+set ~!Local,Category!~,~!Local,variable!~,~!Local,result!~
+makeAvailable ~!Local,Category!~,~!Local,variable!~

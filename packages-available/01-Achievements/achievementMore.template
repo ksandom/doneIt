@@ -1,5 +1,7 @@
 <~~ ~!Color,green!~~%name%~ (~%description%~)~!Color,default!~ ~!Color,blue!~(~%context%~) ~!Color,default!~
-    ~%timeStamp%~ ~!Color,default!~
-    ~%comment%~~!Color,default!~
+  ~%timeStamp%~ ~!Color,default!~
+  ~%comment%~~!Color,default!~
+  Notes (~%numberOfNotes%~):
+~%notesOut%~
 
 ~>

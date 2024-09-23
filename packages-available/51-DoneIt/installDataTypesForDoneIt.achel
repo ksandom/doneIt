@@ -5,4 +5,4 @@ createDataType task,task,,,,Something you can do.
 createDataType did,did,didMore,didLess,,A task you have done or worked towards.
 createDataType achievement,achievement,achievementMore,achievementLess,,An achievement that might be worthy of putting on a CV.
 createDataType context,context,contextMore,contextLess,,What the time usage belongs to. Eg personal or work.
-
+createDataType plateTask,plateTask,plateTaskMore,plateTaskLess,,A task that you work on for a longer period of time.

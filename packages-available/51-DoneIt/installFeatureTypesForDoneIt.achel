@@ -5,3 +5,4 @@ createFeatureType generateTasks,,task,Generates a list of tasks.
 createFeatureType generateDids,,did,Generates a list of did entries.
 createFeatureType generateAchievements,,achievement,Generates a list of achievement entries.
 createFeatureType generateContexts,,context,Generates a list of context entries.
+createFeatureType generatePlateTasks,,plateTask,Generates a list of plate entries.

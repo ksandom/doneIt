@@ -1,0 +1,10 @@
+# Update a plate field within an entry. --updatePlateField=entryID,fieldName,value ~ plate,hidden
+
+parameters entryID,fieldName,value
+
+# Update the root data.
+setNested Plate,entries,~!Local,entryID!~,~!Local,fieldName!~,~!Local,value!~
+
+# If we're iterating through a resultSet, let's update that as well.
+if ~!Result,key!~,==,~!Local,entryID!~,
+    set Result,~!Local,fieldName!~,~!Local,value!~

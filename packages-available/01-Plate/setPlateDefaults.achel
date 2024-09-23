@@ -1,0 +1,7 @@
+# Change the plate default values for a newly created plate entry. --setPlateDefaults=state,priority,noteWorthy . state could be something like added, or active. priority could be a score like 0, 0.5, 50, or a word like high, low etc. noteWorthy could be a score like 0, 0.5, 50, or a word like mundane, normal, important, proud etc. ~ config
+
+parameters state,priority,noteWorthy
+
+setPlateDefault state,~!Local,state!~,added
+setPlateDefault priority,~!Local,priority!~,0
+setPlateDefault noteWorthy,~!Local,noteWorthy!~,normal

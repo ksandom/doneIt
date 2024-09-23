@@ -1,0 +1,7 @@
+# Amend the comment of every item in the resultSet. Eg --plate --refine=doneIt --plateComment=comment . comment is useful for giving more information about the project. ~ plate,amend
+#onDefine aliasFeature plateComment,pComment
+
+parameters comment
+
+loop
+    updatePlateField ~!Result,key!~,comment,~!Local,comment!~

@@ -1,0 +1,6 @@
+# Show a specific plate entry. --showPlateEntry=entryID ~ plate,hidden
+
+parameters entryID
+
+showPlate
+requireItem start,~!Local,entryID!~
