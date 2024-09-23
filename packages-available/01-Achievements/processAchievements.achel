@@ -3,4 +3,8 @@
 loop
     if ~!Result,context!~,==,,
         set Result,context,work
-    fullTimeStamp Result,timeStamp,~!Result,when!~
+
+    if ~!Result,start!~,!=,,
+        fullTimeStamp Result,timeStamp,~!Result,start!~
+
+processNotes
