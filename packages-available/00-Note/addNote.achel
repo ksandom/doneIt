@@ -1,0 +1,17 @@
+# Add a note to an item (eg did, achievement, plateTask etc). You can add multiple notes. --addNote=noteText ~ note,doneIt
+
+parameters noteText
+
+getNoteCategory Local,noteCategory
+now Local,now
+
+loop
+    # Update the current resultSet.
+    setNested Result,notes,~!Local,now!~,when,~!Local,now!~
+    setNested Result,notes,~!Local,now!~,text,~!Local,noteText!~
+
+    # Persist.
+    setNested ~!Local,noteCategory!~,~!Result,key!~,notes,~!Local,now!~,when,~!Local,now!~
+    setNested ~!Local,noteCategory!~,~!Result,key!~,notes,~!Local,now!~,text,~!Local,noteText!~
+
+

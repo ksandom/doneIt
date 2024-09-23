@@ -1,0 +1,15 @@
+# Delete a specific note from a thing. --deleteNoteID=ID . ID is the "when" field on the note entry. ~ notes,doneIt
+
+parameters id
+
+loop
+    unset Result,notes,~!Local,id!~
+
+    getNoteCategory Local,noteCategory
+    set Local,address,~!Local,noteCategory!~,~!Result,key!~,notes,~!Local,id!~
+
+    getLength Local,length,~!~!Local,address!~!~
+    if ~!Local,length!~,>,0,
+        unset ~!Local,address!~
+    else
+        debug Nothing at ~!Local,address!~

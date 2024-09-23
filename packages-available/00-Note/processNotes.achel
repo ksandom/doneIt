@@ -1,0 +1,26 @@
+# Process the noted into a viewable form. ~ doneIt,notes,hidden
+
+loop
+    set Local,notesOut,
+    set Local,numberOfNotes
+
+    isolate
+        retrieveResults Result,notes
+
+        getLength Local,length,~!Result,notes!~
+
+        if ~!Local,length!~,>,0,
+            loop Notes,
+                if ~!Notes,when!~,!=,,
+                    fullTimeStamp Notes,whenOut,~!Notes,when!~
+
+            templateToVar Local,notesOut,note
+
+            countToVar Local,numberOfNotes
+        else
+            set Local,notesOut,
+            set Local,numberOfNotes,0
+
+
+    set Result,notesOut,~!Local,notesOut!~
+    set Result,numberOfNotes,~!Local,numberOfNotes!~
