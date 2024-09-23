@@ -1,0 +1,10 @@
+# Mark an item as finished. --plate --refine=thingToFinish --finish ~ plate
+
+loadPlate
+
+loop
+    updatePlateField ~!Result,key!~,stateBeforeFinishing,~!Result,state!~
+    updatePlateField ~!Result,key!~,state,finished
+
+    now Local,now
+    updatePlateField ~!Result,key!~,stop,~!Local,now!~
