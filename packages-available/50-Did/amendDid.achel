@@ -1,4 +1,4 @@
-# Amend the details of something you've done. --amendDid=[taskName],[who],[comment] ~ doneit,user
+# Amend the details of something you've done. --amendDid=[taskName],[who],[comment],[contextSearch] ~ doneit,user
 #onDefine aliasFeature amendDid,amend
 
 parameters taskName,who,comment,contextSearch
