@@ -1,4 +1,4 @@
-# Amend the details of something you've done. --amendDid=[taskName],[who],[comment] ~ doneit,user
+# Amend the details of something you've done. --amendDid=[taskName],[who],[comment],[contextSearch] ~ doneit,user
 #onDefine aliasFeature amendDid,amend
 
 parameters taskName,who,comment,contextSearch
@@ -44,6 +44,19 @@ loop
 			set Result,id,~!Local,ID!~
 			debug 2,amendDid: Setting context ~!Me,context!~ from search ~!Local,contextSearch!~
 			setNested DoneIt,dids,~!Result,id!~,context,~!Me,context!~
+		else
+			stashResults Local,beforeContext
+			isolate
+				listTasks ^~!DoneIt,dids,~!Result,id!~,taskName!~$
+				first
+				loop Task,
+					if ~!Task,context!~,==,personal,
+						setNested DoneIt,dids,~!Result,id!~,context,personal
+					else
+						set Me,context,
+						getContext Me,context
+						setNested DoneIt,dids,~!Result,id!~,context,~!Me,context!~
+			retrieveResults Local,beforeContext
 
 		# Display after
 		isolate
