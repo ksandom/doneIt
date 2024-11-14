@@ -74,3 +74,7 @@ addTask l,-,Lunch,personal,silent
 addTask bp,-,Break (off the clock),personal,silent
 addTask ada,-,Awesomely dangerous activities - http://funnyhacks.com/tarp,personal,silent
 addTask zzz,-,Sleep,personal,silent
+
+# Set default hours per day.
+setIfNotSet DoneIt,hoursPerDay,8
+setIfNotSet DoneIt,daysPerWeek,5

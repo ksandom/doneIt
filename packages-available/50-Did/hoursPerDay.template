@@ -1,0 +1,7 @@
+<~~ ~!Color,default!~~%key%~: ~!Color,green!~~%fuzzyDuration%~~!Color,brightBlack!~, ~!Color,cyan!~~%fuzzyRemaining%~ remaining~!Color,brightBlack!~. Finishing at ~!Color,purple!~~%fuzzyFinishTime%~~!Color,brightBlack!~.
+
+~>
+~!Color,default!~~!HoursPerDay,daysWorked!~ ~!HoursPerDay,unit!~ worked:~!Color,green!~ ~!HoursPerDay,fuzzyTotalWorked!~~!Color,brightBlack!~,
+    * ~!Color,cyan!~~!HoursPerDay,fuzzyTotalRemaining!~ remaining of the days worked~!Color,brightBlack!~.
+    * ~!Color,cyan!~~!HoursPerDay,fuzzyWeekTotalRemaining!~ remaining of the week~!Color,brightBlack!~.
+Goal: ~!DoneIt,hoursPerDay!~ hours per day, ~!DoneIt,daysPerWeek!~ days per week. ~!HoursPerDay,hoursPerWeek!~ hours per week.~!Color,default!~

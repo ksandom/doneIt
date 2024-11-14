@@ -1,0 +1,6 @@
+# Use --hoursPerDay to display hours per week. ~ did,summary,hours,week
+#onDefine aliasFeature hoursPerWeek,hpw
+
+thisWeek
+requireContext
+hoursPerDay
