@@ -1,0 +1,58 @@
+# For a list of dids (eg --today), list the number of hours worked each day. ~ did,summary,hours,day
+#onDefine aliasFeature hoursPerDay,hpd
+
+countToVar Local,dids
+if ~!Local,dids!~,==,0,
+    today
+    requireContext
+
+# Collect hours into days.
+set Local,collectedHours
+loop
+    fullTimeStamp Local,date,~!Result,start!~,Y-m-d
+    if ~!Local,collectedHours,~!Local,date!~,duration!~,==,,
+        setNested Local,collectedHours,~!Local,date!~,duration,0
+    set Local,currentTotal,~!Local,collectedHours,~!Local,date!~,duration!~
+
+    basicMaths Local,currentTotal,~!Local,currentTotal!~,+,~!Result,duration!~
+    setNested Local,collectedHours,~!Local,date!~,duration,~!Local,currentTotal!~
+
+retrieveResults Local,collectedHours
+
+# Perform statistics.
+basicMaths Local,dividor,60,*,60
+# TODO Make the goal configurable.
+basicMaths Local,goal,~!DoneIt,hoursPerDay!~,*,~!Local,dividor!~
+set HoursPerDay,totalWorked,0
+set Local,totalRemaining,0
+set Local,daysWorked,0
+
+loop
+    basicMaths Result,remaining,~!Local,goal!~,-,~!Result,duration!~
+
+    fuzzyTime Result,fuzzyDuration,~!Result,duration!~
+    fuzzyTime Result,fuzzyRemaining,~!Result,remaining!~
+
+    now Local,now
+    basicMaths Result,finishTime,~!Local,now!~,+,~!Result,remaining!~
+    fuzzyTime Result,fuzzyFinishTime,~!Result,finishTime!~
+
+    basicMaths HoursPerDay,daysWorked,~!HoursPerDay,daysWorked!~,+,1
+    basicMaths Local,totalWorked,~!Local,totalWorked!~,+,~!Result,duration!~
+    basicMaths Local,totalRemaining,~!Local,totalRemaining!~,+,~!Result,remaining!~
+
+fuzzyTime HoursPerDay,fuzzyTotalWorked,~!Local,totalWorked!~,hours
+fuzzyTime HoursPerDay,fuzzyTotalRemaining,~!Local,totalRemaining!~,hours
+
+basicMaths HoursPerDay,hoursPerWeek,~!DoneIt,hoursPerDay!~,*,~!DoneIt,daysPerWeek!~
+basicMaths Local,secondsPerWeek,~!HoursPerDay,hoursPerWeek!~,*,~!Local,dividor!~
+basicMaths Local,weekSecondsRemaining,~!Local,secondsPerWeek!~,-,~!Local,totalWorked!~
+fuzzyTime HoursPerDay,fuzzyWeekTotalRemaining,~!Local,weekSecondsRemaining!~,hours
+
+countToVar Local,days
+if ~!Local,days!~,>,1,
+    set HoursPerDay,unit,days
+else
+    set HoursPerDay,unit,day
+
+templateOut hoursPerDay
