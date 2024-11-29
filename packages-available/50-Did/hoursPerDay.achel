@@ -10,12 +10,26 @@ if ~!Local,dids!~,==,0,
 set Local,collectedHours
 loop
     fullTimeStamp Local,date,~!Result,start!~,Y-m-d
+
     if ~!Local,collectedHours,~!Local,date!~,duration!~,==,,
         setNested Local,collectedHours,~!Local,date!~,duration,0
     set Local,currentTotal,~!Local,collectedHours,~!Local,date!~,duration!~
 
     basicMaths Local,currentTotal,~!Local,currentTotal!~,+,~!Result,duration!~
     setNested Local,collectedHours,~!Local,date!~,duration,~!Local,currentTotal!~
+
+    if ~!Local,collectedHours,~!Local,date!~,lastTime!~,==,,
+        setNested Local,collectedHours,~!Local,date!~,lastTime,0
+        fullTimeStamp Local,dayOfWeek,~!Result,start!~,D
+        setNested Local,collectedHours,~!Local,date!~,dayOfWeek,~!Local,dayOfWeek!~
+
+    if ~!Result,stop!~,==,,
+        if ~!Result,start!~,>,~!Local,collectedHours,~!Local,date!~,lastTime!~,
+            now Local,now
+            setNested Local,collectedHours,~!Local,date!~,lastTime,~!Local,now!~
+    else
+        if ~!Result,stop!~,>,~!Local,collectedHours,~!Local,date!~,lastTime!~,
+            setNested Local,collectedHours,~!Local,date!~,lastTime,~!Result,stop!~
 
 retrieveResults Local,collectedHours
 
@@ -33,8 +47,7 @@ loop
     fuzzyTime Result,fuzzyDuration,~!Result,duration!~
     fuzzyTime Result,fuzzyRemaining,~!Result,remaining!~
 
-    now Local,now
-    basicMaths Result,finishTime,~!Local,now!~,+,~!Result,remaining!~
+    basicMaths Result,finishTime,~!Result,lastTime!~,+,~!Result,remaining!~
     fuzzyTime Result,fuzzyFinishTime,~!Result,finishTime!~
 
     basicMaths HoursPerDay,daysWorked,~!HoursPerDay,daysWorked!~,+,1

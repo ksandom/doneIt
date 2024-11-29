@@ -1,4 +1,4 @@
-<~~ ~!Color,default!~~%key%~: ~!Color,green!~~%fuzzyDuration%~~!Color,brightBlack!~, ~!Color,cyan!~~%fuzzyRemaining%~ remaining~!Color,brightBlack!~. Finishing at ~!Color,purple!~~%fuzzyFinishTime%~~!Color,brightBlack!~.
+<~~ ~!Color,default!~~%key%~ ~%dayOfWeek%~: ~!Color,green!~~%fuzzyDuration%~~!Color,brightBlack!~, ~!Color,cyan!~~%fuzzyRemaining%~ remaining~!Color,brightBlack!~. Goal: ~!Color,purple!~~%fuzzyFinishTime%~~!Color,brightBlack!~.
 
 ~>
 ~!Color,default!~~!HoursPerDay,daysWorked!~ ~!HoursPerDay,unit!~ worked:~!Color,green!~ ~!HoursPerDay,fuzzyTotalWorked!~~!Color,brightBlack!~,
